@@ -3,6 +3,7 @@
 	import myicon from '$lib/image/myicon.png';
 	import Header from '../stories/Header.svelte';
 	import Icon from '@iconify/svelte';
+	import noiz from '$lib/image/noiz.png';
 
 	import { page } from '$app/stores';
 	let title: 'Home' | 'About' | 'Works' | 'Blogs';
@@ -31,17 +32,14 @@
 		const cursor = document.getElementById('cursor');
 
 		if (cursor) {
-			// マウスに追従させる
 			document.addEventListener('mousemove', (e) => {
 				cursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
 			});
 
-			// すべてのリンクに対してクラス追加
 			const links = document.querySelectorAll('a');
 			links.forEach((link) => {
-				link.classList.add('custom-class'); // ここでクラスを追加
+				link.classList.add('custom-class');
 
-				// リンクにホバーした時にクラス追加、離れたらクラス削除
 				link.addEventListener('mouseover', () => {
 					cursor.classList.add('cursor--hover');
 				});
@@ -70,13 +68,13 @@
 				<li>
 					<a href="https://twitter.com/shiki__01">
 						<Icon icon="fa6-brands:square-x-twitter" />
-						@shiki__01
+						<p>@shiki__01</p>
 					</a>
 				</li>
 				<li>
 					<a href="https://github.com/shiki-01">
 						<Icon icon="ph:github-logo-fill" />
-						@shiki-01
+						<p>@shiki-01</p>
 					</a>
 				</li>
 			</ul>
@@ -97,6 +95,22 @@
 		display: grid;
 		grid-template-columns: 1fr 600px 1fr;
 		grid-template-rows: 1fr;
+
+		&::after {
+            content: '';
+            background-image: url(../lib/image/noiz.png);
+            background-size: cover;
+            background-position: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.1;
+            mix-blend-mode: soft-light;
+            z-index: 99;
+            pointer-events: none
+		}
 
 		.header {
 			align-items: center;
@@ -146,6 +160,7 @@
 
 					p {
 						font-size: 1.5em;
+						color: #333;
 					}
 				}
 
@@ -174,8 +189,8 @@
 							font-size: 1em;
 							margin: 0.2em;
 
-							svg {
-								margin-right: 0.5em;
+							p {
+								margin-left: 0.5em;
 							}
 						}
 					}
