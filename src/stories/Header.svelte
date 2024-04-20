@@ -1,52 +1,74 @@
 <script lang="ts">
-  import './header.css';
-  import Button from './Button.svelte';
+	import { writable } from 'svelte/store';
+	export let title: 'Home' | 'About' | 'Blogs' = 'Home';
 
-  import { createEventDispatcher } from 'svelte';
+	let select = ['Home', 'About', 'Blogs'];
 
-  export let user: { name: string } | null = null;
+	let selected = writable(0);
+	let selectedItem: number;
+	selected.subscribe((value) => {
+		selectedItem = value;
+	});
 
-  const dispatch = createEventDispatcher();
-
-  function onLogin(event: MouseEvent) {
-    dispatch('login', event);
-  }
-  function onLogout(event: MouseEvent) {
-    dispatch('logout', event);
-  }
-  function onCreateAccount(event: MouseEvent) {
-    dispatch('createAccount', event);
-  }
+	$: {
+		selected.set(select.indexOf(title));
+	}
 </script>
 
+<svelte:head>
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" />
+	<link
+		href="https://fonts.googleapis.com/css2?family=M+PLUS+1:wght@100..900&family=Noto+Sans+JP:wght@100..900&display=swap"
+		rel="stylesheet"
+	/>
+</svelte:head>
+
 <header>
-  <div class="storybook-header">
-    <div>
-      <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-        <g fill="none" fill-rule="evenodd">
-          <path
-            d="M10 0h12a10 10 0 0110 10v12a10 10 0 01-10 10H10A10 10 0 010 22V10A10 10 0 0110 0z"
-            fill="#FFF"
-          />
-          <path
-            d="M5.3 10.6l10.4 6v11.1l-10.4-6v-11zm11.4-6.2l9.7 5.5-9.7 5.6V4.4z"
-            fill="#555AB9"
-          />
-          <path d="M27.2 10.6v11.2l-10.5 6V16.5l10.5-6zM15.7 4.4v11L6 10l9.7-5.5z" fill="#91BAF8" />
-        </g>
-      </svg>
-      <h1>Acme</h1>
-    </div>
-    <div>
-      {#if user}
-        <span class="welcome">
-          Welcome, <b>{user.name}</b>!
-        </span>
-        <Button size="small" on:click={onLogout} label="Log out" />
-      {:else}
-        <Button size="small" on:click={onLogin} label="Log in" />
-        <Button primary size="small" on:click={onCreateAccount} label="Sign up" />
-      {/if}
-    </div>
-  </div>
+	<ul>
+		{#each select as item, index}
+			<li>
+				<a href="/" class:selected={index === selectedItem}><span>{item}</span></a>
+			</li>
+		{/each}
+	</ul>
 </header>
+
+<style lang="scss">
+	header {
+		ul {
+      padding: 1em 2em;
+			border-left: #333 solid 1px;
+
+			li {
+				list-style: none;
+				margin-bottom: 2em;
+
+				a {
+					text-decoration: none;
+					color: #333;
+					text-transform: uppercase;
+					letter-spacing: 0.8em;
+					font-family:
+						noto sans jp,
+						sans-serif;
+					font-weight: 100;
+					font-size: 1.5em;
+					padding: 0 0.5em;
+
+					span {
+						margin-right: -0.8em;
+					}
+
+					&:not(.selected) {
+						background-color: transparent;
+					}
+
+					&.selected {
+						background-color: #ffec88;
+					}
+				}
+			}
+		}
+	}
+</style>

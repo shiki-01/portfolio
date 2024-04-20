@@ -2,25 +2,35 @@ import type { Meta, StoryObj } from '@storybook/svelte';
 import Header from './Header.svelte';
 
 const meta = {
-  title: 'Example/Header',
+  title: 'Main/Header',
   component: Header,
   // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/writing-docs/autodocs
   tags: ['autodocs'],
-  parameters: {
-    // More on how to position stories at: https://storybook.js.org/docs/configure/story-layout
-    layout: 'fullscreen',
+  argTypes: {
+    title: {
+      control: { type: 'select' },
+      options: ['Home', 'About', 'Blogs'],
+    },
   },
 } satisfies Meta<Header>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const LoggedIn: Story = {
+export const Home: Story = {
   args: {
-    user: {
-      name: 'Jane Doe',
-    },
+    title: 'Home',
   },
 };
 
-export const LoggedOut: Story = {};
+export const About: Story = {
+  args: {
+    title: 'About',
+  },
+};
+
+export const Blogs: Story = {
+  args: {
+    title: 'Blogs',
+  },
+};
