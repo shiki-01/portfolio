@@ -4,6 +4,27 @@
 	import Header from '../stories/Header.svelte';
 	import Icon from '@iconify/svelte';
 
+	import { page } from '$app/stores';
+    let title: 'Home' | 'About' | 'Works' | 'Blogs';
+    $: {
+        switch ($page.route.id) {
+            case '/':
+                title = 'Home';
+                break;
+            case '/pages/about':
+                title = 'About';
+                break;
+            case '/pages/works':
+                title = 'Works';
+                break;
+            case '/pages/blogs':
+                title = 'Blogs';
+                break;
+            default:
+                title = 'Home';
+        }
+    }
+
 	import { onMount } from 'svelte';
 
 	onMount(() => {
@@ -43,9 +64,9 @@
 				<img src={myicon} alt="icon" />
 			</div>
 			<ul>
-                <li>
-                    <p>shiki</p>
-                </li>
+				<li>
+					<p>shiki</p>
+				</li>
 				<li>
 					<a href="https://twitter.com/shiki__01">
 						<Icon icon="fa6-brands:square-x-twitter" />
@@ -65,7 +86,7 @@
 		<slot></slot>
 	</div>
 	<div class="header">
-		<Header title="Home" />
+		<Header {title} />
 	</div>
 </main>
 
@@ -108,7 +129,7 @@
 
 			#profile {
 				display: grid;
-                grid-template-columns: 80px 1fr;
+				grid-template-columns: 80px 1fr;
 
 				div {
 					display: flex;
@@ -120,7 +141,7 @@
 						width: 80px;
 						height: 80px;
 						border-radius: 50%;
-                        border: #333 solid 2px;
+						border: #333 solid 2px;
 					}
 
 					p {
@@ -133,17 +154,17 @@
 					justify-content: center;
 					align-items: start;
 					flex-direction: column;
-                    margin-left: 2em;
+					margin-left: 2em;
 
 					li {
 						display: flex;
 						justify-content: center;
 						margin: 0;
 
-                        p {
-                            margin: .2em;
-                            cursor: default
-                        }
+						p {
+							margin: 0.2em;
+							cursor: default;
+						}
 
 						a {
 							display: flex;
@@ -151,7 +172,7 @@
 							text-decoration: none;
 							color: #333;
 							font-size: 1em;
-                            margin: .2em;
+							margin: 0.2em;
 
 							svg {
 								margin-right: 0.5em;
