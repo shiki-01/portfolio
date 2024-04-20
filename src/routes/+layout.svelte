@@ -72,7 +72,7 @@
 				</li>
 				<li>
 					<a href="https://github.com/shiki-01">
-						<Icon icon="ph:github-logo-fill" />
+						<Icon icon="ph:github-logo-fill" style="cursor:pointer" />
 						<p>@shiki-01</p>
 					</a>
 				</li>
@@ -190,6 +190,7 @@
 
 							p {
 								margin-left: 0.5em;
+                                cursor: pointer;
 							}
 						}
 					}
