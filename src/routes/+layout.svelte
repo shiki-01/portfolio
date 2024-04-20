@@ -5,25 +5,26 @@
 	import Icon from '@iconify/svelte';
 
 	import { page } from '$app/stores';
-    let title: 'Home' | 'About' | 'Works' | 'Blogs';
-    $: {
-        switch ($page.route.id) {
-            case '/':
-                title = 'Home';
-                break;
-            case '/pages/about':
-                title = 'About';
-                break;
-            case '/pages/works':
-                title = 'Works';
-                break;
-            case '/pages/blogs':
-                title = 'Blogs';
-                break;
-            default:
-                title = 'Home';
-        }
-    }
+	let title: 'Home' | 'About' | 'Works' | 'Blogs';
+	$: {
+		switch ($page.route.id) {
+			case '/':
+				title = 'Home';
+				break;
+			case '/pages/about':
+				title = 'About';
+				break;
+			case '/pages/works':
+				title = 'Works';
+				break;
+			case '/pages/blogs':
+				title = 'Blogs';
+				break;
+			default:
+				title = 'Home';
+		}
+	}
+
 
 	import { onMount } from 'svelte';
 
