@@ -3,7 +3,6 @@
 	import myicon from '$lib/image/myicon.png';
 	import Header from '../stories/Header.svelte';
 	import Icon from '@iconify/svelte';
-	import noiz from '$lib/image/noiz.png';
 
 	import { page } from '$app/stores';
 	let title: 'Home' | 'About' | 'Works' | 'Blogs';
