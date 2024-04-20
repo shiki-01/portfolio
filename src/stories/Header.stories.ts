@@ -9,7 +9,7 @@ const meta = {
   argTypes: {
     title: {
       control: { type: 'select' },
-      options: ['Home', 'About', 'Blogs'],
+      options: ['Home', 'About', 'Works', 'Blogs'],
     },
   },
 } satisfies Meta<Header>;

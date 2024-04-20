@@ -1,2 +1,25 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<script lang="ts">
+</script>
+
+<div>
+    <p>design</p>
+    <p>×</p>
+    <p>program</p>
+    <p>×</p>
+    <p>etc</p>
+</div>
+
+<style lang="scss">
+    div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        height: 100%;
+        font-size: 5em;
+        p {
+            margin: 0 1em;
+            font-weight: 100;
+        }
+    }
+</style>
