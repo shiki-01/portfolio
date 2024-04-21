@@ -1,6 +1,18 @@
 <script lang="ts">
 	import { writable } from 'svelte/store';
+  import { goto } from '$app/navigation';
 	export let title: 'Home' | 'About' | 'Works' | 'Blogs' = 'Home';
+	export let primary = false;
+
+	export let container;
+
+	import { createEventDispatcher } from 'svelte';
+	const dispatch = createEventDispatcher();
+
+	function handleClick(event: { currentTarget: { href: string | URL; }; }) {
+		dispatch('linkclick');
+    goto(event.currentTarget.href);
+	}
 
 	let select = [
 		{ name: 'Home', route: '/' },
@@ -29,18 +41,34 @@
 	/>
 </svelte:head>
 
-<header>
+<header class={primary ? 'show' : 'hide'} bind:this={container}>
 	<ul>
 		{#each select as item, index}
 			<li>
-				<a href="{item.route}" class:selected={index === selectedItem}><span>{item.name}</span></a>
+				<a
+					href={item.route}
+					class:selected={index === selectedItem}
+					on:click|preventDefault={handleClick}><span>{item.name}</span></a
+				>
 			</li>
 		{/each}
 	</ul>
 </header>
 
 <style lang="scss">
+	.show {
+		opacity: 1;
+		transition: opacity 0.5s ease-in-out;
+	}
+
+	.hide {
+		opacity: 0;
+		transition: opacity 0.5s ease-in-out;
+	}
 	header {
+		position: fixed;
+		z-index: 1000;
+
 		ul {
 			padding: 1em 2em;
 			border-left: #333 solid 2px;
