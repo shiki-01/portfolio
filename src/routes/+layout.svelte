@@ -252,7 +252,7 @@
 
 	main[class^='pc'] {
 		display: grid;
-		grid-template-columns: 1fr 600px 1fr;
+		grid-template-columns: 1fr 700px 1fr;
 		grid-template-rows: 1fr;
 
 		.header {
