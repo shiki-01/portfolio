@@ -311,8 +311,11 @@
 				}
 
 				span {
-					position: absolute;
-					right: 0;
+                    display: flex;
+                    justify-content: end;
+                    align-items: center;
+                    margin: 0;
+                    margin-right: 1em;
 				}
 			}
 
