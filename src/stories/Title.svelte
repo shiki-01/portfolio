@@ -46,7 +46,7 @@
     @media (max-width: 768px) {
         div {
             h1 {
-                margin-left: 1em;
+                margin-left: 0em;
                 font-size: 2em;
 
                 &::after {
