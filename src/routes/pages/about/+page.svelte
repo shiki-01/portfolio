@@ -21,7 +21,7 @@
 		{ name: 'adobe illustrator', url: 'logos:adobe-illustrator' },
 		{ name: 'adobe photoshop', url: 'logos:adobe-photoshop' },
         { name: 'adobe premiere pro', url: 'logos:adobe-premiere' },
-        { name: 'blender', url: 'logos:blender' },
+        { name: 'blender', url: 'devicon:blender' },
         { name: 'inkscape', url: 'devicon:inkscape' },
         { name: 'gimp', url: 'devicon:gimp' }
 	];
@@ -37,10 +37,10 @@
 		{ name: 'Vue', url: 'vscode-icons:file-type-vue' },
 		{ name: 'storybook', url: 'vscode-icons:file-type-storybook' },
 		{ name: 'electron', url: 'devicon:electron' },
-		{ name: 'MySQL', url: 'logos:mysql-icon' },
-		{ name: 'Python', url: 'logos:python' },
+		{ name: 'MySQL', url: 'vscode-icons:file-type-mysql' },
+		{ name: 'Python', url: 'vscode-icons:file-type-python' },
 		{ name: 'Firebase', url: 'devicon:firebase' },
-		{ name: 'GitHub', url: 'ph:github-logo-fill' }
+		{ name: 'GitHub', url: 'devicon:github' }
 	];
 
     const etc = [
