@@ -140,7 +140,7 @@
 				</li>
 				<li>
 					<a href="https://github.com/shiki-01">
-						<Icon icon="ph:github-logo-fill" style="cursor:pointer" />
+						<Icon icon="devicon:github" style="cursor:pointer" />
 						<p>@shiki-01</p>
 					</a>
 				</li>
@@ -302,6 +302,8 @@
 
 		#content {
 			overflow: auto;
+            margin: 15pt 0;
+            padding: 0 15pt;
 
             &::-webkit-scrollbar {
                 background: #afafaf;
