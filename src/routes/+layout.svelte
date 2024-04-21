@@ -3,7 +3,7 @@
 	import myicon from '$lib/image/myicon.png';
 	import Header from '../stories/Header.svelte';
 	import Icon from '@iconify/svelte';
-    import noiz from '$lib/image/noiz.png';
+	import noiz from '$lib/image/noiz.png';
 	import Toggle from '../stories/Toggle.svelte';
 
 	import { fade } from 'svelte/transition';
@@ -97,7 +97,9 @@
 	}
 </script>
 
-<div id="cursor" class="cursor {type.toLowerCase()}"></div>
+{#if type === 'PC'}
+	<div id="cursor" class="cursor {type.toLowerCase()}"></div>
+{/if}
 <img id="noiz" src={noiz} alt="noiz" />
 <main class={type.toLowerCase()}>
 	<div class="header">
@@ -152,21 +154,21 @@
 </main>
 
 <style lang="scss">
-    :global(body) {
-        font-family: 'M PLUS 1', 'Noto Sans JP', sans-serif;
-    }
-    #noiz {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        z-index: 99999;
-        opacity: 0.1;
-        mix-blend-mode: screen;
-        pointer-events: none;
-    }
+	:global(body) {
+		font-family: 'M PLUS 1', 'Noto Sans JP', sans-serif;
+	}
+	#noiz {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		z-index: 99999;
+		opacity: 0.1;
+		mix-blend-mode: screen;
+		pointer-events: none;
+	}
 
 	main {
 		width: 100vw;
@@ -270,12 +272,12 @@
 				}
 			}
 
-            #profile {
-                span {
+			#profile {
+				span {
 					grid-column: 1 / 3;
-                    text-align: center;
+					text-align: center;
 				}
-            }
+			}
 		}
 	}
 
@@ -322,7 +324,7 @@
 				width: 100%;
 				height: 100%;
 				z-index: 1;
-                margin: 0;
+				margin: 0;
 			}
 
 			#header-container {
