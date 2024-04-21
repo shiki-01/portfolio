@@ -315,7 +315,7 @@
                     justify-content: end;
                     align-items: center;
                     margin: 0;
-                    margin-right: 1em;
+                    margin-right: 2em;
 				}
 			}
 
