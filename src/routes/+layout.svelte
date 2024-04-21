@@ -152,6 +152,9 @@
 </main>
 
 <style lang="scss">
+    :global(body) {
+        font-family: 'M PLUS 1', 'Noto Sans JP', sans-serif;
+    }
     #noiz {
         position: fixed;
         top: 0;
