@@ -74,6 +74,7 @@
     <div>
         <p>※ちなみに盛った</p>
     </div>
+    <div id=""></div>
 </div>
 
 <style lang="scss">
@@ -109,4 +110,28 @@
             margin: 4em 0;
         }
 	}
+
+    @media (max-width: 768px) {
+        div {
+            #profile {
+                grid-template-columns: .1fr 100px 1fr;
+
+                img {
+                    grid-column: 2 / 3;
+                    width: 100px;
+                    height: 100px;
+                }
+
+                div {
+                    p {
+                        font-size: 1em;
+                    }
+                }
+            }
+
+            #design, #program, #etc {
+                margin: 2em 0;
+            }
+        }
+    }
 </style>

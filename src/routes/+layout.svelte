@@ -315,6 +315,8 @@
 		width: 100%;
 		height: calc(100vh + 200px);
 		position: relative;
+        display: flex;
+        flex-direction: column;
 
 		.header:nth-of-type(1) {
 			#logo {
@@ -375,6 +377,7 @@
 			}
 
 			#profile {
+                order: 2;
 				margin: 0;
 				position: absolute;
 				bottom: 0;
@@ -384,6 +387,11 @@
 
 				div {
 					grid-column: 2 / 3;
+                    margin: 0;
+
+                    img {
+                        margin: 0;
+                    }
 				}
 
 				ul {
@@ -406,7 +414,9 @@
 
 		div:nth-of-type(2) {
 			margin: 0 10%;
-			padding-top: 150px;
+			margin-top: 150px;
+            margin-bottom: 150px;
+            order: 1;
 		}
 	}
 </style>
