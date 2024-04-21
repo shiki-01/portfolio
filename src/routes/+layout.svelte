@@ -226,10 +226,6 @@
 						}
 					}
 				}
-				span {
-					grid-column: 1 / 3;
-                    text-align: center;
-				}
 			}
 		}
 
@@ -271,6 +267,13 @@
 					align-items: center;
 				}
 			}
+
+            #profile {
+                span {
+					grid-column: 1 / 3;
+                    text-align: center;
+				}
+            }
 		}
 	}
 
@@ -317,6 +320,7 @@
 				width: 100%;
 				height: 100%;
 				z-index: 1;
+                margin: 0;
 			}
 
 			#header-container {
