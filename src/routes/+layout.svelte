@@ -3,6 +3,7 @@
 	import myicon from '$lib/image/myicon.png';
 	import Header from '../stories/Header.svelte';
 	import Icon from '@iconify/svelte';
+    import noiz from '$lib/image/noiz.png';
 	import Toggle from '../stories/Toggle.svelte';
 
 	import { fade } from 'svelte/transition';
@@ -97,6 +98,7 @@
 </script>
 
 <div id="cursor" class="cursor {type.toLowerCase()}"></div>
+<img id="noiz" src={noiz} alt="noiz" />
 <main class={type.toLowerCase()}>
 	<div class="header">
 		<div id="logo">
@@ -150,25 +152,22 @@
 </main>
 
 <style lang="scss">
+    #noiz {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: 99999;
+        opacity: 0.1;
+        mix-blend-mode: screen;
+        pointer-events: none;
+    }
+
 	main {
 		width: 100vw;
 		height: 100vh;
-
-		&::after {
-			content: '';
-			background-image: url(../lib/image/noiz.png);
-			background-size: cover;
-			background-position: center;
-			position: absolute;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			opacity: 0.1;
-			mix-blend-mode: soft-light;
-			z-index: 99;
-			pointer-events: none;
-		}
 
 		.header {
 			#profile {
