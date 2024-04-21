@@ -213,6 +213,7 @@
 						p {
 							margin: 0.2em;
 							cursor: default;
+							color: #333;
 						}
 
 						a {
@@ -230,11 +231,28 @@
 						}
 					}
 				}
+
+				span {
+					color: #333;
+				}
 			}
 		}
 
 		:not(.header) {
 			margin: 1em;
+			overflow: auto;
+
+			&::-webkit-scrollbar {
+				background: #cfcfcf;
+				width: 5px;
+				height: 5px;
+                border-radius: 10pt;
+			}
+
+            &::-webkit-scrollbar-thumb {
+                background: #333;
+                border-radius: 10pt;
+            }
 		}
 	}
 
@@ -273,11 +291,23 @@
 			}
 
 			#profile {
+				div {
+					width: 100%;
+					margin: 0;
+
+					img {
+						margin: 0;
+					}
+				}
 				span {
 					grid-column: 1 / 3;
 					text-align: center;
 				}
 			}
+		}
+
+		:not(.header) {
+			overflow: auto;
 		}
 	}
 
@@ -311,11 +341,11 @@
 				}
 
 				span {
-                    display: flex;
-                    justify-content: end;
-                    align-items: center;
-                    margin: 0;
-                    margin-right: 2em;
+					display: flex;
+					justify-content: end;
+					align-items: center;
+					margin: 0;
+					margin-right: 2em;
 				}
 			}
 

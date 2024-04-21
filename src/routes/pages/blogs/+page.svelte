@@ -1,2 +1,5 @@
+<script lang="ts">
+    import Title from "../../../stories/Title.svelte";
+</script>
 
-blogs
+<Title title="blogs" />

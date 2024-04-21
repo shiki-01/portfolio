@@ -22,4 +22,10 @@
             font-weight: 100;
         }
     }
+
+    @media (max-width: 768px) {
+        div {
+            font-size: 3em;
+        }
+    }
 </style>
