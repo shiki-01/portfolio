@@ -45,7 +45,7 @@
 
     const etc = [
         { name: 'unity', url: 'devicon:unity' },
-        { name: 'unreal enginr', url: 'logos:unrealengine-icon'}
+        { name: 'unreal engin', url: 'logos:unrealengine-icon'}
     ]
 </script>
 
@@ -59,6 +59,10 @@
 			<p>age: {age}</p>
 			<p>job: student</p>
 		</div>
+        <p>
+            どこにでもいる普通の高校生。<br />
+            色々浅く広く手を出したせいでなんでもできるみたいに見えるけどそんなことはない。<br />
+        </p>
 	</div>
 	<div id="skils">
 		<div id="design">
@@ -101,9 +105,12 @@
 
 				p {
 					font-size: 2em;
-					font-weight: 100;
 				}
 			}
+
+            p {
+                grid-column: 1 / 3;
+            }
 		}
 
         #design, #program, #etc {
@@ -114,10 +121,11 @@
     @media (max-width: 768px) {
         div {
             #profile {
-                grid-template-columns: .1fr 100px 1fr;
+                grid-template-columns: 100px 1fr;
+                margin: 4em 1em;
 
                 img {
-                    grid-column: 2 / 3;
+                    grid-column: 1 / 2;
                     width: 100px;
                     height: 100px;
                 }
@@ -127,10 +135,24 @@
                         font-size: 1em;
                     }
                 }
+
+                p {
+                    font-size: .8em;
+                }
             }
 
             #design, #program, #etc {
-                margin: 2em 0;
+                margin: 2em 1em;
+            }
+        }
+    }
+
+    @media (max-width: 1200px) {
+        div {
+            #profile {
+                p {
+                    font-size: 1em;
+                }
             }
         }
     }

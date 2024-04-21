@@ -119,6 +119,11 @@
 				<Header bind:container={header} {title} {primary} on:linkclick={handleLinkClick} />
 			</div>
 		{/if}
+		{#if type === 'SP'}
+			<div id="content">
+				<slot />
+			</div>
+		{/if}
 		<div id="profile">
 			<div>
 				<img src={myicon} alt="icon" />
@@ -143,9 +148,11 @@
 			<span>shiki © 2024 Copyright.</span>
 		</div>
 	</div>
-	<div>
-		<slot></slot>
-	</div>
+	{#if type === 'PC'}
+		<div id="content">
+			<slot />
+		</div>
+	{/if}
 	<div class="header">
 		{#if type === 'PC'}
 			<Header bind:container={header} {title} {primary} />
@@ -240,19 +247,6 @@
 
 		:not(.header) {
 			margin: 1em;
-			overflow: auto;
-
-			&::-webkit-scrollbar {
-				background: #cfcfcf;
-				width: 5px;
-				height: 5px;
-                border-radius: 10pt;
-			}
-
-            &::-webkit-scrollbar-thumb {
-                background: #333;
-                border-radius: 10pt;
-            }
 		}
 	}
 
@@ -306,8 +300,19 @@
 			}
 		}
 
-		:not(.header) {
+		#content {
 			overflow: auto;
+
+            &::-webkit-scrollbar {
+                background: #afafaf;
+                width: 5px;
+                border-radius: 5px;
+            }
+
+            &::-webkit-scrollbar-thumb {
+                background: #333;
+                border-radius: 5px;
+            }
 		}
 	}
 
@@ -315,8 +320,6 @@
 		width: 100%;
 		height: calc(100vh + 200px);
 		position: relative;
-        display: flex;
-        flex-direction: column;
 
 		.header:nth-of-type(1) {
 			#logo {
@@ -376,22 +379,25 @@
 				z-index: 2;
 			}
 
+			#content {
+				margin: 0 10%;
+				padding-top: 150px;
+				margin-bottom: 150px;
+			}
+
 			#profile {
-                order: 2;
 				margin: 0;
-				position: absolute;
-				bottom: 0;
 				width: 100%;
 				display: grid;
 				grid-template-columns: 0.5fr 80px 150px 0.5fr;
 
 				div {
 					grid-column: 2 / 3;
-                    margin: 0;
+					margin: 0;
 
-                    img {
-                        margin: 0;
-                    }
+					img {
+						margin: 0;
+					}
 				}
 
 				ul {
@@ -403,7 +409,7 @@
 				}
 
 				span {
-                    grid-column: 1 / 6;
+					grid-column: 1 / 6;
 					text-align: center;
 					display: flex;
 					justify-content: center;
@@ -411,13 +417,6 @@
 					font-size: 0.8em;
 				}
 			}
-		}
-
-		div:nth-of-type(2) {
-			margin: 0 10%;
-			margin-top: 150px;
-            margin-bottom: 150px;
-            order: 1;
 		}
 	}
 </style>
