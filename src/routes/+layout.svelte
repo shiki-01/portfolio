@@ -383,7 +383,7 @@
 				bottom: 0;
 				width: 100%;
 				display: grid;
-				grid-template-columns: 0.5fr 80px 150px 0.5fr 0.5fr;
+				grid-template-columns: 0.5fr 80px 150px 0.5fr;
 
 				div {
 					grid-column: 2 / 3;
@@ -403,6 +403,7 @@
 				}
 
 				span {
+                    grid-column: 1 / 6;
 					text-align: center;
 					display: flex;
 					justify-content: center;
