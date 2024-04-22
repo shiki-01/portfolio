@@ -1,4 +1,5 @@
 <script lang="ts">
+    export let id: string;
 	export let title: string;
 	export let published: string;
 	export let updated: string;
@@ -9,6 +10,7 @@
     let updatedDate = new Date(updated);
     published = `${publishedDate.getFullYear()}/${publishedDate.getMonth()+1}/${publishedDate.getDate()}`;
     updated = `${updatedDate.getFullYear()}/${updatedDate.getMonth()+1}/${updatedDate.getDate()}`;
+    id = `#${id}`;
 </script>
 
 <svelte:head>
@@ -22,16 +24,16 @@
 
 <div>
 	<div class="eyecatch">
-		<a href="#"><img src={eyecatch} alt="eyecatch" /></a>
+		<a href={id}><img src={eyecatch} alt="eyecatch" /></a>
 	</div>
 	<div class="category">
-		<a href="#"><p>{category}</p></a>
+		<a href={id}><p>{category}</p></a>
         <div class="date">
 			<p>公開日: {published}</p>
 		</div>
 	</div>
 	<div class="title">
-		<a href="#"><h1>{title}</h1></a>
+		<a href={id}><h1>{title}</h1></a>
 	</div>
 </div>
 

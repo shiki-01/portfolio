@@ -7,6 +7,7 @@ const meta = {
   // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/writing-docs/autodocs
   tags: ['autodocs'],
   argTypes: {
+    id: {},
     title: {},
     published: {},
     updated: {},
@@ -20,6 +21,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
+    id: 'j8a-avkhfh',
     title: '（サンプル）まずはこの記事を開きましょう',
     published: '2024-04-21T13:40:00.315Z',
     updated: '2024-04-21T13:40:00.315Z',

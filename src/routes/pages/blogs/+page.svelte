@@ -14,6 +14,7 @@
 <div>
 	{#each data.blogs.contents as blog}
 		<Blogtitle
+			id={blog.id}
 			title={blog.title}
 			published={blog.publishedAt}
 			updated={blog.updatedAt}
