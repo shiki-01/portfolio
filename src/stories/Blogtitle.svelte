@@ -45,6 +45,7 @@
 
         .eyecatch {
             width: 200px;
+
             img {
                 width: 200px;
                 height: 120px;
@@ -58,11 +59,16 @@
                 }
             }
         }
+
         .category {
             width: 200px;
             display: grid;
             grid-template-columns: 1.5fr 2fr;
             margin-top: .2em;
+
+            a {
+                text-decoration: none;
+            }
 
             p {
                 font-size: .8em;
@@ -95,6 +101,12 @@
         }
         .title {
             width: 200px;
+
+            a {
+                text-decoration: none;
+                color: #333;
+            }
+
             h1 {
                 font-size: 1.2em;
                 font-weight: 500;
