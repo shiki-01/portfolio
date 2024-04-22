@@ -22,16 +22,16 @@
 
 <div>
 	<div class="eyecatch">
-		<img src={eyecatch} alt="eyecatch" />
+		<a href="#"><img src={eyecatch} alt="eyecatch" /></a>
 	</div>
 	<div class="category">
-		<p>{category}</p>
+		<a href="#"><p>{category}</p></a>
         <div class="date">
 			<p>公開日: {published}</p>
 		</div>
 	</div>
 	<div class="title">
-		<h1>{title}</h1>
+		<a href="#"><h1>{title}</h1></a>
 	</div>
 </div>
 
