@@ -10,7 +10,7 @@
     let updatedDate = new Date(updated);
     published = `${publishedDate.getFullYear()}/${publishedDate.getMonth()+1}/${publishedDate.getDate()}`;
     updated = `${updatedDate.getFullYear()}/${updatedDate.getMonth()+1}/${updatedDate.getDate()}`;
-    id = `#${id}`;
+    id = `${id}`;
 </script>
 
 <svelte:head>
@@ -24,7 +24,7 @@
 
 <div>
 	<div class="eyecatch">
-		<a href={id}><img src={eyecatch} alt="eyecatch" /></a>
+		<a href="/pages/blog/{id}"><img src={eyecatch} alt="eyecatch" /></a>
 	</div>
 	<div class="category">
 		<a href={id}><p>{category}</p></a>
@@ -47,6 +47,10 @@
 
         .eyecatch {
             width: 200px;
+
+            a {
+                display: inline-block;
+            }
 
             img {
                 width: 200px;

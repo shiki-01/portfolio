@@ -1,5 +1,5 @@
 <script lang="ts">
-    export let title: string = '';
+	export let title: string = '';
 </script>
 
 <svelte:head>
@@ -12,50 +12,54 @@
 </svelte:head>
 
 <div>
-    <h1>{title}</h1>
+	<h1>{title}</h1>
 </div>
 
 <style lang="scss">
-    div {
-        margin-left: 1em;
-        display: flex;
-        justify-content: start;
-        align-items: center;
-        h1 {
-            font-size: 4em;
-            font-family: 'M PLUS 1', 'Noto Sans JP', sans-serif;
-            font-weight: 400;
-            color: #333;
-            letter-spacing: 0.4em;
-            position: relative;;
-            background:linear-gradient(transparent 30%, #ffec88 30%);
-            text-transform: uppercase;
+	div {
+		margin-left: 5em;
+		display: flex;
+		justify-content: start;
+		align-items: center;
+		h1 {
+			font-size: 4em;
+			font-family: 'M PLUS 1', 'Noto Sans JP', sans-serif;
+			font-weight: 400;
+			color: #333;
+			letter-spacing: 0.4em;
+			position: relative;
+			background: linear-gradient(transparent 30%, #ffec88 30%);
+			text-transform: uppercase;
 
-            &::after {
-                content: '';
-                position: absolute;
-                top: 5pt;
-                left: -10pt;
-                width: 100%;
-                height: 80%;
-                border: #333 solid .1em;
-            }
-        }
-    }
+			&::after {
+				content: '';
+				position: absolute;
+				top: 5pt;
+				left: -10pt;
+				width: 100%;
+				height: 80%;
+				border: #333 solid 0.1em;
+			}
+		}
+	}
 
-    @media (max-width: 768px) {
-        div {
-            h1 {
-                margin-left: 0em;
-                font-size: 2em;
+	@media (max-width: 768px) {
+		div {
+			width: 100%;
+			display: grid;
+			justify-content: center;
+			margin-left: 0;
 
-                &::after {
-                top: 5pt;
-                left: -5pt;
-                width: 100%;
-                height: 80%;
-            }
-            }
-        }
-    }
+			h1 {
+				font-size: 2em;
+
+				&::after {
+					top: 5pt;
+					left: -5pt;
+					width: 100%;
+					height: 80%;
+				}
+			}
+		}
+	}
 </style>

@@ -2,7 +2,9 @@
 	import { onMount } from 'svelte';
 	import Title from '../../../stories/Title.svelte';
 	import Blogtitle from '../../../stories/Blogtitle.svelte';
-	export let data;
+
+	import type { PageData } from './$types';
+	export let data: PageData;
 
 	onMount(() => {
 		console.log('Data on mount:', data);
@@ -12,7 +14,7 @@
 <Title title="blogs" />
 
 <div>
-	{#each data.blogs.contents as blog}
+	{#each data.contents as blog}
 		<Blogtitle
 			id={blog.id}
 			title={blog.title}
@@ -25,12 +27,19 @@
 </div>
 
 <style lang="scss">
-    div {
-        margin-top: 5em;
-        display: grid;
-        gap: .5em;
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-        justify-content: center;
-        align-items: start;
-    }
+	div {
+		width: calc(100vw - 600px - 30pt);
+		margin-top: 3em;
+		display: grid;
+		gap: .5em;
+		grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+		justify-content: center;
+		align-items: start;
+	}
+
+	@media (max-width: 1200px) {
+		div {
+			width: calc(100vw - 100pt);
+		}
+	}
 </style>

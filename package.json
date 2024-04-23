@@ -51,6 +51,7 @@
   "dependencies": {
     "@iconify/svelte": "^3.1.6",
     "iconify": "^1.4.0",
+    "microcms-js-sdk": "^3.1.0",
     "sass": "^1.75.0"
   }
 }

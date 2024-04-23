@@ -252,7 +252,7 @@
 
 	main[class^='pc'] {
 		display: grid;
-		grid-template-columns: 1fr 768px 1fr;
+		grid-template-columns: 300px 1fr 300px;
 		grid-template-rows: 1fr;
 
 		.header {
@@ -304,10 +304,12 @@
 			overflow: auto;
             margin: 15pt 0;
             padding: 0 15pt;
+			width: 100%;
 
             &::-webkit-scrollbar {
                 background: #afafaf;
                 width: 5px;
+				height: 5px;
                 border-radius: 5px;
             }
 
@@ -382,7 +384,8 @@
 			}
 
 			#content {
-				margin: 0 10%;
+				width: 100%;
+				margin: 0;
 				padding-top: 150px;
 				margin-bottom: 150px;
 			}
