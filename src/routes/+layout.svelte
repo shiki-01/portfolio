@@ -1,10 +1,10 @@
 <script lang="ts">
 	import logo from '$lib/image/logo.png';
 	import myicon from '$lib/image/myicon.png';
-	import Header from '../stories/Header.svelte';
+	import Header from '$lib/components/Header.svelte';
 	import Icon from '@iconify/svelte';
 	import noiz from '$lib/image/noiz.png';
-	import Toggle from '../stories/Toggle.svelte';
+	import Toggle from '$lib/components/Toggle.svelte';
 
 	import { fade } from 'svelte/transition';
 
@@ -29,13 +29,13 @@
 			case '/':
 				title = 'Home';
 				break;
-			case '/pages/about':
+			case '/about':
 				title = 'About';
 				break;
-			case '/pages/works':
+			case '/works':
 				title = 'Works';
 				break;
-			case '/pages/blogs':
+			case '/blogs':
 				title = 'Blogs';
 				break;
 			default:
@@ -302,21 +302,21 @@
 
 		#content {
 			overflow: auto;
-            margin: 15pt 0;
-            padding: 0 15pt;
+			margin: 15pt 0;
+			padding: 0 15pt;
 			width: 100%;
 
-            &::-webkit-scrollbar {
-                background: #afafaf;
-                width: 5px;
+			&::-webkit-scrollbar {
+				background: #afafaf;
+				width: 5px;
 				height: 5px;
-                border-radius: 5px;
-            }
+				border-radius: 5px;
+			}
 
-            &::-webkit-scrollbar-thumb {
-                background: #333;
-                border-radius: 5px;
-            }
+			&::-webkit-scrollbar-thumb {
+				background: #333;
+				border-radius: 5px;
+			}
 		}
 	}
 
