@@ -7,28 +7,46 @@ const MICROCMS_SERVICE_DOMAIN = import.meta.env.VITE_MICROCMS_SERVICE_DOMAIN;
 const MICROCMS_API_KEY = import.meta.env.VITE_MICROCMS_API_KEY;
 
 export const microcms = createClient({
-  serviceDomain: MICROCMS_SERVICE_DOMAIN,
-  apiKey: MICROCMS_API_KEY,
+    serviceDomain: MICROCMS_SERVICE_DOMAIN,
+    apiKey: MICROCMS_API_KEY,
 });
 
 export async function getContentList<T extends keyof EndPoints["gets"]>(
-  key: T,
-  queries: MicroCMSQueries = {},
+    key: T,
+    queries: MicroCMSQueries = {},
 ): Promise<EndPoints["gets"][T]> {
-  return microcms.get({
-    endpoint: key,
-    queries,
-  });
+    if (process.env.NODE_ENV === "development") {
+        switch (key) {
+            case "blogs":
+                return blogsList as never;
+            default:
+                throw new Error("Invalid key");
+        }
+    }
+
+    return microcms.get({
+        endpoint: key,
+        queries,
+    });
 }
 
 export async function getContentDetail<T extends keyof EndPoints["get"]>(
-  key: T,
-  id: string,
-  queries: MicroCMSQueries = {},
+    key: T,
+    id: string,
+    queries: MicroCMSQueries = {},
 ): Promise<EndPoints["get"][T]> {
-  return microcms.getListDetail<EndPoints["get"][T]>({
-    endpoint: key,
-    contentId: id,
-    queries,
-  });
+    if (process.env.NODE_ENV === "development") {
+        switch (key) {
+            case "blogs":
+                return blogsDetail as never;
+            default:
+                throw new Error("Invalid key");
+        }
+    }
+
+    return microcms.getListDetail<EndPoints["get"][T]>({
+        endpoint: key,
+        contentId: id,
+        queries,
+    });
 }
