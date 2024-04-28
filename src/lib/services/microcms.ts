@@ -1,4 +1,3 @@
-// src/lib/services/microcms.ts
 import { createClient, type MicroCMSQueries } from "microcms-js-sdk";
 import blogsDetail from "$lib/assets/mocks/blogs-detail.json";
 import blogsList from "$lib/assets/mocks/blogs-list.json";
@@ -16,16 +15,6 @@ export async function getContentList<T extends keyof EndPoints["gets"]>(
   key: T,
   queries: MicroCMSQueries = {},
 ): Promise<EndPoints["gets"][T]> {
-  if (import.meta.env.MODE === "development") {
-    console.log(import.meta.env.VITE_MICROCMS_API_KEY);
-    switch (key) {
-      case "blogs":
-        return blogsList as never;
-      default:
-        throw new Error("Invalid key");
-    }
-  }
-
   return microcms.get({
     endpoint: key,
     queries,
@@ -37,14 +26,6 @@ export async function getContentDetail<T extends keyof EndPoints["get"]>(
   id: string,
   queries: MicroCMSQueries = {},
 ): Promise<EndPoints["get"][T]> {
-  if (import.meta.env.MODE === "development") {
-    switch (key) {
-      case "blogs":
-        return blogsDetail as never;
-      default:
-        throw new Error("Invalid key");
-    }
-  }
   return microcms.getListDetail<EndPoints["get"][T]>({
     endpoint: key,
     contentId: id,
