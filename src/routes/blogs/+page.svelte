@@ -4,12 +4,14 @@
 
 	import type { PageData } from './$types';
 	export let data: PageData;
-	console.log(data);
 </script>
 
 <Title title="blogs" />
 
 <div>
+	{#each data.blogList.contents as blog}
+		<Blogtitle blogData={blog}/>
+	{/each}
 </div>
 
 <style lang="scss">
