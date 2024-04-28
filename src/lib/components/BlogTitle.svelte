@@ -5,12 +5,11 @@
 
 	let publishedDate = new Date(publishedAt);
 	publishedAt = `${publishedDate.getFullYear()}/${publishedDate.getMonth() + 1}/${publishedDate.getDate()}`;
-	id = `${id}`;
 </script>
 
 <div>
 	<div class="eyecatch">
-		<a href='/blogs/blog/{id}'>
+		<a href="/blogs/blog/{id}">
 			{#if ogpImg}
 				<img src={ogpImg.url} alt={title} height={ogpImg.height} width={ogpImg.width} />
 			{:else}
@@ -19,15 +18,19 @@
 		</a>
 	</div>
 	<div class="category">
-		{#each tags as tag}
-			<p>{tag}</p>
-		{/each}
+		{#if Array.isArray(tags)}
+			{#each tags as tag}
+				<p>{tag}</p>
+			{/each}
+		{:else}
+			<p>{tags}</p>
+		{/if}
 		<div class="date">
 			<p>公開日: {publishedAt}</p>
 		</div>
 	</div>
 	<div class="title">
-		<a href='/blogs/blog/{id}'><h1>{title}</h1></a>
+		<a href="/blogs/blog/{id}"><h1>{title}</h1></a>
 	</div>
 </div>
 
