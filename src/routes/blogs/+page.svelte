@@ -9,9 +9,6 @@
 <Title title="blogs" />
 
 <div>
-	{#each data.blogList.contents as blog}
-		<Blogtitle blogData={blog}/>
-	{/each}
 </div>
 
 <style lang="scss">
