@@ -10,7 +10,7 @@
 <Title title="blogs" />
 
 <div>
-	
+		<Blogtitle blogData={data.blogList.contents[0]}/>
 </div>
 
 <style lang="scss">
