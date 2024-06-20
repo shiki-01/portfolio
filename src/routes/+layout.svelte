@@ -1,10 +1,14 @@
 <script lang="ts">
+	import '../app.css';
 	import logo from '$lib/image/logo.png';
 	import myicon from '$lib/image/myicon.png';
 	import Header from '$lib/components/Header.svelte';
 	import Icon from '@iconify/svelte';
 	import noiz from '$lib/image/noiz.png';
 	import Toggle from '$lib/components/Toggle.svelte';
+	import { setupViewTransition } from "sveltekit-view-transition";
+
+	setupViewTransition();
 
 	import { fade } from 'svelte/transition';
 
@@ -69,23 +73,17 @@
 
 	export let type: 'PC' | 'SP' = 'PC';
 
-	// On component mount
 	onMount(() => {
-		// Define resize handler
 		const handleResize = () => {
 			type = window.innerWidth >= 1200 ? 'PC' : 'SP';
 			primary = type === 'PC';
 		};
 
-		// Attach resize event listener
 		window.addEventListener('resize', handleResize);
 
-		// Call resize handler initially
 		handleResize();
 
-		// Cleanup function
 		return () => {
-			// Remove resize event listener
 			window.removeEventListener('resize', handleResize);
 		};
 	});
@@ -100,11 +98,15 @@
 {#if type === 'PC'}
 	<div id="cursor" class="cursor {type.toLowerCase()}"></div>
 {/if}
-<img id="noiz" src={noiz} alt="noiz" />
-<main class={type.toLowerCase()}>
+<img
+	src={noiz}
+	alt="noiz"
+	class="fixed w-full h-full object-cover z-[9999] opacity-10 mix-blend-screen pointer-events-none"
+/>
+<main class="{type.toLowerCase()} w-full h-full">
 	<div class="header">
 		<div id="logo">
-			<a href="/"><img src={logo} alt="Shiki" /></a>
+			<a href="/"><img src={logo} alt="Shiki" class="m-8" /></a>
 			{#if type === 'SP'}
 				<span><Toggle {primary} on:change={handlePrimaryChange} /></span>
 			{/if}
@@ -124,11 +126,11 @@
 				<slot />
 			</div>
 		{/if}
-		<div id="profile">
-			<div>
-				<img src={myicon} alt="icon" />
+		<div id="profile" class="grid grid-cols-[80px]">
+			<div class="flex justify-center items-center flex-col">
+				<img src={myicon} alt="icon" class="rounded-full shadow-lg" />
 			</div>
-			<ul>
+			<ul class="flex justify-center items-start flex-col ml-2 gap-2">
 				<li>
 					<p>shiki</p>
 				</li>
@@ -145,7 +147,7 @@
 					</a>
 				</li>
 			</ul>
-			<span>shiki © 2024 Copyright.</span>
+			<span class="text-gray-800"> shiki © 2024 Copyright. </span>
 		</div>
 	</div>
 	{#if type === 'PC'}
@@ -164,93 +166,38 @@
 	:global(body) {
 		font-family: 'M PLUS 1', 'Noto Sans JP', sans-serif;
 	}
-	#noiz {
-		position: fixed;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
-		z-index: 99999;
-		opacity: 0.1;
-		mix-blend-mode: screen;
-		pointer-events: none;
-	}
 
-	main {
-		width: 100vw;
-		height: 100vh;
+	main .header #profile ul {
+		li {
+			display: flex;
+			justify-content: center;
+			margin: 0;
 
-		.header {
-			#profile {
-				display: grid;
-				grid-template-columns: 80px 1fr;
+			p {
+				margin: 0.2em;
+				cursor: default;
+				@apply text-gray-800;
+			}
 
-				div {
-					display: flex;
-					justify-content: center;
-					align-items: center;
-					flex-direction: column;
+			a {
+				display: flex;
+				align-items: center;
+				text-decoration: none;
+				color: #333;
+				font-size: 1em;
+				margin: 0.2em;
 
-					img {
-						width: 80px;
-						height: 80px;
-						border-radius: 50%;
-						border: #333 solid 2px;
-					}
-
-					p {
-						font-size: 1.5em;
-						color: #333;
-					}
-				}
-
-				ul {
-					display: flex;
-					justify-content: center;
-					align-items: start;
-					flex-direction: column;
-					margin-left: 2em;
-
-					li {
-						display: flex;
-						justify-content: center;
-						margin: 0;
-
-						p {
-							margin: 0.2em;
-							cursor: default;
-							color: #333;
-						}
-
-						a {
-							display: flex;
-							align-items: center;
-							text-decoration: none;
-							color: #333;
-							font-size: 1em;
-							margin: 0.2em;
-
-							p {
-								margin-left: 0.5em;
-								cursor: pointer;
-							}
-						}
-					}
-				}
-
-				span {
-					color: #333;
+				p {
+					margin-left: 0.5em;
+					cursor: pointer;
 				}
 			}
-		}
-
-		:not(.header) {
-			margin: 1em;
 		}
 	}
 
 	main[class^='pc'] {
+		width: 100vw;
+		height: 100vh;
 		display: grid;
 		grid-template-columns: 300px 1fr 300px;
 		grid-template-rows: 1fr;
@@ -307,14 +254,16 @@
 			width: 100%;
 
 			&::-webkit-scrollbar {
-				background: #afafaf;
+				position: absolute;
+				right: 0;
 				width: 5px;
 				height: 5px;
-				border-radius: 5px;
 			}
 
 			&::-webkit-scrollbar-thumb {
-				background: #333;
+				@apply bg-gray-400;
+				width: 5px;
+				height: 5px;
 				border-radius: 5px;
 			}
 		}
@@ -420,6 +369,7 @@
 					justify-content: center;
 					align-items: center;
 					font-size: 0.8em;
+					margin-top: 1em;
 				}
 			}
 		}
