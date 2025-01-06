@@ -58,11 +58,13 @@
 	{#if $displayWidth > 1280}
 		<div class="grid h-full grid-cols-[400px_1fr_400px]">
 			<div class="flex flex-col items-center justify-center gap-8">
-				<img
-					src={icon}
-					alt="icon"
-					class="pointer-events-none aspect-square w-[150px] rounded-full shadow-lg"
-				/>
+				<div class="rounded-ful long-shadow">
+					<img
+						src={icon}
+						alt="icon"
+						class="border pointer-events-none aspect-square w-[150px] rounded-full"
+					/>
+				</div>
 				<div class="flex w-full flex-col items-center justify-center gap-4 px-10">
 					<p class="text-lg">shiki</p>
 					<div class="flex flex-col gap-2">
@@ -111,52 +113,74 @@
 </div>
 
 <style lang="postcss">
-	.main {
-		background-color: var(--color-bg);
-	}
+    .main {
+        background-color: var(--color-bg);
+    }
 
-	.pages {
-		background-color: var(--color-bg-accent);
-		box-shadow: 0px 0px 20px 0px var(--color-shadow);
-	}
+    .pages {
+        background-color: #ffffff;
+        border-left: 2px solid var(--color-border);
+        border-right: 2px solid var(--color-border);
+    }
 
-	.link {
-		position: relative;
-
-		&::before {
-			content: '';
-			position: absolute;
-			display: block;
-			bottom: 0;
-			left: 0;
-			width: 0;
-			height: 2px;
-			background-color: var(--color-accent);
-			transition: width 0.3s ease;
+		.border {
+				border: 2px solid var(--color-border);
 		}
 
-		&:hover::before {
-			width: 100%;
-		}
+    .long-shadow {
+        position: relative;
+    }
 
-		&[data-is-here='true']::before {
-			width: 100%;
-		}
-	}
+    .long-shadow::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: inherit;
+        filter: drop-shadow(2px 2px 0 var(--color-accent))
+        drop-shadow(4px 4px 0 var(--color-accent))
+        drop-shadow(6px 6px 0 var(--color-accent))
+        drop-shadow(8px 8px 0 var(--color-accent))
+        drop-shadow(10px 10px 0 var(--color-accent));
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    }
 
-	.overflow {
-		&::-webkit-scrollbar {
-			position: absolute;
-			right: 0;
-			width: 5px;
-			height: 5px;
-		}
+    .link {
+        position: relative;
 
-		&::-webkit-scrollbar-thumb {
+        &::before {
+            content: '';
+            position: absolute;
+            display: block;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--color-accent);
+            transition: width 0.3s ease;
+        }
+
+        &:hover::before {
+            width: 100%;
+        }
+
+        &[data-is-here='true']::before {
+            width: 100%;
+        }
+    }
+
+    .overflow {
+        &::-webkit-scrollbar {
+            position: absolute;
+            right: 0;
+            width: 5px;
+            height: 5px;
+        }
+
+        &::-webkit-scrollbar-thumb {
             background-color: var(--color-bg);
-			width: 5px;
-			height: 5px;
-			border-radius: 5px;
-		}
-	}
+            width: 5px;
+            height: 5px;
+            border-radius: 5px;
+        }
+    }
 </style>

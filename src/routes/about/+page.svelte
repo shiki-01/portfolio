@@ -178,7 +178,7 @@
 		</p>
 	</div>
 	<div class="flex flex-col gap-8">
-		<p class="text-2xl">skils</p>
+		<p class="text-2xl">skills</p>
 		<div class="flex flex-col gap-8">
 			{#each skills as skill}
 				<div class="flex flex-col gap-4">
