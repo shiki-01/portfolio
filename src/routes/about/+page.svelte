@@ -22,7 +22,7 @@
 		return age;
 	}
 
-    type Skil = {
+    type Skill = {
         title: string;
         contents: {
             title: string;
@@ -30,7 +30,7 @@
         }[];
     };
 
-	const skils: Skil[] = [
+	const skills: Skill[] = [
 		{
 			title: 'design',
 			contents: [
@@ -180,11 +180,11 @@
 	<div class="flex flex-col gap-8">
 		<p class="text-2xl">skils</p>
 		<div class="flex flex-col gap-8">
-			{#each skils as skil}
+			{#each skills as skill}
 				<div class="flex flex-col gap-4">
-					<p class="text-xl">{skil.title}</p>
+					<p class="text-xl">{skill.title}</p>
 					<div class="flex flex-wrap gap-4">
-						{#each skil.contents as content}
+						{#each skill.contents as content}
 							<div class="flex flex-col items-center gap-2 w-[80px]">
 								<Icon icon={ "logos:" + content.icon} class="h-12 w-12" />
 								<p class="w-full text-center">{content.title}</p>
