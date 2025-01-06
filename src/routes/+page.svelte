@@ -1,31 +1,9 @@
 <script lang="ts">
+
 </script>
 
-<div>
-    <p>design</p>
-    <p>×</p>
-    <p>program</p>
-    <p>×</p>
-    <p>etc</p>
-</div>
-
-<style lang="scss">
-    div {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-        height: 100%;
-        font-size: 5em;
-        p {
-            margin: 0 1em;
-            font-weight: 100;
-        }
-    }
-
-    @media (max-width: 768px) {
-        div {
-            font-size: 3em;
-        }
-    }
-</style>
+<main class="w-full h-full flex flex-col justify-center items-center">
+    <div class="w-full h-full flex flex-col justify-center items-center">
+        <p class="flex text-center font-thin text-6xl">design<br>×<br>system<br>×<br>etc...</p>
+    </div>
+</main>

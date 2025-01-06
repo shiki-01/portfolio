@@ -1,3 +1,14 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+:root {
+    --color-bg: #e2f5ff;
+    --color-bg-accent: #b7e6ff;
+    --color-bg-dark: #1a202c;
+    --color-bg-dark-accent: #2d3748;
+
+    --color-shadow: rgba(0, 48, 73, 0.2);
+
+    --color-accent: #2b6cb0;
+}
