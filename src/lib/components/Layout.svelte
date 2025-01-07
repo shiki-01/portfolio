@@ -154,7 +154,7 @@
 			</div>
 			<div class="pages flex max-h-[100svh] w-full p-5">
 				<div class="overflow flex h-full w-full overflow-y-auto">
-					<div class="flex h-fit w-full p-8">
+					<div class="flex h-fit w-full min-h-full p-8">
 						<slot />
 					</div>
 				</div>
