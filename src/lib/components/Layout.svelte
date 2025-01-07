@@ -2,6 +2,7 @@
 	import icon from '$lib/img/myicon.png';
 	import Icon from '@iconify/svelte';
 	import { onMount } from 'svelte';
+	import { Spring } from 'svelte/motion';
 	import { writable } from 'svelte/store';
 
 	export let pages;
@@ -9,8 +10,12 @@
 
 	const isHovered = writable(false);
 	const displayWidth = writable(0);
-	const pointer = writable({ x: 0, y: 0 });
 	const isLinkHovered = writable(false);
+
+	const linkPosition = new Spring({ x: 0, y: 0 }, {
+		stiffness: 0.08,
+		damping: 0.5
+	});
 
 	onMount(() => {
 		if (typeof window === 'undefined') return;
@@ -23,9 +28,20 @@
 	function handlePointerMove(e: PointerEvent) {
 		if (typeof window === 'undefined') return;
 		const target = e.target as HTMLElement;
+		const linkElement = target.closest('a');
 		isHovered.set(true);
-		pointer.set({ x: e.clientX, y: e.clientY });
-		isLinkHovered.set(target instanceof HTMLAnchorElement || target.closest('a') !== null);
+
+		if (linkElement) {
+			const rect = linkElement.getBoundingClientRect();
+			linkPosition.target = {
+				x: rect.left + rect.width / 2,
+				y: rect.top + rect.height / 2
+			};
+			isLinkHovered.set(true);
+		} else {
+			linkPosition.target = { x: e.clientX, y: e.clientY };
+			isLinkHovered.set(false);
+		}
 	}
 
 	function handlePointerOut() {
@@ -34,6 +50,7 @@
 	}
 
 	function handlePointerLeave() {
+		console.log('leave');
 		isHovered.set(false);
 		isLinkHovered.set(false);
 	}
@@ -46,12 +63,19 @@
 />
 
 {#if $displayWidth > 1280}
-	<span
-		class="pointer-events-none fixed z-50 flex -translate-x-1/2 -translate-y-1/2 rounded-full transition-[background,width,height] duration-300 {$isLinkHovered
-			? 'h-8 w-8 bg-red-400/50'
-			: 'h-2 w-2 bg-black'} {$isHovered ? 'opacity-100' : 'opacity-0'}"
-		style="top: {$pointer.y}px; left: {$pointer.x}px;"
-	></span>
+ <span
+	 class="pointer-events-none fixed z-50 border-2 border-black flex -translate-x-1/2 -translate-y-1/2 rounded-full {$isHovered ? 'opacity-100' : 'opacity-0'}"
+	 style="
+    top: {linkPosition.current.y}px;
+    left: {linkPosition.current.x}px;
+    width: {$isLinkHovered ? '40px' : '16px'};
+    height: {$isLinkHovered ? '40px' : '16px'};
+    transform: translate(-50%, -50%) scale({isLinkHovered ? 1.2 : 1});
+    transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                height 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  "
+ ></span>
 {/if}
 
 <div class="main h-[100svh] w-[100svw] select-none">
@@ -206,59 +230,59 @@
 </div>
 
 <style lang="postcss">
-	.main {
-		background-color: var(--color-bg);
-	}
+    .main {
+        background-color: var(--color-bg);
+    }
 
-	.pages {
-		background-color: #ffffff;
-		border-left: 2px solid var(--color-border);
-		border-right: 2px solid var(--color-border);
-	}
+    .pages {
+        background-color: #ffffff;
+        border-left: 2px solid var(--color-border);
+        border-right: 2px solid var(--color-border);
+    }
 
-	.link {
-		&:hover {
-			& .front {
-				transform: translate(-8px, -8px);
-			}
+    .link {
+        &:hover {
+            & .front {
+                transform: translate(-8px, -8px);
+            }
 
-			& a {
-				transform: translate(-8px, -8px);
-			}
-		}
+            & a {
+                transform: translate(-8px, -8px);
+            }
+        }
 
-		.front {
-			transform: translate(0, 0);
-			transition: transform 0.3s;
-		}
+        .front {
+            transform: translate(0, 0);
+            transition: transform 0.3s;
+        }
 
-		& a {
-			transform: translate(0, 0);
-			transition: transform 0.3s;
-		}
+        & a {
+            transform: translate(0, 0);
+            transition: transform 0.3s;
+        }
 
-		& a.isHere {
-			transform: translate(-8px, -8px);
-		}
+        & a.isHere {
+            transform: translate(-8px, -8px);
+        }
 
-		& svg.isHere {
-			transform: translate(-8px, -8px);
-		}
-	}
+        & svg.isHere {
+            transform: translate(-8px, -8px);
+        }
+    }
 
-	.overflow {
-		&::-webkit-scrollbar {
-			position: absolute;
-			right: 0;
-			width: 5px;
-			height: 5px;
-		}
+    .overflow {
+        &::-webkit-scrollbar {
+            position: absolute;
+            right: 0;
+            width: 5px;
+            height: 5px;
+        }
 
-		&::-webkit-scrollbar-thumb {
-			background-color: var(--color-bg);
-			width: 5px;
-			height: 5px;
-			border-radius: 5px;
-		}
-	}
+        &::-webkit-scrollbar-thumb {
+            background-color: var(--color-bg);
+            width: 5px;
+            height: 5px;
+            border-radius: 5px;
+        }
+    }
 </style>

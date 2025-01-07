@@ -46,10 +46,13 @@
 	@import url('https://fonts.googleapis.com/css2?family=M+PLUS+1:wght@100..900&display=swap');
 
 	:global(body) {
-		cursor: none !important;
 		font-family: 'M PLUS 1', serif;
 		font-optical-sizing: auto;
-		font-weight: <weight>;
+      font-weight: 400;
 		font-style: normal;
 	}
+
+  :global(*) {
+      cursor: none !important;
+  }
 </style>
