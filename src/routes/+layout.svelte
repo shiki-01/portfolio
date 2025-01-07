@@ -2,9 +2,10 @@
 	import '../app.css';
 	import src from '$lib/img/noiz.png';
 	import Layout from '$lib/components/Layout.svelte';
-	import { onMount } from 'svelte';
-	import { writable } from 'svelte/store';
 	import { page } from '$app/state';
+	import { setupViewTransition } from 'sveltekit-view-transition';
+
+	setupViewTransition();
 
 	let { children } = $props();
 

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import Icon from '@iconify/svelte';
 	import icon from '$lib/img/myicon.png';
+    import Title from '$lib/components/Title.svelte';
 
 	const birthday = new Date(2007, 10, 1);
 
@@ -162,6 +163,7 @@
 </script>
 
 <main class="flex h-full w-full flex-col gap-8">
+    <Title>About</Title>
 	<div class="flex w-full flex-row gap-8">
 		<img src={icon} alt="icon" class="aspect-square w-[150px] rounded-lg" />
 		<div class="flex w-full flex-col justify-between py-5">
@@ -179,11 +181,11 @@
 	</div>
 	<div class="flex flex-col gap-8">
 		<p class="text-2xl">skills</p>
-		<div class="flex flex-col gap-8">
+		<div class="flex flex-col gap-16">
 			{#each skills as skill}
-				<div class="flex flex-col gap-4">
-					<p class="text-xl">{skill.title}</p>
-					<div class="flex flex-wrap gap-4">
+				<div class="flex flex-col gap-8">
+					<p class="text-xl text-center">{skill.title}</p>
+					<div class="flex flex-wrap justify-center gap-4">
 						{#each skill.contents as content}
 							<div class="flex flex-col items-center gap-2 w-[80px]">
 								<Icon icon={ "logos:" + content.icon} class="h-12 w-12" />
