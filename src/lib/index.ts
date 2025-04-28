@@ -1,1 +1,5 @@
-// place files you want to import through the `$lib` alias in this folder.
+import { writable, type Writable } from "svelte/store";
+
+const pageNumber: Writable<number> = writable(1);
+
+export { pageNumber };

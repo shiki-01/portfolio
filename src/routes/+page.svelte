@@ -2,8 +2,8 @@
 
 </script>
 
-<main class="w-full h-[calc(100svh-40px-64px)] flex flex-col justify-center items-center">
-    <div class="w-full h-full flex flex-col justify-center items-center">
-        <p class="flex text-center font-thin text-6xl">design<br>×<br>system<br>×<br>etc...</p>
+<div class="h:2000px w:100%">
+    <div class="w:100dvw h:100dvh flex justify-content:center align-items:center">
+        <p class="text:32px mb:80px">好きに、<br>自由に。</p>
     </div>
-</main>
+</div>

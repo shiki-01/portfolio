@@ -1,9 +1,10 @@
 <script lang="ts">
 	import '../app.css';
-	import src from '$lib/img/noiz.png';
-	import Layout from '$lib/components/Layout.svelte';
+	import SolidHome from '$lib/components/page/solid/Home.svelte';
+	import '@fontsource-variable/noto-sans-jp';
 	import { page } from '$app/state';
 	import { setupViewTransition } from 'sveltekit-view-transition';
+	import { pageNumber } from '$lib';
 
 	setupViewTransition();
 
@@ -29,30 +30,26 @@
 	];
 
 	const link = $derived(page.url.pathname);
-
 </script>
 
-<div
-	class="pointer-events-none fixed flex h-[100svh] w-[100svw] items-center justify-center bg-blend-soft-light"
->
-	<img {src} alt="noiz" class="h-full w-full object-cover opacity-[0.05] mix-blend-soft-light" />
-</div>
+<main class="w:100dvw h:100dvh flex:column justify-content:center align-items:center flex">
+	{#if pageNumber.subscribe((v) => v === 1)}
+		<div class="w:100% h:100% bg:#153F63 fg:#ffffff flex:column justify-content:center align-items:center flex">
+			<SolidHome>
+				{@render children()}
+			</SolidHome>
+		</div>
+	{:else if pageNumber.subscribe((v) => v === 2)}
+		{@render children()}
+	{:else if pageNumber.subscribe((v) => v === 3)}
+		{@render children()}
+	{:else if pageNumber.subscribe((v) => v === 4)}
+		{@render children()}
+	{/if}
+</main>
 
-<Layout {pages} {link}>
-	{@render children()}
-</Layout>
-
-<style lang="postcss">
-	@import url('https://fonts.googleapis.com/css2?family=M+PLUS+1:wght@100..900&display=swap');
-
+<style>
 	:global(body) {
-		font-family: 'M PLUS 1', serif;
-		font-optical-sizing: auto;
-      font-weight: 400;
-		font-style: normal;
+		font-family: 'Noto Sans JP', sans-serif;
 	}
-
-  :global(*) {
-      cursor: none !important;
-  }
 </style>
