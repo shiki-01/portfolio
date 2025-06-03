@@ -11,3 +11,58 @@
 - 3d treejs とか使ったりアイソメトリック使いたい
 - かわいい　ポップでファンシーな感じ
 - ストリート　かっこいいに近い
+
+## contents
+
+### 自己紹介
+
+- shiki
+- age
+- github, youtube, twitter
+
+### 遍歴
+
+- misc 部長
+
+何もやってなくてうける
+
+### 技術スタック
+
+#### lang & service
+
+- HTML
+- CSS / SCSS / Tailwind / MasterCSS
+- JavaScript / TypeScript (front & back)
+- Svelte / React / Astro
+- SVG
+- Python
+- Java / Kotlin
+- Swift
+- C# / C++
+- Rust
+
+- Cloudflare
+- Supabase
+- firebase
+- Vite
+- Electron
+- Dioxus
+- PWA
+- XCode
+- AndroidStudio
+- Unity
+- Unreal Engine
+- Git / GitHub
+
+- CLI in Windows / Arch Linux
+
+#### design
+
+- Figma
+- Canva
+- Lottie
+- Inkscape
+- GIMP
+- Krita
+- Davinci Resolve
+- Piapro Studio
