@@ -1,5 +1,10 @@
 <script lang="ts">
-	import Title from '$lib/components/Title.svelte';
+	import Page from '$lib/components/Page.svelte';
 </script>
 
-<Title>Blogs</Title>
+<Page>
+	<div class="w:100% h:100% flex flex:column justify-content:center align-items:center">
+		<h1 class="text:4em font:thin line-h:1em uppercase">Blogs</h1>
+		<p class="text:2em font:thin">Now Loading...</p>
+	</div>
+</Page>
