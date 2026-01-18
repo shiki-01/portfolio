@@ -28,7 +28,7 @@
 	</Page>
 	<Page>
 		<div class="w:100% h:100% grid-template-columns:1fr|1fr grid">
-			<div class="w:100% h:100% rel justify-content:center align-items:center flex">
+			<div class="w:100% h:100% rel justify-content:center ai:center flex">
 				<span class="circle"></span>
 				<span class="circle circle2"></span>
 				<img src={icon} alt="My Icon" class="w:240px h:240px object:cover r:full overflow:hidden" />
@@ -44,10 +44,10 @@
 								href={link}
 								target="_blank"
 								rel="noopener noreferrer"
-								class="mb:10px flex:row align-items:center gap:4px b:1px|solid|#fff px:16px py:8px bg:#fff:hover fg:#153F63:hover transition:background-color|0.3s flex rounded"
+								class="mb:10px flex:row ai:center gap:4px b:1px|solid|#fff px:16px py:8px bg:#fff:hover fg:#153F63:hover transition:background-color|0.3s flex rounded"
 							>
 								<Icon class="text:24px mr:10px" {icon} />
-								<div class="flex:row gap:2px align-items:center flex">
+								<div class="flex:row gap:2px ai:center flex">
 									<span class="text:18px">
 										{title}
 									</span>
@@ -64,6 +64,21 @@
                     API が完全な型をもって実装できることが最近の幸せ
 				</p>
 			</div>
+		</div>
+	</Page>
+	<Page>
+		<div class="w:100% h:100% flex ai:start jc:center pt:100px">
+			<h1 class="text:4em font:thin line-h:1em uppercase">works</h1>
+		</div>
+	</Page>
+	<Page>
+		<div class="w:100% h:100% flex ai:start jc:center pt:100px">
+			<h1 class="text:4em font:thin line-h:1em uppercase">skills</h1>
+		</div>
+	</Page>
+	<Page>
+		<div class="w:100% h:100% flex ai:start jc:center pt:100px">
+			<h1 class="text:4em font:thin line-h:1em uppercase">blog</h1>
 		</div>
 	</Page>
 </div>

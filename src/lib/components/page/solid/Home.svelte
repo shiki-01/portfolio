@@ -2,7 +2,9 @@
 	import Header from './components/Header.svelte';
 	import Page from '$lib/components/Page.svelte';
 	import Icon from '@iconify/svelte';
-    import logo from '$lib/components/page/solid/img/logo.svg';
+    import logo from '$lib/components/page/solid/img/logoTitle.svg';
+    import outline from '$lib/components/page/solid/img/logoSymbol_outline.svg';
+	import ToTop from './components/ToTop.svelte';
 	let { children } = $props();
 
 	let position = $state({
@@ -49,7 +51,7 @@
 	onpointerenter={handlePointerEnter}
 />
 
-<div class="rel w:100% h:100% flex:column justify-content:center align-items:center flex">
+<div class="rel w:100% h:100% flex:column justify-content:center ai:center flex">
 	<span
 		class="pointer"
 		style="top: {position.y}px; left: {position.x}px; opacity: {isOvered ? 0 : 1}"
@@ -63,9 +65,11 @@
 		</svg>
 	</span>
 	<Header />
+	<ToTop />
 	<div
-		class="fixed back top:0 left:0 w:100dvw h:100dvh overflow-y:auto flex:column justify-content:center align-items:center flex"
+		class="fixed back top:0 left:0 w:100dvw h:100dvh overflow:hidden flex:column justify-content:center ai:center flex"
 	>
+		<img src={outline} class="w:600px opacity:0.2" alt="logo outline" />
 		<span class="circle circle1"></span>
 		<span class="circle circle2"></span>
 		<span class="circle circle3"></span>
@@ -76,16 +80,16 @@
 	>
 		{@render children()}
 		<footer
-			class="bg:#153F63 fg:#ffffff bt:1px|solid|#fff justify-content:center align-items:center flex"
+			class="bg:#153F63 fg:#ffffff bt:1px|solid|#fff justify-content:center ai:center flex"
 		>
 			<Page height={60}>
 				<div
-					class="w:100% h:100% p:40px flex:column justify-content:space-between align-items:center flex"
+					class="w:100% h:100% p:40px flex:column justify-content:space-between ai:center flex"
 				>
 					<div
 						class="w:100% flex:column justify-content:space-between align-items:start gap:40px px:16px flex flex-wrap"
 					>
-						<div class="w:100% h:60px flex:row justify-content:start align-items:center gap:16px">
+						<div class="w:100% h:60px flex:row justify-content:start ai:center gap:16px">
                             <img src={logo} alt="Logo" class="w:auto h:100% object:cover" />
                         </div>
 						<div class="w:100% px:40px grid-template-columns:1fr|1fr|1fr gap:40px grid">
@@ -125,10 +129,10 @@
 											href={link}
 											target="_blank"
 											rel="noopener noreferrer"
-											class="w:fit mb:10px flex:row align-items:center gap:4px b:1px|solid|#fff px:16px py:8px bg:#fff:hover fg:#153F63:hover transition:background-color|0.3s flex rounded"
+											class="w:fit mb:10px flex:row ai:center gap:4px b:1px|solid|#fff px:16px py:8px bg:#fff:hover fg:#153F63:hover transition:background-color|0.3s flex rounded"
 										>
 											<Icon class="text:24px mr:10px" {icon} />
-											<div class="flex:row gap:2px align-items:center flex">
+											<div class="flex:row gap:2px ai:center flex">
 												<span class="text:18px">
 													{title}
 												</span>
@@ -153,9 +157,9 @@
 </div>
 
 <style>
-	:global(html, body, *, *:hover, *:active, *:focus) {
+	/* :global(html, body, *, *:hover, *:active, *:focus) {
 		cursor: none !important;
-	}
+	} */
 
     :global(body) {
         background-color: #153F63;
@@ -176,6 +180,7 @@
 		left: 0;
 		z-index: 1000;
 		pointer-events: none;
+		display: none;
 	}
 
 	.circle {
