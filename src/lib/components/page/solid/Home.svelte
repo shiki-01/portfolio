@@ -5,6 +5,7 @@
     import logo from '$lib/components/page/solid/img/logoTitle.svg';
     import outline from '$lib/components/page/solid/img/logoSymbol_outline.svg';
 	import ToTop from './components/ToTop.svelte';
+	import LogoAnimate from './components/LogoAnimate.svelte';
 	let { children } = $props();
 
 	let position = $state({
@@ -66,6 +67,7 @@
 	</span>
 	<Header />
 	<ToTop />
+	<!-- <LogoAnimate /> -->
 	<div
 		class="fixed back top:0 left:0 w:100dvw h:100dvh overflow:hidden flex:column justify-content:center ai:center flex"
 	>
