@@ -6,6 +6,7 @@
     import outline from '$lib/components/page/solid/img/logoSymbol_outline.svg';
 	import ToTop from './components/ToTop.svelte';
 	import LogoAnimate from './components/LogoAnimate.svelte';
+	import { onMount } from 'svelte';
 	let { children } = $props();
 
 	let position = $state({
@@ -32,18 +33,121 @@
 		}
 	];
 
+	let backEl: HTMLDivElement | null = null;
+	let scrollEl: HTMLDivElement | null = null;
+	const parallax = {
+		scrollFactor: 0.18,
+		mouseAmplitude: 80,
+		smooth: 0.08
+	};
+
+	const target = {
+		scrollX: 0,
+		lineScrollX: 0,
+		mouseX: 0,
+		mouseY: 0
+	};
+
+	const current = {
+		scrollX: 0,
+		lineScrollX: 0,
+		mouseX: 0,
+		mouseY: 0
+	};
+
+	let viewport = {
+		w: 0,
+		h: 0
+	};
+
+	const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
+
 	const handlePointerMove = (e: PointerEvent) => {
 		position.x = e.clientX;
 		position.y = e.clientY;
+
+		if (!viewport.w || !viewport.h) return;
+		const nx = (e.clientX - viewport.w / 2) / (viewport.w / 2);
+		const ny = (e.clientY - viewport.h / 2) / (viewport.h / 2);
+		target.mouseX = -nx * parallax.mouseAmplitude;
+		target.mouseY = -ny * parallax.mouseAmplitude;
 	};
 
 	const handlePointerLeave = () => {
 		isOvered = false;
+		target.mouseX = 0;
+		target.mouseY = 0;
 	};
 
 	const handlePointerEnter = () => {
 		isOvered = true;
 	};
+
+	const getScrollTop = () => {
+		const elementScroll = scrollEl?.scrollTop ?? 0;
+		const windowScroll = window.scrollY || 0;
+		if (scrollEl && scrollEl.scrollHeight > scrollEl.clientHeight) {
+			return elementScroll;
+		}
+		return Math.max(elementScroll, windowScroll);
+	};
+
+	const handleScroll = () => {
+		const scrollTop = getScrollTop();
+		target.scrollX = scrollTop * parallax.scrollFactor;
+		target.lineScrollX = scrollTop;
+	};
+
+	const handleResize = () => {
+		viewport.w = window.innerWidth;
+		viewport.h = window.innerHeight;
+	};
+
+	onMount(() => {
+		handleResize();
+		handleScroll();
+		window.addEventListener('resize', handleResize);
+		scrollEl?.addEventListener('scroll', handleScroll, { passive: true });
+
+		let rafId = 0;
+		const tick = (time: number) => {
+			const scrollTop = getScrollTop();
+			target.scrollX = scrollTop * parallax.scrollFactor;
+			target.lineScrollX = scrollTop;
+
+			current.scrollX = lerp(current.scrollX, target.scrollX, parallax.smooth);
+			current.lineScrollX = lerp(current.lineScrollX, target.lineScrollX, parallax.smooth);
+			current.mouseX = lerp(current.mouseX, target.mouseX, parallax.smooth);
+			current.mouseY = lerp(current.mouseY, target.mouseY, parallax.smooth);
+
+			const baseX = current.scrollX + current.mouseX;
+			const baseY = current.mouseY;
+			const t = time * 0.001;
+
+			const gridX = baseX * 0.4 + Math.sin(t * 0.6) * 6;
+			const gridY = baseY * 0.3 + Math.cos(t * 0.5) * 6;
+			const lineGridX = ((current.lineScrollX * 1.1 + current.mouseX * 0.6) % 32 + 32) % 32;
+
+			if (backEl) {
+				backEl.style.setProperty('--circle-x', `${baseX}px`);
+				backEl.style.setProperty('--circle-y', `${baseY}px`);
+				backEl.style.setProperty('--line-y', `0px`);
+				backEl.style.setProperty('--grid-x', `${gridX}px`);
+				backEl.style.setProperty('--grid-y', `${gridY}px`);
+				backEl.style.setProperty('--line-grid-x', `${lineGridX}px`);
+			}
+
+			rafId = requestAnimationFrame(tick);
+		};
+
+		rafId = requestAnimationFrame(tick);
+
+		return () => {
+			window.removeEventListener('resize', handleResize);
+			scrollEl?.removeEventListener('scroll', handleScroll);
+			cancelAnimationFrame(rafId);
+		};
+	});
 </script>
 
 <svelte:window
@@ -69,6 +173,7 @@
 	<ToTop />
 	<!-- <LogoAnimate /> -->
 	<div
+		bind:this={backEl}
 		class="fixed back top:0 left:0 w:100dvw h:100dvh overflow:hidden flex:column justify-content:center ai:center flex"
 	>
 		<img src={outline} class="w:600px opacity:0.2" alt="logo outline" />
@@ -78,13 +183,14 @@
 		<span class="line"></span>
 	</div>
 	<div
+		bind:this={scrollEl}
 		class="w:100% h:100% z:2 mt:80px flex:column justify-content:center align-items:start overflow-y:auto flex"
 	>
 		{@render children()}
 		<footer
 			class="bg:#153F63 fg:#ffffff bt:1px|solid|#fff justify-content:center ai:center flex"
 		>
-			<Page height={60}>
+			<Page height={80}>
 				<div
 					class="w:100% h:100% p:40px flex:column justify-content:space-between ai:center flex"
 				>
@@ -173,7 +279,7 @@
 			linear-gradient(90deg, transparent calc(100% - 1px), rgba(80, 108, 122, 40%) calc(100% - 1px));
 		background-size: 32px 32px;
 		background-repeat: repeat;
-		background-position: center center;
+		background-position: calc(50% + var(--grid-x, 0px)) calc(50% + var(--grid-y, 0px));
 	}
 
 	.pointer {
@@ -201,6 +307,7 @@
 		left: calc(-200px);
 		width: 500px;
 		height: 500px;
+		transform: translate3d(var(--circle-x, 0px), var(--circle-y, 0px), 0);
 	}
 
 	.circle2 {
@@ -208,6 +315,7 @@
 		left: calc(300px);
 		width: 1728px;
 		height: 1728px;
+		transform: translate3d(var(--circle-x, 0px), var(--circle-y, 0px), 0);
 	}
 
 	.circle3 {
@@ -215,6 +323,7 @@
 		left: calc(300px);
 		width: 1400px;
 		height: 1400px;
+		transform: translate3d(var(--circle-x, 0px), var(--circle-y, 0px), 0);
 	}
 
 	.line {
@@ -223,7 +332,7 @@
 		left: 50%;
 		width: 100%;
 		height: 1px;
-		transform: translate(-50%, -50%);
+		transform: translate3d(-50%, calc(-50% + var(--line-y, 0px)), 0);
 		background-color: #fff;
 	}
 
@@ -238,6 +347,12 @@
 		background-image: linear-gradient(90deg, transparent calc(100% - 1px), #fff calc(100% - 1px));
 		background-size: 32px 32px;
 		background-repeat: repeat;
-		background-position: center center;
+		background-position: calc(50% + var(--line-grid-x, 0px)) center;
+	}
+
+	.circle,
+	.line,
+	.back {
+		will-change: transform, background-position;
 	}
 </style>
