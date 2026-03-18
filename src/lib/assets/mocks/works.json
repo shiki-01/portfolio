@@ -1,0 +1,194 @@
+{
+    "contents": [
+        {
+            "id": "wv-pwuh5x",
+            "createdAt": "2026-03-18T05:06:39.855Z",
+            "updatedAt": "2026-03-18T05:06:39.855Z",
+            "publishedAt": "2026-03-18T05:06:39.855Z",
+            "revisedAt": "2026-03-18T05:06:39.855Z",
+            "title": "3D プリンター活用推進会 公式サイト",
+            "description": "<p>「3D プリンター活用推進会」の運営を支援するため、プリンターの予約・管理・情報発信を一元化した Web システムを開発しました。</p><h1 id=\"ha7981fd118\">開発の背景</h1><p>メンバーやプリンター利用者が増えるにつれ、プリンターの利用調整や故障報告・引き継ぎ情報の管理が口頭や紙では追いつかなくなりました。 メンバー全員がブラウザだけで利用でき、管理者への通知も自動化できるシステムを一人で設計・実装しました。</p><h1 id=\"h12633f74eb\">実装内容</h1><p>SvelteKit + Firebase + Cloudflare Workers で構築し、Cloudflare Pages へデプロイしています。 認証は Firebase Auth（Google ログイン・メールログイン）で実装し、Firestore のセキュリティルールでロールごとのアクセス制御を行っています。</p><p>ページ構成は利用者向けと管理者向けに分かれており、以下の機能を備えています。</p><ul><li><strong>予約フォーム・確認・キャンセル</strong> — <code>/form</code> <code>/confirm</code> <code>/cancel</code> ルートで予約フローを実装</li><li><strong>管理者ダッシュボード</strong> — <code>/admin</code> で予約一覧・承認・利用実績の管理</li><li><strong>故障報告</strong> — <code>/report</code> で不具合をその場で記録</li><li><strong>活動ブログ</strong> — <code>/blog</code> <code>/activities</code> で活動情報を発信</li><li><strong>自動メール通知</strong> — Cloudflare Workers 経由で Gmail に通知を送信</li></ul><p>また <code>sitemap.xml</code>・<code>robots.txt</code>・OG 画像生成（<code>/og</code> ルート）・プライバシーポリシー・利用規約ページも整備しており、公開サービスとしての品質を意識した設計にしています。</p>",
+            "term": "2025.06",
+            "role": "システム全体の設計・実装",
+            "member": 1,
+            "link": "https://mdn-3dprinter.f5.si/",
+            "gh-repo": "https://github.com/3-dpt-mdn",
+            "tags": [
+                "system",
+                "design",
+                "plan"
+            ],
+            "skills": [
+                "Figma",
+                "TypeScript",
+                "Svelte"
+            ],
+            "image": {
+                "url": "https://images.microcms-assets.io/assets/88fd2dd256cd4385abed34510a068d9d/aa8244ed76a34bec8d44793fbfc810ea/%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%BC%E3%83%B3%E3%82%B7%E3%83%A7%E3%83%83%E3%83%88%202026-03-18%20140253.png",
+                "height": 941,
+                "width": 1892
+            }
+        },
+        {
+            "id": "yegnb35z86",
+            "createdAt": "2026-03-18T05:00:16.608Z",
+            "updatedAt": "2026-03-18T05:00:16.608Z",
+            "publishedAt": "2026-03-18T05:00:16.608Z",
+            "revisedAt": "2026-03-18T05:00:16.608Z",
+            "title": "ARグラスを用いた介護用システム「あいメモ」",
+            "description": "<p>ARグラスを活用した介護向けメモシステム「あいメモ」を、高校の課題研究として 3 名で共同開発しました。</p><h1 id=\"ha7981fd118\">開発の背景</h1><p>高齢化が進む日本で、介護士の「記録業務」にかかる時間と負担を減らすことが課題として挙げられています。 手が塞がりやすい現場でも記録をフリーハンドで行えるよう、ARグラスとダッシュボードを統合したシステムの開発を目指しました。</p><h1 id=\"hdf8a4d8b2f\">システム構成</h1><table><tbody><tr><th colspan=\"1\" rowspan=\"1\"><p>レイヤー</p></th><th colspan=\"1\" rowspan=\"1\"><p>技術・要素</p></th></tr><tr><td colspan=\"1\" rowspan=\"1\"><p>ARグラス ディスプレイ</p></td><td colspan=\"1\" rowspan=\"1\"><p>透過 OLED + ミラーシール</p></td></tr><tr><td colspan=\"1\" rowspan=\"1\"><p>カメラ・マイク</p></td><td colspan=\"1\" rowspan=\"1\"><p>ESP-EYE</p></td></tr><tr><td colspan=\"1\" rowspan=\"1\"><p>視線検出</p></td><td colspan=\"1\" rowspan=\"1\"><p>ESP-EYE 映像 → OpenCV → 視線コマンド変換</p></td></tr><tr><td colspan=\"1\" rowspan=\"1\"><p>音声認識</p></td><td colspan=\"1\" rowspan=\"1\"><p>音声 → テキスト変換サービス</p></td></tr><tr><td colspan=\"1\" rowspan=\"1\"><p>フロントエンド</p></td><td colspan=\"1\" rowspan=\"1\"><p>SvelteKit（ダッシュボード）</p></td></tr><tr><td colspan=\"1\" rowspan=\"1\"><p>バックエンド・インフラ</p></td><td colspan=\"1\" rowspan=\"1\"><p>AWS（Serverless Framework）</p></td></tr></tbody></table><p>筐体設計は Fusion 360 でモデリングし、Creality Ender 3 V3 KE で 3D 印刷しました。 眼鏡の有無に関わらず装着できるよう、アタッチメント形式の構造を採用しています。</p><h1 id=\"h8d632c3b0d\">担当範囲</h1><p>フロントエンド（SvelteKit によるダッシュボード）・バックエンド開発・DB / API 構築・ARグラスのファームウェア・音声操作と視線操作の AI 実装を担当しました。 ダッシュボードではホーム画面の D&amp;D・利用者リストの閲覧と詳細表示機能を実装しており、視線・音声を組み合わせた複合インターフェースの設計も行いました。</p>",
+            "term": "2024.03 - 2025.12",
+            "role": "フルスタック開発 ＋ ARグラス制御",
+            "member": 3,
+            "gh-repo": "https://github.com/202508sp",
+            "tags": [
+                "system",
+                "design",
+                "plan"
+            ],
+            "skills": [
+                "Figma",
+                "TypeScript",
+                "Svelte"
+            ],
+            "image": {
+                "url": "https://images.microcms-assets.io/assets/88fd2dd256cd4385abed34510a068d9d/d56ab6d86af74e148a295e7a9134b296/image%201.png",
+                "height": 577,
+                "width": 811
+            }
+        },
+        {
+            "id": "w5izg40z56q",
+            "createdAt": "2026-03-18T04:53:30.129Z",
+            "updatedAt": "2026-03-18T05:07:01.109Z",
+            "publishedAt": "2026-03-18T05:07:01.109Z",
+            "revisedAt": "2026-03-18T05:07:01.109Z",
+            "title": "デンベアくん",
+            "description": "<p>愛知工業大学名電高等学校 バレーボール部（AMVT）のマスコットキャラクター「デンベアくん」キーホルダーにて、3D モデルを設計しました。</p><h1 id=\"ha8bed89b74\"><strong>制作の背景</strong></h1><p style=\"text-align: start\">「ザ・名電ショー2025」のバレー部ブースにてクレーンゲームの景品として使用するキーホルダーの制作を担当しました。その後、春高バレーの応援グッズとしても別タイプを新たに設計・印刷しており、用途に合わせた複数バリエーションの制作に携わっています。</p><h1 id=\"hdb7e1e33bd\"><strong>制作内容</strong></h1><p style=\"text-align: start\">モデリングは Blender でキャラクターの造形を行い、印刷用の寸法調整・分割設計を Fusion 360 で仕上げました。印刷には Creality Ender 3 V3 KE を使用しています。</p><p style=\"text-align: start\">キャラクターはミニキャラ（SD）体型を意識し、頭部を大きく・輪郭をシンプルにすることで小さなサイズでも愛らしい見た目になるよう造形しました。また、単色プリンターでの出力でも多色・複雑な見た目を再現できるよう、パーツをアタッチ（組み合わせ）形式に分割して設計し、色違いのフィラメントで個別に印刷したパーツを後から組み合わせる構造にしています。印刷後の組み立てと着色の手間を最小限に抑えながら、見栄えのよい仕上がりを実現しました。</p>",
+            "term": "2025.06 - 2025.12",
+            "role": "3D モデルの設計",
+            "member": 2,
+            "tags": [
+                "design"
+            ],
+            "skills": [
+                "Blender"
+            ],
+            "image": {
+                "url": "https://images.microcms-assets.io/assets/88fd2dd256cd4385abed34510a068d9d/6ea47f70b70040c79053d00b5c5b91eb/image%203.png",
+                "height": 542,
+                "width": 874
+            }
+        },
+        {
+            "id": "px-5matod",
+            "createdAt": "2026-03-18T04:40:02.543Z",
+            "updatedAt": "2026-03-18T04:55:24.063Z",
+            "publishedAt": "2026-03-18T04:40:02.543Z",
+            "revisedAt": "2026-03-18T04:55:24.063Z",
+            "title": "Storift",
+            "description": "<p>小説・シナリオ制作を支援する Web アプリケーション「Storift」を個人開発しました。</p><h1 id=\"ha7981fd118\"><strong>開発の背景</strong></h1><p style=\"text-align: start\">小説やビジュアルノベルを書く際、キャラクター・プロット・章・シーン・世界観設定といった情報が散在して管理しきれなくなる問題を解決するため、創作に必要な要素をひとつのプロジェクトとして統合管理できるツールとして開発しました。</p><h1 id=\"h12633f74eb\"><strong>実装内容</strong></h1><p style=\"text-align: start\">SvelteKit + TypeScript + Firebase で構築し、Cloudflare Pages へデプロイしています。 データモデルは <code>Project</code> を頂点に、<code>Chapter</code>・<code>Scene</code>・<code>Character</code>・<code>Plot</code>・<code>Worldbuilding</code> といった型をそれぞれ独立して設計し、創作に必要な情報を構造的に管理できるようにしました。</p><p style=\"text-align: start\">バックエンドは Firestore をメインのデータストアとして採用し、<code>sync.service.ts</code>でオフライン対応・競合解決・差分同期を実装しています。 編集履歴のバージョン管理は <code>version.service.ts</code> で行い、<code>export.service.ts</code> と <code>import.service.ts</code> では JSON/Markdown などの複数フォーマットへの書き出し・読み込みにも対応しています。 また <code>search.service.ts</code> によるプロジェクト横断検索や、<code>notification.service.ts</code> によるユーザー通知機能も備えています。</p><h1 id=\"hc2ace5582c\"><strong>設計のこだわり</strong></h1><p style=\"text-align: start\">ローカルの IndexedDB と Firestore の二層構造を取ることで、オフライン時でも編集を継続できる設計にしました。 Firestore のセキュリティルールも <code>firestore.rules</code> で独自に整備しており、認証ユーザーごとにデータアクセスを制御しています。</p>",
+            "term": "2025.11",
+            "role": "企画・実装",
+            "member": 1,
+            "link": "https://storift.f5.si/",
+            "gh-repo": "https://github.com/shiki-01/Storift",
+            "tags": [
+                "system",
+                "design",
+                "plan"
+            ],
+            "skills": [
+                "Figma",
+                "Svelte",
+                "TypeScript"
+            ],
+            "image": {
+                "url": "https://images.microcms-assets.io/assets/88fd2dd256cd4385abed34510a068d9d/6d4b7dc3529b4646b9051159fc0a909c/%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%BC%E3%83%B3%E3%82%B7%E3%83%A7%E3%83%83%E3%83%88%202025-12-12%2017.27.17%201.png",
+                "height": 536,
+                "width": 929
+            }
+        },
+        {
+            "id": "6b14p_t6-a3",
+            "createdAt": "2026-03-18T04:34:24.920Z",
+            "updatedAt": "2026-03-18T05:06:49.216Z",
+            "publishedAt": "2026-03-18T04:34:24.920Z",
+            "revisedAt": "2026-03-18T05:06:49.216Z",
+            "title": "文化祭 公式サイト",
+            "description": "<p>愛知工業大学名電高等学校の文化祭「燈 ―Light Up the Future―」の公式 Web サイトを制作しました。</p><h1 id=\"ha8bed89b74\"><strong>制作の背景</strong></h1><p style=\"text-align: start\">文化祭のプログラムや各クラスの企画情報を、来場者や保護者が手軽にスマートフォンで確認できる場として、紙のリーフレットと同等に使える公式 Web サイトの制作を担当しました。</p><h1 id=\"h12633f74eb\"><strong>実装内容</strong></h1><p style=\"text-align: start\">SvelteKit + TypeScript で構築し、Cloudflare Pages へデプロイしています。 ページには文化祭テーマ・校長あいさつ・タイムテーブル・スタンプラリー・フロアマップなど、当日必要な情報をすべて 1 ページにまとめた構成にしています。 フロアマップでは 1〜4 階の SVG 地図をフロアごとにスクロール連動で <code>sticky</code> 表示し、それぞれのクラス情報と対応させることで直感的に企画を探しやすい UI を実現しました。</p><h1 id=\"hb2fb298eb1\"><strong>こだわりポイント</strong></h1><p style=\"text-align: start\">背景には複数の SVG デコレーションを配置し、<code>requestAnimationFrame</code> を活用したスクロール連動のパラレックス演出を自前で実装しました。 各要素のスクロール速度を <code>data-speed</code> 属性で個別に設定することで、奥行きのある動きを軽量に実現しています。 また OGP・Twitter Card・canonical タグなどの SEO 対応も行い、SNS でのシェア時にも見栄えよく表示されるよう整えました。</p>",
+            "term": "2025.07",
+            "role": "サイトの実装",
+            "member": 1,
+            "tags": [
+                "system"
+            ],
+            "skills": [
+                "TypeScript",
+                "Svelte"
+            ],
+            "image": {
+                "url": "https://images.microcms-assets.io/assets/88fd2dd256cd4385abed34510a068d9d/463f982bb0b74181b6f0a390da107622/%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%BC%E3%83%B3%E3%82%B7%E3%83%A7%E3%83%83%E3%83%88%202025-12-12%2017.36.41%201.png",
+                "height": 613,
+                "width": 704
+            }
+        },
+        {
+            "id": "570e1r020p",
+            "createdAt": "2026-03-18T04:18:08.233Z",
+            "updatedAt": "2026-03-18T04:55:07.115Z",
+            "publishedAt": "2026-03-18T04:18:08.233Z",
+            "revisedAt": "2026-03-18T04:55:07.115Z",
+            "title": "チェインズ",
+            "description": "<p>落ちコンカードゲーム「チェインズ」という企画に参加し、デモ版の実装を行いました。</p><h1 id=\"h878222ed70\"><strong>企画概要</strong></h1><p style=\"text-align: start\">「チェインズ」は、手札のカードを条件に沿って連鎖（チェイン）させ、敵と戦う落ちコン型カードゲームです。カードをただ出すだけでなく、前に出したカードの属性やアクション値を条件として次のカードがつながる「チェイン」という独自の仕組みが戦略の核心となっています。</p><h1 id=\"h12633f74eb\"><strong>実装内容</strong></h1><p style=\"text-align: start\">デモ版は SvelteKit + TypeScript + Electron で構築しました。ゲームロジックの中心となる <code>GameManager</code> クラスを設計・実装し、プレイヤーと敵それぞれのデッキ・手札・ステータスを管理する状態機械として機能します。</p><p style=\"text-align: start\">チェイン処理は再帰的に実装しており、直前に出たカードを「親」として、手札から条件を満たす「子」カードを順番に探索し、自動的に連鎖させていきます。 条件の種類はカードタイプ・レアリティ・アクション値の大小比較・特定カードIDなど複数のパターンに対応しています。</p><p style=\"text-align: start\">敵 AI もシンプルながら実装しており、タイムアウトを使った非同期ターン処理によってプレイヤーの操作とスムーズに交互進行します。 ステージ・フェーズ構造も設計し、フェーズをクリアするごとに次の敵へ進む進行管理も組み込みました。</p><h1 id=\"hbebe78daa7\"><strong>技術的なこだわり</strong></h1><p style=\"text-align: start\"><code>Combatant</code> インターフェースでプレイヤーと敵を共通の型として扱い、カードインスタンスには一意の <code>instanceId</code> を付与することで、同名カードが複数手札にある場合も個別に追跡できる設計にしました。 チュートリアル・デモ向けに手札を任意のカードセットで初期化するメソッドも用意しており、体験設計の柔軟性も確保しています。</p><p style=\"text-align: start\">また、UI 演出面では GSAP を用いてカードのドロー・プレイ・チェイン発動時のアニメーションを実装し、ゲームロジックと連動した動きで「つながっていく気持ちよさ」を感じられるよう工夫しました。</p>",
+            "term": "2024.3",
+            "role": "デモ版の実装",
+            "member": 1,
+            "tags": [
+                "system"
+            ],
+            "skills": [
+                "TypeScript",
+                "Svelte",
+                "Electron"
+            ],
+            "image": {
+                "url": "https://images.microcms-assets.io/assets/88fd2dd256cd4385abed34510a068d9d/fce4de6dcf7b4e4e969250ae78dff2f1/image%204.png",
+                "height": 536,
+                "width": 743
+            }
+        },
+        {
+            "id": "bqzzv0_-fm",
+            "createdAt": "2026-03-18T03:36:30.478Z",
+            "updatedAt": "2026-03-18T04:54:41.780Z",
+            "publishedAt": "2026-03-18T03:36:30.478Z",
+            "revisedAt": "2026-03-18T04:54:41.780Z",
+            "title": "Funbook",
+            "description": "<p>もっと手軽に、もっと身近にプログラミングを学べる。拡張型ビジュアルプログラミング環境 を開発しました。</p><h1 id=\"h157b7c6f73\">課題背景とビジョン</h1><p>プログラミングにおいて、初学者は「言語ごとに UI / 教材 / 心理的障壁が発生する」ため学習コストが高くなっています。デザイン / 映像クリエイターは After Effects Expressions や Blender Python などのスクリプトにおいて、断片を検索コピペするのみでロジック全体像を俯瞰できません。また、教育現場では授業ごとに資料フォーマットが分裂し再利用性が低くなっています。NoCode 系ツールは拡張が閉じがちで、逆にフルコード IDE は初学者にはオーバースペックとなっています。</p><p>そうした経験から、「もっと気軽に基本をイメージできて、応用にもつなげやすい環境は作れないか？」と考えたのが開発の出発点です。</p><p>Funbook はパズル感覚でブロックを組み合わせながら、プログラムの流れや仕組みを直感的に理解できるようにしています。NoCode の手軽さと、本格的なプログラミング環境の自由度の“いいとこ取り”をすることが狙いです。</p><h1 id=\"h001a548c1c\">ペルソナと価値</h1><p>学校教師が独自教材を作ったり、配布したりしやすいだけではなく、クリエイターがビジュアルデザインやスクリプト生成の中で「自分なりの工夫」を気軽に試せる場にもなっています。</p><p>教育用途だけでは、マクロでの自動化をはじめとして一般の方でも手軽に試すことができます。 OSS であるため、コミュニティでブロックや機能を共有するのも Funbook が与えることのできる価値です。</p><h3 id=\"ha88dc2a453\">ゴール</h3><p>Funbook が目指すゴールは「誰もが学習や創作を始める &quot;最初のハードル&quot; をぐっと下げること」です。プログラムを学ぶ人も、何かを創作したいひとも、自由に知識・成果物をシェアできる「コミュニティで育てる」プラットフォームとしての成長を目指しています。</p>",
+            "term": "2024.12 - 2025.8",
+            "role": "企画・ソフトウェア実装",
+            "member": 1,
+            "link": "https://protopedia.net/prototype/6940",
+            "gh-repo": "https://github.com/shiki-01/Funbook",
+            "tags": [
+                "system",
+                "plan"
+            ],
+            "skills": [
+                "Figma",
+                "TypeScript",
+                "Svelte",
+                "Tauri"
+            ],
+            "image": {
+                "url": "https://images.microcms-assets.io/assets/88fd2dd256cd4385abed34510a068d9d/bcee38fb3d6d4459b413e5866e31fa2f/image%205.png",
+                "height": 443,
+                "width": 787
+            }
+        }
+    ],
+    "totalCount": 7,
+    "offset": 0,
+    "limit": 10
+}

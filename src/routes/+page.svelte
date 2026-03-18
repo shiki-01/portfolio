@@ -1,7 +1,9 @@
 <script lang="ts">
 	import Page from '$lib/components/Page.svelte';
 	import Icon from '@iconify/svelte';
-	import icon from '$lib/img/myicon.png';
+	import icon from '$lib/assets/img/myicon.png';
+	import WorksBox from '$lib/components/page/solid/components/WorksBox.svelte';
+	import works from '$lib/assets/mocks/works.json';
 
 	const icons = [
 		{
@@ -67,8 +69,19 @@
 		</div>
 	</Page>
 	<Page>
-		<div class="w:100% h:100% flex ai:start jc:center pt:100px">
-			<h1 class="text:4em font:thin line-h:1em uppercase">works</h1>
+		<div class="w:100% h:100% flex ai:center jc:center flex:column pt:100px gap:100px">
+			<h1 class="text:4em text-align:center font:thin line-h:1em uppercase w:100%">works</h1>
+			<div class="flex flex:wrap w:100% h:100% px:100px gap:40px ai:center jc:center">
+				{#each works.contents.slice(0,6) as work}
+					<WorksBox
+						id={work.id}
+						title={work.title}
+						_description={work.description}
+						src={work.image.url}
+						tags={work.tags}
+					/>
+				{/each}
+			</div>
 		</div>
 	</Page>
 	<Page>
