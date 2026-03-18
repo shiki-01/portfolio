@@ -2,8 +2,8 @@
 	import Header from './components/Header.svelte';
 	import Page from '$lib/components/Page.svelte';
 	import Icon from '@iconify/svelte';
-    import logo from '$lib/components/page/solid/img/logoTitle.svg';
-    import outline from '$lib/components/page/solid/img/logoSymbol_outline.svg';
+	import logo from '$lib/components/page/solid/img/logoTitle.svg';
+	import outline from '$lib/components/page/solid/img/logoSymbol_outline.svg';
 	import ToTop from './components/ToTop.svelte';
 	import LogoAnimate from './components/LogoAnimate.svelte';
 	import { onMount } from 'svelte';
@@ -126,7 +126,7 @@
 
 			const gridX = baseX * 0.4 + Math.sin(t * 0.6) * 6;
 			const gridY = baseY * 0.3 + Math.cos(t * 0.5) * 6;
-			const lineGridX = ((current.lineScrollX * 1.1 + current.mouseX * 0.6) % 32 + 32) % 32;
+			const lineGridX = (((current.lineScrollX * 1.1 + current.mouseX * 0.6) % 32) + 32) % 32;
 
 			if (backEl) {
 				backEl.style.setProperty('--circle-x', `${baseX}px`);
@@ -187,19 +187,15 @@
 		class="w:100% h:100% z:2 mt:80px flex:column justify-content:center align-items:start overflow-y:auto flex"
 	>
 		{@render children()}
-		<footer
-			class="bg:#153F63 fg:#ffffff bt:1px|solid|#fff justify-content:center ai:center flex"
-		>
+		<footer class="bg:#153F63 fg:#ffffff bt:1px|solid|#fff justify-content:center ai:center flex">
 			<Page height={80}>
-				<div
-					class="w:100% h:100% p:40px flex:column justify-content:space-between ai:center flex"
-				>
+				<div class="w:100% h:100% p:40px flex:column justify-content:space-between ai:center flex">
 					<div
 						class="w:100% flex:column justify-content:space-between align-items:start gap:40px px:16px flex flex-wrap"
 					>
 						<div class="w:100% h:60px flex:row justify-content:start ai:center gap:16px">
-                            <img src={logo} alt="Logo" class="w:auto h:100% object:cover" />
-                        </div>
+							<img src={logo} alt="Logo" class="w:auto h:100% object:cover" />
+						</div>
 						<div class="w:100% px:40px grid-template-columns:1fr|1fr|1fr gap:40px grid">
 							<div class="flex:column gap:8px flex">
 								<h2 class="text:2em font:thin mb:8px uppercase">site map</h2>
@@ -269,9 +265,9 @@
 		cursor: none !important;
 	} */
 
-    :global(body) {
-        background-color: #153F63;
-    }
+	:global(body) {
+		background-color: #153f63;
+	}
 
 	.back {
 		background-image:

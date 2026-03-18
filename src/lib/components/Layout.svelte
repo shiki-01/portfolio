@@ -12,10 +12,13 @@
 	const displayWidth = writable(0);
 	const isLinkHovered = writable(false);
 
-	const linkPosition = new Spring({ x: 0, y: 0 }, {
-		stiffness: 0.08,
-		damping: 0.5
-	});
+	const linkPosition = new Spring(
+		{ x: 0, y: 0 },
+		{
+			stiffness: 0.08,
+			damping: 0.5
+		}
+	);
 
 	onMount(() => {
 		if (typeof window === 'undefined') return;
@@ -63,9 +66,11 @@
 />
 
 {#if $displayWidth > 1280}
- <span
-	 class="pointer-events-none fixed z-50 border-2 border-black flex -translate-x-1/2 -translate-y-1/2 rounded-full {$isHovered ? 'opacity-100' : 'opacity-0'}"
-	 style="
+	<span
+		class="pointer-events-none fixed z-50 border-2 border-black flex -translate-x-1/2 -translate-y-1/2 rounded-full {$isHovered
+			? 'opacity-100'
+			: 'opacity-0'}"
+		style="
     top: {linkPosition.current.y}px;
     left: {linkPosition.current.x}px;
     width: {$isLinkHovered ? '40px' : '16px'};
@@ -75,7 +80,7 @@
                 height 0.4s cubic-bezier(0.16, 1, 0.3, 1),
                 transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
   "
- ></span>
+	></span>
 {/if}
 
 <div class="main h-[100svh] w-[100svw] select-none">
@@ -218,7 +223,10 @@
 						</svg>
 						<a
 							href={page.href}
-							class="absolute left-0 top-0 z-10 flex h-full w-full flex-row items-center justify-center gap-4 px-8 py-6 {link === page.href ? 'isHere' : ''}"
+							class="absolute left-0 top-0 z-10 flex h-full w-full flex-row items-center justify-center gap-4 px-8 py-6 {link ===
+							page.href
+								? 'isHere'
+								: ''}"
 						>
 							<p class="text-xl">{page.title}</p>
 						</a>
@@ -230,59 +238,59 @@
 </div>
 
 <style lang="postcss">
-    .main {
-        background-color: var(--color-bg);
-    }
+	.main {
+		background-color: var(--color-bg);
+	}
 
-    .pages {
-        background-color: #ffffff;
-        border-left: 2px solid var(--color-border);
-        border-right: 2px solid var(--color-border);
-    }
+	.pages {
+		background-color: #ffffff;
+		border-left: 2px solid var(--color-border);
+		border-right: 2px solid var(--color-border);
+	}
 
-    .link {
-        &:hover {
-            & .front {
-                transform: translate(-8px, -8px);
-            }
+	.link {
+		&:hover {
+			& .front {
+				transform: translate(-8px, -8px);
+			}
 
-            & a {
-                transform: translate(-8px, -8px);
-            }
-        }
+			& a {
+				transform: translate(-8px, -8px);
+			}
+		}
 
-        .front {
-            transform: translate(0, 0);
-            transition: transform 0.3s;
-        }
+		.front {
+			transform: translate(0, 0);
+			transition: transform 0.3s;
+		}
 
-        & a {
-            transform: translate(0, 0);
-            transition: transform 0.3s;
-        }
+		& a {
+			transform: translate(0, 0);
+			transition: transform 0.3s;
+		}
 
-        & a.isHere {
-            transform: translate(-8px, -8px);
-        }
+		& a.isHere {
+			transform: translate(-8px, -8px);
+		}
 
-        & svg.isHere {
-            transform: translate(-8px, -8px);
-        }
-    }
+		& svg.isHere {
+			transform: translate(-8px, -8px);
+		}
+	}
 
-    .overflow {
-        &::-webkit-scrollbar {
-            position: absolute;
-            right: 0;
-            width: 5px;
-            height: 5px;
-        }
+	.overflow {
+		&::-webkit-scrollbar {
+			position: absolute;
+			right: 0;
+			width: 5px;
+			height: 5px;
+		}
 
-        &::-webkit-scrollbar-thumb {
-            background-color: var(--color-bg);
-            width: 5px;
-            height: 5px;
-            border-radius: 5px;
-        }
-    }
+		&::-webkit-scrollbar-thumb {
+			background-color: var(--color-bg);
+			width: 5px;
+			height: 5px;
+			border-radius: 5px;
+		}
+	}
 </style>

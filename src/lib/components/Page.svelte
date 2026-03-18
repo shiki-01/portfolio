@@ -3,5 +3,5 @@
 </script>
 
 <div class="w:100dvw h:calc(100dvh-{height}px) pb:{height}px justify-content:center ai:center flex">
-    {@render children?.()}
+	{@render children?.()}
 </div>

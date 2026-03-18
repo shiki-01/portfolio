@@ -164,7 +164,10 @@
 	class="scroll-wrapper w:100vw h:100vh overflow-y:auto overflow-x:hidden"
 	style="position: fixed; inset: 0;"
 >
-	<main bind:this={mainContainer} class="w:100dvw h:auto flex:column justify-content:center ai:center flex">
+	<main
+		bind:this={mainContainer}
+		class="w:100dvw h:auto flex:column justify-content:center ai:center flex"
+	>
 		{#if pageNumber.subscribe((v) => v === 1)}
 			<div
 				class="w:100% h:100% bg:#153F63 fg:#ffffff flex:column justify-content:center ai:center flex"

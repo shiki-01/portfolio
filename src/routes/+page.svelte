@@ -63,7 +63,7 @@
 					どこにでもいる普通の高校生<br /><br />
 					Web 系を中心としたフルスタックエンジニアを目指している<br />
 					デザインの分野にも興味があるためやりたいことの収集がつかなくなっている<br /><br />
-                    API が完全な型をもって実装できることが最近の幸せ
+					API が完全な型をもって実装できることが最近の幸せ
 				</p>
 			</div>
 		</div>
@@ -72,7 +72,7 @@
 		<div class="w:100% h:100% flex ai:center jc:center flex:column pt:100px gap:60px">
 			<h1 class="text:4em text-align:center font:thin line-h:1em uppercase w:100%">works</h1>
 			<div class="flex flex:wrap w:100% h:100% px:100px gap:40px ai:center jc:center">
-				{#each works.contents.slice(0,3) as work}
+				{#each works.contents.slice(0, 3) as work}
 					<WorksBox
 						id={work.id}
 						title={work.title}

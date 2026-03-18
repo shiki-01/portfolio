@@ -14,13 +14,13 @@
 	];
 
 	onMount(() => {
-        scrollContainer = document.querySelector('.scroll-wrapper');
-        if (scrollContainer) {
-            scrollContainer.addEventListener('scroll', () => {
-                scrollY = scrollContainer!.scrollTop;
-            });
-        }
-    });
+		scrollContainer = document.querySelector('.scroll-wrapper');
+		if (scrollContainer) {
+			scrollContainer.addEventListener('scroll', () => {
+				scrollY = scrollContainer!.scrollTop;
+			});
+		}
+	});
 </script>
 
 <header
