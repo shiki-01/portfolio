@@ -29,7 +29,7 @@
 		<p class="text:3em line-h:1.4em font:thin">好きに、<br />自由に。</p>
 	</Page>
 	<Page>
-		<div class="w:100% h:100% grid-template-columns:1fr|1fr grid">
+		<div class="w:100% h:100% grid-template-columns:1fr|1fr grid px:100px">
 			<div class="w:100% h:100% rel justify-content:center ai:center flex">
 				<span class="circle"></span>
 				<span class="circle circle2"></span>
@@ -69,10 +69,10 @@
 		</div>
 	</Page>
 	<Page>
-		<div class="w:100% h:100% flex ai:center jc:center flex:column pt:100px gap:100px">
+		<div class="w:100% h:100% flex ai:center jc:center flex:column pt:100px gap:60px">
 			<h1 class="text:4em text-align:center font:thin line-h:1em uppercase w:100%">works</h1>
 			<div class="flex flex:wrap w:100% h:100% px:100px gap:40px ai:center jc:center">
-				{#each works.contents.slice(0,6) as work}
+				{#each works.contents.slice(0,3) as work}
 					<WorksBox
 						id={work.id}
 						title={work.title}
@@ -81,6 +81,9 @@
 						tags={work.tags}
 					/>
 				{/each}
+			</div>
+			<div>
+				<a class="f:2em font-weight:100 uppercase" href="/works">more</a>
 			</div>
 		</div>
 	</Page>
