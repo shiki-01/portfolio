@@ -176,7 +176,6 @@
 		bind:this={backEl}
 		class="fixed back top:0 left:0 w:100dvw h:100dvh overflow:hidden flex:column justify-content:center ai:center flex"
 	>
-		<img src={outline} class="w:600px opacity:0.2" alt="logo outline" />
 		<span class="circle circle1"></span>
 		<span class="circle circle2"></span>
 		<span class="circle circle3"></span>

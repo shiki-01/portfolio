@@ -39,7 +39,14 @@
 		"@iconify/svelte": "^4.2.0",
 		"@master/css": "^2.0.0-rc.68",
 		"@master/css.vite": "^2.0.0-rc.68",
+		"@types/node": "^25.5.0",
+		"@types/sanitize-html": "^2.16.1",
 		"gsap": "^3.14.2",
-		"lenis": "^1.3.17"
+		"lenis": "^1.3.17",
+		"microcms-js-sdk": "^3.3.0",
+		"sanitize-html": "^2.17.2",
+		"sass": "^1.98.0",
+		"sass-embedded": "^1.98.0",
+		"svelte-meta-tags": "^4.5.0"
 	}
 }

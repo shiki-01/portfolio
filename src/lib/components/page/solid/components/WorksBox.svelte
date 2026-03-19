@@ -6,7 +6,7 @@
 		_description: string;
 		tags: string[];
 	};
-	let { title, src, id, _description, tags }: Props = $props();
+	let { title, src, id, _description, tags: _tags }: Props = $props();
 	let height = 168.75;
 </script>
 
@@ -48,16 +48,23 @@
 				<td></td>
 				<td></td>
 			</tr>
-			<tr class="h:2em">
+			<tr class="h:2.4em">
 				<td></td>
-				<td class="flex h:2em">
-					<div class="bg:#153F63 flex ai:center w:100%">
-						<h2 class="f:1em">{title}</h2>
-						<!-- <div>
-                            {#each tags as tag}
-                                <a href={"/" + tag}>{tag}</a>
-                            {/each}
-                        </div> -->
+				<td class="h:2.4em">
+					<div class="h:100% px:10px|8px flex ai:center jc:space-between gap:10px">
+						<a
+							href={'/works/' + id}
+							class="f:clamp(1em,1vw,1.2em) line-h:1 c:#fff text-decoration:none text-transform:capitalize"
+						>
+							{title}
+						</a>
+						<a
+							href={'/works/' + id}
+							class="c:#fff f:14px ls:0.02em text-decoration:none line-h:1"
+							aria-label={title + ' detail'}
+						>
+							&lt;/&gt;
+						</a>
 					</div>
 				</td>
 				<td></td>
@@ -116,7 +123,7 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		font-size: 10px;
+		font-size: 12px;
 		color: #ffffff50;
 		border-bottom: 1px solid #ffffff50;
 	}

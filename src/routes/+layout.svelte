@@ -196,7 +196,7 @@
 		width: 100%;
 	}
 	:global(body) {
-		font-family: 'Noto Sans JP', sans-serif;
+		font-family: 'LINE Seed JP', 'Noto Sans JP', sans-serif;
 		touch-action: pan-y;
 	}
 	:global(*) {

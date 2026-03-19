@@ -3,7 +3,7 @@
 	import Icon from '@iconify/svelte';
 	import icon from '$lib/assets/img/myicon.png';
 	import WorksBox from '$lib/components/page/solid/components/WorksBox.svelte';
-	import works from '$lib/assets/mocks/works.json';
+	import works from '$lib/assets/mocks/works-list.json';
 
 	const icons = [
 		{

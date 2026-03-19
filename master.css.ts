@@ -1,3 +1,9 @@
 import type { Config } from '@master/css';
 
-export default {} as Config;
+export default {
+    variables: {
+        'font-family': {
+            'JetBrainsMono': 'JetBrains Mono' 
+        }
+    }
+} as Config;
