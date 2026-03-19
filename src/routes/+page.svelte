@@ -106,8 +106,10 @@
 		border-radius: 50%;
 		width: 255px;
 		height: 255px;
-		top: calc(0);
-		left: calc(0);
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		pointer-events: none;
 	}
 
 	.circle2 {
