@@ -9,20 +9,45 @@ const USE_MOCKS =
 	viteEnv?.VITE_USE_MOCKS === 'true' ||
 	process.env.NODE_ENV === 'development';
 
+const getCredentials = () => ({
+	serviceDomain:
+		process.env.MICROCMS_SERVICE_DOMAIN ??
+		process.env.VITE_MICROCMS_SERVICE_DOMAIN ??
+		viteEnv?.VITE_MICROCMS_SERVICE_DOMAIN ??
+		'',
+	apiKey:
+		process.env.MICROCMS_API_KEY ??
+		process.env.VITE_MICROCMS_API_KEY ??
+		viteEnv?.VITE_MICROCMS_API_KEY ??
+		''
+});
+
+const hasMicroCMSCredentials = () => {
+	const { serviceDomain, apiKey } = getCredentials();
+	return Boolean(serviceDomain && apiKey);
+};
+
+let hasWarnedMockFallback = false;
+
+const shouldUseMocks = () => {
+	if (USE_MOCKS) return true;
+	if (hasMicroCMSCredentials()) return false;
+
+	if (!hasWarnedMockFallback) {
+		hasWarnedMockFallback = true;
+		console.warn(
+			'[microCMS] Credentials are missing. Falling back to mock data for build/runtime safety.'
+		);
+	}
+
+	return true;
+};
+
 let client: ReturnType<typeof createClient> | null = null;
 
 function getMicroCMSClient() {
 	if (!client) {
-		const serviceDomain =
-			process.env.MICROCMS_SERVICE_DOMAIN ??
-			process.env.VITE_MICROCMS_SERVICE_DOMAIN ??
-			viteEnv?.VITE_MICROCMS_SERVICE_DOMAIN ??
-			'';
-		const apiKey =
-			process.env.MICROCMS_API_KEY ??
-			process.env.VITE_MICROCMS_API_KEY ??
-			viteEnv?.VITE_MICROCMS_API_KEY ??
-			'';
+		const { serviceDomain, apiKey } = getCredentials();
 
 		if (!serviceDomain || !apiKey) {
 			throw new Error(
@@ -42,7 +67,7 @@ export async function getServerContentList<T extends keyof EndPoints['gets']>(
 	key: T,
 	queries?: MicroCMSQueries
 ): Promise<EndPoints['gets'][T]> {
-	if (USE_MOCKS) {
+	if (shouldUseMocks()) {
 		switch (key) {
 			case 'works':
 				return workssList as never;
@@ -63,7 +88,7 @@ export async function getServerContentDetail<T extends keyof EndPoints['get']>(
 	id: string,
 	queries: MicroCMSQueries = {}
 ): Promise<EndPoints['get'][T]> {
-	if (USE_MOCKS) {
+	if (shouldUseMocks()) {
 		switch (key) {
 			case 'works':
 				return worksDetail as never;
@@ -86,7 +111,7 @@ export async function getServerDraftContentDetail<T extends keyof EndPoints['get
 	draftKey: string,
 	queries: MicroCMSQueries = {}
 ): Promise<EndPoints['get'][T]> {
-	if (USE_MOCKS && !draftKey) {
+	if (shouldUseMocks() && !draftKey) {
 		switch (key) {
 			case 'works':
 				return worksDetail as never;
