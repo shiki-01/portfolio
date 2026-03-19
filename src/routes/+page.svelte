@@ -30,7 +30,7 @@
 	</Page>
 	<Page>
 		<div class="w:100% h:100% grid-template-columns:1fr|1fr grid px:100px">
-			<div class="w:100% h:100% rel justify-content:center ai:center flex">
+			<div class="w:100% h:100% justify-content:center ai:center flex icon-wrap">
 				<span class="circle"></span>
 				<span class="circle circle2"></span>
 				<img src={icon} alt="My Icon" class="w:240px h:240px object:cover r:full overflow:hidden" />
@@ -100,6 +100,10 @@
 </div>
 
 <style>
+	.icon-wrap {
+		position: relative;
+	}
+
 	.circle {
 		position: absolute;
 		border: 1px solid #fff;
