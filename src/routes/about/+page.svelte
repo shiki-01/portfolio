@@ -97,18 +97,18 @@
 					class="w:100% h:100% px:20px flex:column gap:80px justify-content:center align-items:start flex intro-content"
 				>
 					<div class="flex flex:column gap:20px">
-						<h1 class="text:4em font:thin line-h:1em uppercase">shiki</h1>
-						<div class="text:20px flex:row flex:wrap gap:20px flex social-list">
+						<h1 class="text:3em font:thin line-h:1em uppercase">shiki</h1>
+						<div class="flex:row flex:wrap gap:20px gap-y:12px@<md flex">
 							{#each icons as { title, icon, link }}
 								<a
 									href={link}
 									target="_blank"
 									rel="noopener noreferrer"
-									class="mb:10px flex:row ai:center gap:4px b:1px|solid|#fff px:16px py:8px bg:#fff:hover fg:#153F63:hover transition:background-color|0.3s flex rounded"
+									class="mb:10px flex:row ai:center gap:4px gap:2px@<md b:1px|solid|#fff px:16px py:8px pl:10px@<md pr:8px@<md py:4px@<md bg:#fff:hover fg:#153F63:hover transition:background-color|0.3s flex rounded"
 								>
-									<Icon class="text:24px mr:10px" {icon} />
+									<Icon class="text:24px text:20px@<md mr:10px" {icon} />
 									<div class="flex:row gap:2px ai:center flex">
-										<span class="text:18px">
+										<span class="text:18px text:12px@<md">
 											{title}
 										</span>
 										<Icon icon="mdi-light:arrow-up" width="30" height="30" class="rotate(45deg)" />
@@ -128,7 +128,7 @@
 		</Page>
 		<Page>
 			<div class="w:100% h:100% flex:column ai:center pt:100px gap:80px flex">
-				<Title>skills</Title>
+				<Title class="f:.8em">skills</Title>
 				<div
 					bind:this={skillsListEl}
 					class="w:100% flex:column ai:center gap:0 flex rel"
@@ -142,7 +142,7 @@
 						>
 							{#each row as skill, colIndex}
 								<span
-									class="w:92px p:20px flex position:relative transform-origin:center transition:transform|0.24s|ease will-change:transform"
+									class="w:92px p:20px w:82px@<md flex position:relative transform-origin:center transition:transform|0.24s|ease will-change:transform"
 									role="button"
 									tabindex="0"
 									aria-label={`${skill.name} (${skill.id})`}

@@ -4,6 +4,7 @@
 	import { initCSSRuntime } from '@master/css-runtime';
 	import masterCssConfig from 'virtual:master-css-config';
 	import SolidHome from '$lib/components/page/solid/Home.svelte';
+	import SeoJsonLd from '$lib/components/SeoJsonLd.svelte';
 	import { page } from '$app/state';
 	import { setupViewTransition } from 'sveltekit-view-transition';
 	import { lenis as lenisStore, pageNumber } from '$lib';
@@ -18,8 +19,12 @@
 		type SeoData
 	} from '$lib/utils/seo';
 
-	if (typeof document !== 'undefined') {
-		initCSSRuntime(masterCssConfig);
+	if (typeof window !== 'undefined') {
+		const win = window as Window & { __MASTER_CSS_RUNTIME_INITIALIZED__?: boolean };
+		if (!win.__MASTER_CSS_RUNTIME_INITIALIZED__) {
+			initCSSRuntime(masterCssConfig);
+			win.__MASTER_CSS_RUNTIME_INITIALIZED__ = true;
+		}
 	}
 
 	setupViewTransition();
@@ -194,12 +199,9 @@
 		<meta property="article:modified_time" content={seo.modifiedTime} />
 	{/if}
 
-	{#each jsonLdBlocks as _jsonLd}
-		<script type="application/ld+json">
-			{JSON.stringify(jsonLd)}
-		</script>
-	{/each}
 </svelte:head>
+
+<SeoJsonLd blocks={jsonLdBlocks} />
 
 <svelte:window
 	oncontextmenu={(e) => {

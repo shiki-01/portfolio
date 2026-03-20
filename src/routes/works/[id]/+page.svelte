@@ -26,7 +26,7 @@
 </script>
 
 <section
-	class="rel w:min(1220px,calc(100%-20px)) my:160px mx:auto px:100px px:60px@<md px:20px@<sm"
+	class="rel my:160px mx:auto px:100px px:60px@<md px:20px@<sm"
 >
 	<Title class="abs top:-6em left:0">works</Title>
 	<div

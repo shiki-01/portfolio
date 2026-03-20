@@ -135,7 +135,7 @@
 	</Page>
 	<Page>
 		<div class="w:100% h:100% flex:column ai:center pt:100px gap:80px flex">
-			<Title>skills</Title>
+			<Title class="f:.8em">skills</Title>
 			<div
 				bind:this={skillsListEl}
 				class="w:100% flex:column ai:center gap:0 flex rel"
