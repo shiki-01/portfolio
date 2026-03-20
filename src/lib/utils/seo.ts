@@ -1,4 +1,4 @@
-export const SITE_NAME = 'Shiki Portfolio';
+export const SITE_NAME = 'shiki Portfolio';
 export const DEFAULT_LOCALE = 'ja_JP';
 export const DEFAULT_SEO_IMAGE = '/og/default-1200x630.png';
 
