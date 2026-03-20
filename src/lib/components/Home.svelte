@@ -5,7 +5,6 @@
 	import WorksBox from '$lib/components/page/solid/components/WorksBox.svelte';
 	import works from '$lib/assets/mocks/works-list.json';
 	import WorksWindow from '$lib/components/page/solid/components/WorksWindow.svelte';
-	import Title from '$lib/components/page/solid/components/Title.svelte';
 
 	const icons = [
 		{
@@ -92,10 +91,14 @@
 		</div>
 	</Page>
 	<Page>
-		<Title>skills</Title>
+		<div class="w:100% h:100% flex ai:start jc:center pt:100px simple-heading-wrap">
+			<h1 class="text:4em font:thin line-h:1em uppercase section-title">skills</h1>
+		</div>
 	</Page>
 	<Page>
-		<Title>blogs</Title>
+		<div class="w:100% h:100% flex ai:start jc:center pt:100px simple-heading-wrap">
+			<h1 class="text:4em font:thin line-h:1em uppercase section-title">blogs</h1>
+		</div>
 	</Page>
 </div>
 
@@ -184,6 +187,10 @@
 
 		.works-inner {
 			padding: 0 12px;
+		}
+
+		.simple-heading-wrap {
+			padding-top: 64px;
 		}
 	}
 </style>

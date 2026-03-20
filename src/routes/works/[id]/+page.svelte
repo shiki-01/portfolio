@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { PageData } from './$types';
 	import '$lib/styles/blog.scss';
+	import Title from '$lib/components/page/solid/components/Title.svelte';
 
 	let { data }: { data: PageData } = $props();
 
@@ -27,7 +28,7 @@
 <section
 	class="rel w:min(1220px,calc(100%-20px)) my:160px mx:auto @min-900:w:min(1220px,calc(100%-32px)) @min-900:mt:100px @min-900:mb:180px work-detail-section"
 >
-	<h1 class="abs top:-1.4em left:0 text:4em text-align:center font:thin line-h:1em uppercase w:100% work-detail-title">works</h1>
+	<Title class="abs top:-6em left:0">works</Title>
 	<div
 		class="abs w:100% h:100% top:10px right:-10px bottom:-10px left:10px z:0 bg:#153f63 b:1px|solid|#fff r:15px @min-900:top:14px @min-900:right:-14px @min-900:bottom:-14px @min-900:left:14px"
 		aria-hidden="true"
@@ -134,11 +135,6 @@
 		margin-bottom: clamp(120px, 13vw, 180px);
 	}
 
-	.work-detail-title {
-		font-size: clamp(2rem, 7vw, 4rem);
-		top: -1.3em;
-	}
-
 	@media (max-width: 960px) {
 		.detail-grid {
 			grid-template-columns: 1fr;
@@ -150,10 +146,6 @@
 	}
 
 	@media (max-width: 768px) {
-		.work-detail-title {
-			top: -1.55em;
-		}
-
 		.detail-body {
 			padding: 14px;
 		}

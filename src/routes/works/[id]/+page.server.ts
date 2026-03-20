@@ -1,11 +1,38 @@
 import type { EntryGenerator, PageServerLoad } from './$types';
 import { getServerContentDetail, getServerContentList } from '$lib/server/microcms.server';
-import sanitizeHtml from 'sanitize-html';
+
+type SanitizeHtmlFn = ((dirty: string, options?: Record<string, unknown>) => string) & {
+	simpleTransform: (
+		tagName: string,
+		attribs: Record<string, string>,
+		merge?: boolean
+	) => (tagName: string, attribs: Record<string, string>) => { tagName: string; attribs: Record<string, string> };
+};
+
+let sanitizeHtmlFn: SanitizeHtmlFn | null | undefined;
+
+const getSanitizeHtml = async () => {
+	if (sanitizeHtmlFn !== undefined) {
+		return sanitizeHtmlFn;
+	}
+
+	try {
+		const mod = await import('sanitize-html');
+		sanitizeHtmlFn = ((mod as { default?: unknown }).default ?? mod) as SanitizeHtmlFn;
+	} catch (error) {
+		console.warn('[works/[id]] sanitize-html is unavailable. Skip sanitization.', error);
+		sanitizeHtmlFn = null;
+	}
+
+	return sanitizeHtmlFn;
+};
 
 export const prerender = true;
 
-const sanitizeDescription = (html?: string): string => {
+const sanitizeDescription = async (html?: string): Promise<string> => {
 	if (!html) return '';
+	const sanitizeHtml = await getSanitizeHtml();
+	if (!sanitizeHtml) return html;
 
 	return sanitizeHtml(html, {
 		allowedTags: [
@@ -63,7 +90,7 @@ export const load: PageServerLoad = async ({ params }) => {
 	const res = await getServerContentDetail('works', id);
 	const safeDetail = {
 		...res,
-		description: sanitizeDescription(res.description)
+		description: await sanitizeDescription(res.description)
 	};
 
 	return {
