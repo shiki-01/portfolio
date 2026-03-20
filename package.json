@@ -12,7 +12,8 @@
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"format": "prettier --write .",
 		"lint": "prettier --check . && eslint .",
-		"deploy": "npm run create-empty-mocks && vite build && wrangler pages deploy"
+		"deploy": "npm run create-empty-mocks && vite build",
+		"deploy:wrangler": "npm run create-empty-mocks && vite build && wrangler pages deploy"
 	},
 	"devDependencies": {
 		"@eslint/compat": "^1.2.8",
