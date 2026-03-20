@@ -1,7 +1,6 @@
 <script lang="ts">
 	import '../app.css';
 	import SolidHome from '$lib/components/page/solid/Home.svelte';
-	import '@fontsource-variable/noto-sans-jp';
 	import { page } from '$app/state';
 	import { setupViewTransition } from 'sveltekit-view-transition';
 	import { lenis as lenisStore, pageNumber } from '$lib';
@@ -178,23 +177,33 @@
 			</div>
 		{:else if $pageNumber === 2}
 			<div class="w:100% h:100dvh flex flex:column ai:center jc:center overflow:hidden">
-				<!-- {#await import('$lib/components/ThreeModelViewer.svelte') then module}
+				{#await import('$lib/components/ThreeModelViewer.svelte') then module}
 					{@const ThreeModelViewer = module.default}
-					<ThreeModelViewer
-						modelSrc={computerModel}
-						noiseStrength={0.2}
-						chromaticAberration={0.004}
-						distortionStrength={0.08}
-						vignetteStrength={0.6}
-						exposure={1}
-					>
+					{#await import('$lib/assets/models/computer.glb') then computerModule}
+						{@const computerModel = computerModule.default}
+						<ThreeModelViewer
+							modelSrc={computerModel}
+							noiseStrength={0.2}
+							chromaticAberration={0.004}
+							distortionStrength={0.08}
+							vignetteStrength={0.6}
+							exposure={1}
+						>
+							<div
+								style="width:100%;height:100%;display:flex;flex-direction:column;padding:28px;box-sizing:border-box;background:#0f172a;color:#fff;font-family:'LINE Seed JP',sans-serif;"
+							>
+								<h2 style="margin:0 0 10px;font-size:56px;line-height:1.1;">Shiki</h2>
+								{@render children()}
+							</div>
+						</ThreeModelViewer>
+					{:catch _error}
 						<div
 							style="width:100%;height:100%;display:flex;flex-direction:column;padding:28px;box-sizing:border-box;background:#0f172a;color:#fff;font-family:'LINE Seed JP',sans-serif;"
 						>
 							<h2 style="margin:0 0 10px;font-size:56px;line-height:1.1;">Shiki</h2>
 							{@render children()}
 						</div>
-					</ThreeModelViewer>
+					{/await}
 				{:catch _error}
 					<div
 						style="width:100%;height:100%;display:flex;flex-direction:column;padding:28px;box-sizing:border-box;background:#0f172a;color:#fff;font-family:'LINE Seed JP',sans-serif;"
@@ -202,7 +211,7 @@
 						<h2 style="margin:0 0 10px;font-size:56px;line-height:1.1;">Shiki</h2>
 						{@render children()}
 					</div>
-				{/await} -->
+				{/await}
 			</div>
 		{:else if $pageNumber === 3}
 			{@render children()}

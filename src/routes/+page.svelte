@@ -3,9 +3,11 @@
 	import Icon from '@iconify/svelte';
 	import icon from '$lib/assets/img/myicon.png';
 	import WorksBox from '$lib/components/page/solid/components/WorksBox.svelte';
-	import works from '$lib/assets/mocks/works-list.json';
 	import WorksWindow from '$lib/components/page/solid/components/WorksWindow.svelte';
 	import Title from '$lib/components/page/solid/components/Title.svelte';
+	import type { PageData } from './$types';
+
+	let { data }: { data: PageData } = $props();
 
 	const icons = [
 		{
@@ -77,12 +79,12 @@
 			</h1>
 			<div class="flex w:100% px:100px works-inner">
 				<WorksWindow title={'/GET/ENTRIES/WORKS'}>
-					{#each (works.contents ?? []).slice(0, 3) as work}
+					{#each data.worksList.contents.slice(0, 3) as work}
 						<WorksBox
 							id={work.id}
 							title={work.title}
-							_description={work.description}
-							src={work.image.url}
+							_description={work.description || ''}
+							src={work.image?.url || ''}
 							tags={work.tags}
 						/>
 					{/each}
