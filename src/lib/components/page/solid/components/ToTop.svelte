@@ -313,7 +313,10 @@
 			</svg>
 		</span>
 
-		<span class="abs w:60px w:48px@<md bottom:8px bottom:4px@<md left:50% translateX(-50%)" aria-hidden="true">
+		<span
+			class="abs w:60px w:48px@<md bottom:8px bottom:4px@<md left:50% translateX(-50%)"
+			aria-hidden="true"
+		>
 			<img bind:this={logoEl} src={logoSymbolSmall} class="w:100%" alt="logo symbol" />
 		</span>
 

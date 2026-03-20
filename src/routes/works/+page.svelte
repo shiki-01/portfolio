@@ -7,9 +7,7 @@
 	let { data }: { data: PageData } = $props();
 </script>
 
-<section
-	class="rel w:100% px:80px px:60px@<md px:25px@<sm my:160px mx:auto"
->
+<section class="rel w:100% px:80px px:60px@<md px:25px@<sm my:160px mx:auto">
 	<Title class="abs top:-6em left:0">works</Title>
 	<WorksWindow title={'/GET/ENTRIES/WORKS'}>
 		{#if data.worksList}

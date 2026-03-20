@@ -48,10 +48,7 @@
 			TOOLTIP_MARGIN + halfWidth,
 			skillsListEl.clientWidth - TOOLTIP_MARGIN - halfWidth
 		);
-		const left = Math.min(
-			Math.max(centerX, TOOLTIP_MARGIN + halfWidth),
-			maxLeft
-		);
+		const left = Math.min(Math.max(centerX, TOOLTIP_MARGIN + halfWidth), maxLeft);
 		const placeBelow = rect.top - TOOLTIP_ESTIMATED_HEIGHT - TOOLTIP_MARGIN < 0;
 
 		tooltipPos = {
@@ -86,14 +83,22 @@
 
 <div class="w:100%">
 	<Page height={100}>
-		<p class="text:3em line-h:1.4em font:thin font-size:clamp(2rem,6vw,3em)">好きに、<br />自由に。</p>
+		<p class="text:3em line-h:1.4em font:thin font-size:clamp(2rem,6vw,3em)">
+			好きに、<br />自由に。
+		</p>
 	</Page>
 	<Page>
-		<div class="w:100% h:100% grid grid-template-columns:1fr|1fr grid-template-columns:1fr@<md grid-template-rows:120px|1fr@<md gap:60px@<md pt:100px@<md px:100px px:40px@<md">
+		<div
+			class="w:100% h:100% grid grid-template-columns:1fr|1fr grid-template-columns:1fr@<md grid-template-rows:120px|1fr@<md gap:60px@<md pt:100px@<md px:100px px:40px@<md"
+		>
 			<div class="w:100% h:100% justify-content:center ai:center flex rel profile-media">
 				<span class="circle w:255px w:135px@<md square"></span>
 				<span class="circle w:280px w:165px@<md square"></span>
-				<img src={icon} alt="My Icon" class="w:240px w:120px@<md square object:cover r:full overflow:hidden" />
+				<img
+					src={icon}
+					alt="My Icon"
+					class="w:240px w:120px@<md square object:cover r:full overflow:hidden"
+				/>
 			</div>
 			<div
 				class="w:100% h:100% px:20px px:12px@<md flex:column gap:80px justify-content:center align-items:start flex intro-content"
@@ -131,7 +136,12 @@
 	<Page>
 		<div class="w:100% h:100% flex:column ai:center pt:100px gap:80px flex">
 			<Title>skills</Title>
-			<div bind:this={skillsListEl} class="w:100% flex:column ai:center gap:0 flex rel" role="list" aria-label="skills">
+			<div
+				bind:this={skillsListEl}
+				class="w:100% flex:column ai:center gap:0 flex rel"
+				role="list"
+				aria-label="skills"
+			>
 				{#each skillsIconRows as row, rowIndex}
 					<div class="flex flex:row flex:wrap jc:center ai:center gap:0 skill-row" role="listitem">
 						{#each row as skill, colIndex}

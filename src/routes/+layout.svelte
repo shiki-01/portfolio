@@ -7,6 +7,13 @@
 	import { afterNavigate } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import Lenis from 'lenis';
+	import {
+		DEFAULT_LOCALE,
+		DEFAULT_SEO_IMAGE,
+		SITE_NAME,
+		toAbsoluteUrl,
+		type SeoData
+	} from '$lib/utils/seo';
 
 	setupViewTransition();
 
@@ -15,6 +22,25 @@
 
 	const _link = $derived(page.url.pathname);
 	const computerModelPath = '/computer.glb';
+	const defaultDescription =
+		'shikiのポートフォリオサイト。制作実績・スキル・プロフィールを掲載しています。';
+	const defaultKeywords = ['portfolio', 'ポートフォリオ', 'SvelteKit', 'TypeScript', 'Web制作'];
+
+	const seo = $derived(((page.data as { seo?: SeoData } | undefined)?.seo ?? {}) as SeoData);
+	const resolvedTitle = $derived(seo.title ? `${seo.title} | ${SITE_NAME}` : SITE_NAME);
+	const resolvedDescription = $derived(seo.description || defaultDescription);
+	const resolvedCanonical = $derived(toAbsoluteUrl(seo.path || page.url.pathname));
+	const resolvedImage = $derived(toAbsoluteUrl(seo.image || DEFAULT_SEO_IMAGE));
+	const resolvedType = $derived(seo.type || 'website');
+	const resolvedKeywords = $derived(
+		(seo.keywords?.length ? seo.keywords : defaultKeywords).join(', ')
+	);
+	const robotsContent = $derived(
+		seo.noindex ? 'noindex, nofollow, noarchive' : 'index, follow, max-image-preview:large'
+	);
+	const jsonLdBlocks = $derived(
+		Array.isArray(seo.jsonLd) ? seo.jsonLd : seo.jsonLd ? [seo.jsonLd] : []
+	);
 
 	let mainContainer: HTMLElement | null = null;
 
@@ -132,6 +158,41 @@
 		};
 	});
 </script>
+
+<svelte:head>
+	<title>{resolvedTitle}</title>
+	<meta name="description" content={resolvedDescription} />
+	<meta name="keywords" content={resolvedKeywords} />
+	<meta name="robots" content={robotsContent} />
+	<link rel="canonical" href={resolvedCanonical} />
+
+	<meta property="og:site_name" content={SITE_NAME} />
+	<meta property="og:locale" content={DEFAULT_LOCALE} />
+	<meta property="og:type" content={resolvedType} />
+	<meta property="og:title" content={resolvedTitle} />
+	<meta property="og:description" content={resolvedDescription} />
+	<meta property="og:url" content={resolvedCanonical} />
+	<meta property="og:image" content={resolvedImage} />
+	<meta property="og:image:alt" content={resolvedTitle} />
+
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:title" content={resolvedTitle} />
+	<meta name="twitter:description" content={resolvedDescription} />
+	<meta name="twitter:image" content={resolvedImage} />
+
+	{#if seo.publishedTime}
+		<meta property="article:published_time" content={seo.publishedTime} />
+	{/if}
+	{#if seo.modifiedTime}
+		<meta property="article:modified_time" content={seo.modifiedTime} />
+	{/if}
+
+	{#each jsonLdBlocks as _jsonLd}
+		<script type="application/ld+json">
+			{JSON.stringify(jsonLd)}
+		</script>
+	{/each}
+</svelte:head>
 
 <svelte:window
 	oncontextmenu={(e) => {

@@ -1,5 +1,6 @@
 import type { EntryGenerator, PageServerLoad } from './$types';
 import { getServerContentDetail, getServerContentList } from '$lib/server/microcms.server';
+import { clampDescription, toAbsoluteUrl, stripHtml } from '$lib/utils/seo';
 
 type SanitizeHtmlFn = ((dirty: string, options?: Record<string, unknown>) => string) & {
 	simpleTransform: (
@@ -96,7 +97,46 @@ export const load: PageServerLoad = async ({ params }) => {
 		description: await sanitizeDescription(res.description)
 	};
 
+	const rawTextDescription = stripHtml(
+		res.description || res.content || `${res.title} の制作実績ページです。`
+	);
+	const seoDescription = clampDescription(
+		rawTextDescription || `${res.title} の制作実績ページです。`
+	);
+	const coverImageUrl =
+		(Array.isArray(res.image)
+			? res.image[0]?.url
+			: (res.image as { url?: string } | undefined)?.url) || '/og/works-1200x630.png';
+	const canonicalPath = `/works/${id}`;
+
+	const structuredData = {
+		'@context': 'https://schema.org',
+		'@type': 'CreativeWork',
+		name: res.title,
+		description: seoDescription,
+		url: toAbsoluteUrl(canonicalPath),
+		image: toAbsoluteUrl(coverImageUrl),
+		datePublished: res.publishedAt,
+		dateModified: res.updatedAt,
+		keywords: res.tags || [],
+		author: {
+			'@type': 'Person',
+			name: 'Shiki'
+		}
+	};
+
 	return {
-		detail: safeDetail
+		detail: safeDetail,
+		seo: {
+			title: res.title,
+			description: seoDescription,
+			path: canonicalPath,
+			image: coverImageUrl,
+			type: 'article',
+			keywords: ['制作実績', 'Works', ...(res.tags || [])],
+			publishedTime: res.publishedAt,
+			modifiedTime: res.updatedAt,
+			jsonLd: structuredData
+		}
 	};
 };

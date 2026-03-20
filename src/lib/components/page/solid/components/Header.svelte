@@ -54,7 +54,12 @@
 			<span class="menu-line menu-line-bottom"></span>
 		</button>
 	</div>
-	<nav id="header-main-nav" class="main-nav min-w:100%@<md gap:32px flex" aria-label="Main navigation" data-open={isMenuOpen}>
+	<nav
+		id="header-main-nav"
+		class="main-nav min-w:100%@<md gap:32px flex"
+		aria-label="Main navigation"
+		data-open={isMenuOpen}
+	>
 		{#each links as link}
 			<a class="nav-link" href={link.href} onclick={() => (isMenuOpen = false)}>{link.title}</a>
 		{/each}
@@ -70,7 +75,9 @@
 		padding: 0 30px;
 		position: sticky;
 		top: 0;
-		transition: height 0.3s ease, padding 0.3s ease;
+		transition:
+			height 0.3s ease,
+			padding 0.3s ease;
 	}
 
 	.header-top {
@@ -108,7 +115,10 @@
 		height: 2px;
 		background-color: currentColor;
 		transform-origin: center;
-		transition: transform 0.24s ease, top 0.24s ease, opacity 0.24s ease;
+		transition:
+			transform 0.24s ease,
+			top 0.24s ease,
+			opacity 0.24s ease;
 	}
 
 	.menu-line-top {

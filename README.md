@@ -1,5 +1,27 @@
 # sv
 
+## SEO setup (portfolio)
+
+This project now includes site-wide SEO metadata, structured data, `robots.txt`, and `sitemap.xml`.
+
+### Required environment variable
+
+Set the production domain with a public env var:
+
+```bash
+PUBLIC_SITE_URL=https://your-domain.example
+```
+
+### Required OGP images
+
+Place these files under `static/og/` (1200x630 recommended):
+
+- `static/og/default-1200x630.png`
+- `static/og/home-1200x630.png`
+- `static/og/about-1200x630.png`
+- `static/og/works-1200x630.png`
+- `static/og/blogs-1200x630.png`
+
 Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
 
 ## Creating a project

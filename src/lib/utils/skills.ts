@@ -64,7 +64,12 @@ const skillsIconRows: SkillItem[][] = [
 			id: 'sk-blender',
 			note: '3Dで表現の幅を広げる。'
 		},
-		{ icon: 'devicon-plain:fusion', name: 'Autodesk Fusion', id: 'sk-fusion', note: '3Dモデリングも。' },
+		{
+			icon: 'devicon-plain:fusion',
+			name: 'Autodesk Fusion',
+			id: 'sk-fusion',
+			note: '3Dモデリングも。'
+		},
 		{ icon: 'simple-icons:krita', name: 'Krita', id: 'sk-krita', note: 'イラスト制作に使う。' },
 		{
 			icon: 'simple-icons:adobeillustrator',
@@ -182,6 +187,4 @@ const getSkillTransform = (
 	return `translate(${offsetX}px, ${offsetY}px) scale(${SKILL_OTHER_SCALE})`;
 };
 
-export {
-    skillsIconRows, getSkillTransform
-}
+export { skillsIconRows, getSkillTransform };
