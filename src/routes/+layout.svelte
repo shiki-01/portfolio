@@ -8,7 +8,6 @@
 	import { afterNavigate } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import Lenis from 'lenis';
-	import computerModel from '$lib/assets/models/computer.glb';
 
 	setupViewTransition();
 
@@ -179,7 +178,7 @@
 			</div>
 		{:else if $pageNumber === 2}
 			<div class="w:100% h:100dvh flex flex:column ai:center jc:center overflow:hidden">
-				{#await import('$lib/components/ThreeModelViewer.svelte') then module}
+				<!-- {#await import('$lib/components/ThreeModelViewer.svelte') then module}
 					{@const ThreeModelViewer = module.default}
 					<ThreeModelViewer
 						modelSrc={computerModel}
@@ -203,7 +202,7 @@
 						<h2 style="margin:0 0 10px;font-size:56px;line-height:1.1;">Shiki</h2>
 						{@render children()}
 					</div>
-				{/await}
+				{/await} -->
 			</div>
 		{:else if $pageNumber === 3}
 			{@render children()}
