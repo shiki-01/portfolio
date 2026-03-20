@@ -20,6 +20,7 @@
 		"@sveltejs/adapter-cloudflare": "^5.1.0",
 		"@sveltejs/kit": "^2.20.7",
 		"@sveltejs/vite-plugin-svelte": "^5.0.0",
+		"@types/three": "^0.183.1",
 		"autoprefixer": "^10.4.21",
 		"eslint": "^9.25.1",
 		"eslint-config-prettier": "^9.1.0",
@@ -43,11 +44,13 @@
 		"@types/node": "^25.5.0",
 		"@types/sanitize-html": "^2.16.1",
 		"gsap": "^3.14.2",
+		"html2canvas": "^1.4.1",
 		"lenis": "^1.3.17",
 		"microcms-js-sdk": "^3.3.0",
 		"sanitize-html": "^2.17.2",
 		"sass": "^1.98.0",
 		"sass-embedded": "^1.98.0",
-		"svelte-meta-tags": "^4.5.0"
+		"svelte-meta-tags": "^4.5.0",
+		"three": "^0.183.2"
 	}
 }

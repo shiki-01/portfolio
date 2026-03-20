@@ -8,6 +8,9 @@
 	import { afterNavigate } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import Lenis from 'lenis';
+	import computerModel from '$lib/assets/models/computer.glb';
+	import ThreeModelViewer from '$lib/components/ThreeModelViewer.svelte';
+	import Icon from '@iconify/svelte';
 
 	setupViewTransition();
 
@@ -150,6 +153,24 @@
 			lenisStore.set(null);
 		};
 	});
+
+	const icons = [
+		{
+			title: '@shiki-01',
+			link: 'https://github.com/shiki-01',
+			icon: 'simple-icons:github'
+		},
+		{
+			title: '@shiki__01',
+			link: 'https://twitter.com/shiki__01',
+			icon: 'simple-icons:x'
+		},
+		{
+			title: '@shiki-01',
+			link: 'https://www.youtube.com/@shiki-01',
+			icon: 'simple-icons:youtube'
+		}
+	];
 </script>
 
 <svelte:window
@@ -161,14 +182,14 @@
 <div
 	id="scroll-container"
 	bind:this={scrollContainer}
-	class="scroll-wrapper w:100% h:100% overflow-y:auto overflow-x:hidden"
+	class="scroll-wrapper w:100% min-h:100dvh overflow-y:auto overflow-x:hidden"
 	style="position: fixed; inset: 0;"
 >
 	<main
 		bind:this={mainContainer}
 		class="w:100% h:auto flex:column justify-content:center ai:center flex"
 	>
-		{#if pageNumber.subscribe((v) => v === 1)}
+		{#if $pageNumber === 1}
 			<div
 				class="w:100% h:100% bg:#153F63 fg:#ffffff flex:column justify-content:center ai:center flex"
 			>
@@ -176,11 +197,27 @@
 					{@render children()}
 				</SolidHome>
 			</div>
-		{:else if pageNumber.subscribe((v) => v === 2)}
+		{:else if $pageNumber === 2}
+			<div class="w:100% h:100dvh flex flex:column ai:center jc:center overflow:hidden">
+				<ThreeModelViewer
+					modelSrc={computerModel}
+					noiseStrength={0.2}
+					chromaticAberration={0.004}
+					distortionStrength={0.08}
+					vignetteStrength={0.6}
+					exposure={1}
+				>
+					<div
+						style="width:100%;height:100%;display:flex;flex-direction:column;padding:28px;box-sizing:border-box;background:#0f172a;color:#fff;font-family:'LINE Seed JP',sans-serif;"
+					>
+						<h2 style="margin:0 0 10px;font-size:56px;line-height:1.1;">Shiki</h2>
+						{@render children()}
+					</div>
+				</ThreeModelViewer>
+			</div>
+		{:else if $pageNumber === 3}
 			{@render children()}
-		{:else if pageNumber.subscribe((v) => v === 3)}
-			{@render children()}
-		{:else if pageNumber.subscribe((v) => v === 4)}
+		{:else if $pageNumber === 4}
 			{@render children()}
 		{/if}
 	</main>
