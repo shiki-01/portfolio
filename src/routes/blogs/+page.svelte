@@ -6,7 +6,7 @@
 <Page height={100}>
 	<div class="w:100% h:100% flex flex:column justify-content:center ai:center page-shell">
 		<Title>blogs</Title>
-		<p class="text:2em font:thin page-subtitle">Now Loading...</p>
+		<p class="text:2em font:thin page-subtitle">Coming Soon...</p>
 	</div>
 </Page>
 

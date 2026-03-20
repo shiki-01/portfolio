@@ -64,8 +64,8 @@ const skillsIconRows: SkillItem[][] = [
 			id: 'sk-blender',
 			note: '3Dで表現の幅を広げる。'
 		},
-		{ icon: 'simple-icons:autocad', name: 'AutoCAD', id: 'sk-autocad', note: '図面も読める。' },
-		{ icon: 'simple-icons:krita', name: 'Krita', id: 'sk-krita', note: 'ラフ制作に使う。' },
+		{ icon: 'devicon-plain:fusion', name: 'Autodesk Fusion', id: 'sk-fusion', note: '3Dモデリングも。' },
+		{ icon: 'simple-icons:krita', name: 'Krita', id: 'sk-krita', note: 'イラスト制作に使う。' },
 		{
 			icon: 'simple-icons:adobeillustrator',
 			name: 'Illustrator',
@@ -84,7 +84,7 @@ const skillsIconRows: SkillItem[][] = [
 			id: 'sk-davinci',
 			note: '映像編集も対応。'
 		},
-		{ icon: 'devicon-plain:opencv', name: 'OpenCV', id: 'sk-opencv', note: '画像処理も試す。' }
+		{ icon: 'devicon-plain:opencv', name: 'OpenCV', id: 'sk-opencv', note: '画像処理も。' }
 	],
 	[
 		{ icon: 'simple-icons:github', name: 'GitHub', id: 'sk-github', note: '開発のハブ。' },
@@ -92,7 +92,7 @@ const skillsIconRows: SkillItem[][] = [
 			icon: 'mdi:microsoft-visual-studio-code',
 			name: 'VS Code',
 			id: 'sk-vscode',
-			note: '主戦場エディタ。'
+			note: '主戦力エディタ。'
 		},
 		{ icon: 'simple-icons:unity', name: 'Unity', id: 'sk-unity', note: 'ゲーム制作も経験。' },
 		{
@@ -107,7 +107,7 @@ const skillsIconRows: SkillItem[][] = [
 			id: 'sk-arduino',
 			note: 'ハード連携が楽しい。'
 		},
-		{ icon: 'mdi:aws', name: 'AWS', id: 'sk-aws', note: 'クラウド基盤も触る。' },
+		{ icon: 'mdi:aws', name: 'AWS', id: 'sk-aws', note: 'クラウド基盤もさわる。' },
 		{ icon: 'simple-icons:docker', name: 'Docker', id: 'sk-docker', note: '環境差分をなくす。' },
 		{ icon: 'simple-icons:linux', name: 'Linux', id: 'sk-linux', note: 'CLI作業が得意。' }
 	]

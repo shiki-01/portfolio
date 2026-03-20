@@ -26,11 +26,11 @@
 </script>
 
 <section
-	class="rel w:min(1220px,calc(100%-20px)) my:160px mx:auto @min-900:w:min(1220px,calc(100%-32px))"
+	class="rel w:min(1220px,calc(100%-20px)) my:160px mx:auto px:100px px:60px@<md px:20px@<md"
 >
 	<Title class="abs top:-6em left:0">works</Title>
 	<div
-		class="abs w:100% h:100% top:10px right:-10px bottom:-10px left:10px z:0 bg:#153f63 b:1px|solid|#fff r:15px @min-900:top:14px @min-900:right:-14px @min-900:bottom:-14px @min-900:left:14px"
+		class="abs w:calc(100%-200px) w:calc(100%-120px)@<md w:calc(100%-40px)@<sm h:100% top:10px left:calc(50%+10px) translateX(-50%) z:0 bg:#153f63 b:1px|solid|#fff r:15px @min-900:top:14px @min-900:right:-14px @min-900:bottom:-14px @min-900:left:14px"
 		aria-hidden="true"
 	></div>
 	<div class="rel z:1 overflow:hidden bg:#153f63 b:1px|solid|#fff r:10px">
