@@ -167,7 +167,7 @@
 	<Page>
 		<div class="w:100% h:100% flex ai:center jc:center flex:column py:100px gap:60px">
 			<Title>works</Title>
-			<div class="flex w:100% px:100px px:24px@<sm px:60px@<md px:100px@<lg">
+			<div class="flex w:100% px:240px px:24px@<sm px:60px@<md">
 				<WorksWindow title={'/GET/ENTRIES/WORKS'}>
 					{#each data.worksList.contents.slice(0, 3) as work}
 						<WorksBox
