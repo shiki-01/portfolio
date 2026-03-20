@@ -6,26 +6,11 @@
 	import WorksWindow from '$lib/components/page/solid/components/WorksWindow.svelte';
 	import Title from '$lib/components/page/solid/components/Title.svelte';
 	import type { PageData } from './$types';
+	import { skillsIconRows, getSkillTransform } from '$lib/utils/skills';
+	import { icons } from '$lib/utils/const';
 
 	let { data }: { data: PageData } = $props();
-
-	const icons = [
-		{
-			title: '@shiki-01',
-			link: 'https://github.com/shiki-01',
-			icon: 'simple-icons:github'
-		},
-		{
-			title: '@shiki__01',
-			link: 'https://twitter.com/shiki__01',
-			icon: 'simple-icons:x'
-		},
-		{
-			title: '@shiki-01',
-			link: 'https://www.youtube.com/@shiki-01',
-			icon: 'simple-icons:youtube'
-		}
-	];
+	let hoveredSkill: { row: number; col: number } | null = $state(null);
 </script>
 
 <div class="w:100%">
@@ -73,7 +58,42 @@
 		</div>
 	</Page>
 	<Page>
-		<div class="w:100% h:100% flex ai:center jc:center flex:column pt:100px gap:60px works-section">
+		<div class="w:100% h:100% flex:column ai:center pt:100px gap:80px flex">
+			<Title>skills</Title>
+			<div class="w:100% flex:column ai:center gap:0 flex" role="list" aria-label="skills">
+				{#each skillsIconRows as row, rowIndex}
+					<div class="flex flex:row jc:center ai:center gap:0 skill-row" role="listitem">
+						{#each row as skill, colIndex}
+							<span
+								class="w:92px p:20px flex position:relative transform-origin:center transition:transform|0.24s|ease will-change:transform"
+								role="button"
+								tabindex="0"
+								aria-label={`${skill.name} (${skill.id})`}
+								onmouseenter={() => (hoveredSkill = { row: rowIndex, col: colIndex })}
+								onmouseleave={() => (hoveredSkill = null)}
+								onfocus={() => (hoveredSkill = { row: rowIndex, col: colIndex })}
+								onblur={() => (hoveredSkill = null)}
+								style={`transform: ${getSkillTransform(hoveredSkill, rowIndex, colIndex, row.length)}`}
+							>
+								<Icon icon={skill.icon} width="100%" height="100%" />
+								{#if hoveredSkill?.row === rowIndex && hoveredSkill?.col === colIndex}
+									<span
+										class="abs left:50% bottom:calc(100%+4px) translateX(-50%) flex flex:column ai:flex-start gap:2px min-w:180px h:100% px:12px py:10px r:12px bg:rgba(10,18,30,0.94) b:1px|solid|rgba(255,255,255,0.24) fg:#fff f:12px line-h:1.35 shadow:0|8px|20px|rgba(0,0,0,0.34) z:5 pointer-events:none"
+									>
+										<strong class="f:13px font-weight:600">{skill.name}</strong>
+										<small class="opacity:.8 f:11px ls:0.04em">{skill.id}</small>
+										<span>{skill.note}</span>
+									</span>
+								{/if}
+							</span>
+						{/each}
+					</div>
+				{/each}
+			</div>
+		</div>
+	</Page>
+	<Page>
+		<div class="w:100% h:100% flex ai:center jc:center flex:column py:100px gap:60px works-section">
 			<h1 class="text:4em text-align:center font:thin line-h:1em uppercase w:100% section-title">
 				works
 			</h1>
@@ -95,12 +115,9 @@
 			</div>
 		</div>
 	</Page>
-	<Page>
-		<Title>skills</Title>
-	</Page>
-	<Page>
+	<!-- <Page>
 		<Title>blogs</Title>
-	</Page>
+	</Page> -->
 </div>
 
 <style>

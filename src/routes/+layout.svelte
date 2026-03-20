@@ -13,26 +13,7 @@
 	let { children } = $props();
 	let scrollContainer: HTMLDivElement | null = null;
 
-	const pages = [
-		{
-			title: 'Home',
-			href: '/'
-		},
-		{
-			title: 'About',
-			href: '/about'
-		},
-		{
-			title: 'Works',
-			href: '/works'
-		},
-		{
-			title: 'Blogs',
-			href: '/blogs'
-		}
-	];
-
-	const link = $derived(page.url.pathname);
+	const _link = $derived(page.url.pathname);
 	const computerModelPath = '/computer.glb';
 
 	let mainContainer: HTMLElement | null = null;

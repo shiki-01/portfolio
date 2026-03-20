@@ -184,79 +184,77 @@
 		class="w:100% h:100% z:2 flex:column justify-content:center align-items:start flex"
 	>
 		{@render children()}
-		<footer class="bg:#153F63 fg:#ffffff bt:1px|solid|#fff justify-content:center ai:center flex">
-			<Page height={80}>
+		<footer class="w:100% pt:20px bg:#153F63 fg:#ffffff bt:1px|solid|#fff justify-content:center ai:center flex">
+			<div
+				class="w:100% h:100% p:40px flex:column justify-content:space-between ai:center flex footer-inner"
+			>
 				<div
-					class="w:100% h:100% p:40px flex:column justify-content:space-between ai:center flex footer-inner"
+					class="w:100% flex:column justify-content:space-between align-items:start gap:40px px:16px flex flex-wrap footer-content"
 				>
 					<div
-						class="w:100% flex:column justify-content:space-between align-items:start gap:40px px:16px flex flex-wrap footer-content"
+						class="w:100% h:60px flex:row justify-content:start ai:center gap:16px footer-logo-wrap"
 					>
-						<div
-							class="w:100% h:60px flex:row justify-content:start ai:center gap:16px footer-logo-wrap"
-						>
-							<img src={logo} alt="Logo" class="w:auto h:100% object:cover" />
-						</div>
-						<div class="w:100% px:40px grid-template-columns:1fr|1fr|1fr gap:40px grid footer-grid">
-							<div class="flex:column gap:8px flex">
-								<h2 class="text:2em font:thin mb:8px uppercase">site map</h2>
-								<div class="flex:column pl:12px gap:16px flex">
-									<a href="/" class="text:18px fg:#fff:hover underline:hover transition:color|0.2s"
-										>Home</a
-									>
-									<a
-										href="/about"
-										class="text:18px fg:#fff:hover underline:hover transition:color|0.2s">About</a
-									>
-									<a
-										href="/works"
-										class="text:18px fg:#fff:hover underline:hover transition:color|0.2s">Works</a
-									>
-									<a
-										href="/blogs"
-										class="text:18px fg:#fff:hover underline:hover transition:color|0.2s">Blogs</a
-									>
-								</div>
-							</div>
-							<div class="flex:column gap:8px flex">
-								<h2 class="text:2em font:thin mb:8px uppercase">Contact</h2>
+						<img src={logo} alt="Logo" class="w:auto h:100% object:cover" />
+					</div>
+					<div class="w:100% px:40px grid-template-columns:1fr|1fr|1fr gap:40px grid footer-grid">
+						<div class="flex:column gap:8px flex">
+							<h2 class="text:2em font:thin mb:8px uppercase">site map</h2>
+							<div class="flex:column pl:12px gap:16px flex">
+								<a href="/" class="text:18px fg:#fff:hover underline:hover transition:color|0.2s"
+									>Home</a
+								>
 								<a
-									href="mailto:contact@shiki-01.com"
-									class="text:18px pl:12px fg:#fff:hover underline:hover transition:color|0.2s"
-									>contact@shiki-01.com</a
+									href="/about"
+									class="text:18px fg:#fff:hover underline:hover transition:color|0.2s">About</a
+								>
+								<a
+									href="/works"
+									class="text:18px fg:#fff:hover underline:hover transition:color|0.2s">Works</a
+								>
+								<a
+									href="/blogs"
+									class="text:18px fg:#fff:hover underline:hover transition:color|0.2s">Blogs</a
 								>
 							</div>
-							<div class="flex:column gap:8px flex">
-								<h2 class="text:2em font:thin mb:8px uppercase">Links</h2>
-								<div class="flex:column gap:8px pl:12px flex">
-									{#each icons as { title, icon, link }}
-										<a
-											href={link}
-											target="_blank"
-											rel="noopener noreferrer"
-											class="w:fit mb:10px flex:row ai:center gap:4px b:1px|solid|#fff px:16px py:8px bg:#fff:hover fg:#153F63:hover transition:background-color|0.3s flex rounded"
-										>
-											<Icon class="text:24px mr:10px" {icon} />
-											<div class="flex:row gap:2px ai:center flex">
-												<span class="text:18px">
-													{title}
-												</span>
-												<Icon
-													icon="mdi-light:arrow-up"
-													width="30"
-													height="30"
-													class="rotate(45deg)"
-												/>
-											</div>
-										</a>
-									{/each}
-								</div>
+						</div>
+						<div class="flex:column gap:8px flex">
+							<h2 class="text:2em font:thin mb:8px uppercase">Contact</h2>
+							<a
+								href="mailto:contact@shiki-01.com"
+								class="text:18px pl:12px fg:#fff:hover underline:hover transition:color|0.2s"
+								>contact@shiki-01.com</a
+							>
+						</div>
+						<div class="flex:column gap:8px flex">
+							<h2 class="text:2em font:thin mb:8px uppercase">Links</h2>
+							<div class="flex:column gap:8px pl:12px flex">
+								{#each icons as { title, icon, link }}
+									<a
+										href={link}
+										target="_blank"
+										rel="noopener noreferrer"
+										class="w:fit mb:10px flex:row ai:center gap:4px b:1px|solid|#fff px:16px py:8px bg:#fff:hover fg:#153F63:hover transition:background-color|0.3s flex rounded"
+									>
+										<Icon class="text:24px mr:10px" {icon} />
+										<div class="flex:row gap:2px ai:center flex">
+											<span class="text:18px">
+												{title}
+											</span>
+											<Icon
+												icon="mdi-light:arrow-up"
+												width="30"
+												height="30"
+												class="rotate(45deg)"
+											/>
+										</div>
+									</a>
+								{/each}
 							</div>
 						</div>
 					</div>
-					<p class="text:14px mt:24px fg:#bbb">© 2024 shiki-01</p>
 				</div>
-			</Page>
+				<p class="text:14px mt:40px fg:#bbb">© 2024 - 2026 shiki-01</p>
+			</div>
 		</footer>
 	</div>
 </div>
