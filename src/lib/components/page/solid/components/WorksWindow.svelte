@@ -15,7 +15,9 @@
 		>
 			{title}
 		</p>
-		<div class="flex flex:wrap jc:center gap:20px px:24px py:30px @min-900:px:20px works-window-body">
+		<div
+			class="flex flex:wrap jc:center gap:20px px:24px py:30px @min-900:px:20px works-window-body"
+		>
 			{@render children?.()}
 		</div>
 	</div>

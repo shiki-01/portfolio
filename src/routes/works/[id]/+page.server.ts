@@ -6,7 +6,10 @@ type SanitizeHtmlFn = ((dirty: string, options?: Record<string, unknown>) => str
 		tagName: string,
 		attribs: Record<string, string>,
 		merge?: boolean
-	) => (tagName: string, attribs: Record<string, string>) => { tagName: string; attribs: Record<string, string> };
+	) => (
+		tagName: string,
+		attribs: Record<string, string>
+	) => { tagName: string; attribs: Record<string, string> };
 };
 
 let sanitizeHtmlFn: SanitizeHtmlFn | null | undefined;

@@ -42,7 +42,9 @@
 		<div class="grid cols:1 gap:20px p:24px @min-900:px:24px detail-body">
 			<h1 class="f:clamp(24px,4.6vw,36px) font:thin line-h:1.2">{title}</h1>
 
-			<div class="grid grid-template-cols:1fr|500px @min-900:cols:2 gap:20px @min-900:ai:start detail-grid">
+			<div
+				class="grid grid-template-cols:1fr|500px @min-900:cols:2 gap:20px @min-900:ai:start detail-grid"
+			>
 				<div
 					class="b:1px|solid|#ffffff50 r:8px w:100% h:100% @min-900:h:338px overflow:hidden detail-image"
 				>
@@ -54,11 +56,7 @@
 							loading="lazy"
 						/>
 					{:else}
-						<div
-							class="w:100% h:100% flex ai:center jc:center f:14px opacity:.75"
-						>
-							image: TBD
-						</div>
+						<div class="w:100% h:100% flex ai:center jc:center f:14px opacity:.75">image: TBD</div>
 					{/if}
 				</div>
 

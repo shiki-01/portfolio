@@ -39,26 +39,26 @@ export type Blogs<T = 'get'> = Structure<
 		 * 本文
 		 */
 		content?: string;
-        /**
+		/**
 		 * 期間
 		 */
 		term?: string;
-        /**
+		/**
 		 * 担当
 		 */
 		role?: string;
-        /**
+		/**
 		 * 人数
 		 */
 		member?: number;
-        /**
+		/**
 		 * リンク
 		 */
 		link?: string;
-        /**
+		/**
 		 * GitHub
 		 */
-		"gh-repo"?: string;
+		'gh-repo'?: string;
 		/**
 		 * タグ
 		 */
@@ -66,7 +66,17 @@ export type Blogs<T = 'get'> = Structure<
 		/**
 		 * スキル
 		 */
-		skills: ('Illustrator' | 'AfterEffects' | 'Blender' | 'Figma' | 'TypeScript' | 'Svelte' | 'React' | 'Electron' | 'Tauri')[];
+		skills: (
+			| 'Illustrator'
+			| 'AfterEffects'
+			| 'Blender'
+			| 'Figma'
+			| 'TypeScript'
+			| 'Svelte'
+			| 'React'
+			| 'Electron'
+			| 'Tauri'
+		)[];
 		/**
 		 * 表示画像
 		 */

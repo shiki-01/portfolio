@@ -71,7 +71,9 @@
 	</Page>
 	<Page>
 		<div class="w:100% h:100% flex ai:center jc:center flex:column pt:100px gap:60px works-section">
-			<h1 class="text:4em text-align:center font:thin line-h:1em uppercase w:100% section-title">works</h1>
+			<h1 class="text:4em text-align:center font:thin line-h:1em uppercase w:100% section-title">
+				works
+			</h1>
 			<div class="flex w:100% px:100px works-inner">
 				<WorksWindow title={'/GET/ENTRIES/WORKS'}>
 					{#each works.contents.slice(0, 3) as work}
@@ -84,7 +86,7 @@
 						/>
 					{/each}
 					<div class="flex flex:column w:100% ai:center py:20px">
-							<a class="f:2em font-weight:100 uppercase" href="/works">more</a>
+						<a class="f:2em font-weight:100 uppercase" href="/works">more</a>
 					</div>
 				</WorksWindow>
 			</div>

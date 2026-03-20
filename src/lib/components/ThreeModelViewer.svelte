@@ -39,12 +39,12 @@
 		siteUrl: string;
 	};
 
-	type PanelDrawer = (
-		ctx: CanvasRenderingContext2D,
-		info: PanelDrawerContext
-	) => void;
+	type PanelDrawer = (ctx: CanvasRenderingContext2D, info: PanelDrawerContext) => void;
 
-	type PanelPointerDown = (point: { x: number; y: number }, info: PanelDrawerContext) => boolean | void;
+	type PanelPointerDown = (
+		point: { x: number; y: number },
+		info: PanelDrawerContext
+	) => boolean | void;
 
 	let {
 		children,
@@ -141,433 +141,443 @@
 		loader.load(
 			modelSrc,
 			(gltf: GLTF) => {
-			loadedModel = gltf.scene;
-			modelRoot.add(loadedModel);
-			debugText = 'model: loaded';
+				loadedModel = gltf.scene;
+				modelRoot.add(loadedModel);
+				debugText = 'model: loaded';
 
-			const box = new THREE.Box3().setFromObject(loadedModel);
-			const center = box.getCenter(new THREE.Vector3());
+				const box = new THREE.Box3().setFromObject(loadedModel);
+				const center = box.getCenter(new THREE.Vector3());
 
-			loadedModel.position.sub(center);
+				loadedModel.position.sub(center);
 
-			baseCameraPosition.set(1.5, 0.1, 0);
-			orbitBaseOffset.copy(baseCameraPosition).sub(baseLookAt);
-			camera.position.copy(baseCameraPosition);
-			camera.lookAt(baseLookAt);
+				baseCameraPosition.set(1.5, 0.1, 0);
+				orbitBaseOffset.copy(baseCameraPosition).sub(baseLookAt);
+				camera.position.copy(baseCameraPosition);
+				camera.lookAt(baseLookAt);
 
-			const allMeshes: THREE.Mesh[] = [];
-			loadedModel.traverse((obj) => {
-				const mesh = obj as THREE.Mesh;
-				if (mesh.isMesh) allMeshes.push(mesh);
-			});
-
-			const byMaterial = allMeshes.find((mesh) => {
-				const material = mesh.material;
-				if (Array.isArray(material)) {
-					return material.some(
-						(m) => normalizeName(m?.name ?? '') === normalizeName(SITE_EMBED.preferredMaterialName)
-					);
-				}
-				return normalizeName(material?.name ?? '') === normalizeName(SITE_EMBED.preferredMaterialName);
-			});
-
-			const byRootName = allMeshes.find(
-				(mesh) => normalizeName(mesh.name) === normalizeName(SITE_EMBED.targetRootName)
-			);
-
-			const byMeshName = allMeshes.find(
-				(mesh) => normalizeName(mesh.name) === normalizeName(SITE_EMBED.targetMeshName)
-			);
-
-			const byLooseRoot = allMeshes.find((mesh) =>
-				normalizeName(mesh.name).includes(normalizeName(SITE_EMBED.targetRootName))
-			);
-
-			const targetMesh = byMeshName ?? byMaterial ?? byRootName ?? byLooseRoot ?? allMeshes[0] ?? null;
-			if (!targetMesh) {
-				debugText = 'mesh: target not found';
-				console.warn('[ThreeModelViewer] target mesh not found');
-				return;
-			}
-			debugText = `mesh: ${targetMesh.name}`;
-
-			targetMesh.geometry.computeBoundingBox();
-			const localBox = targetMesh.geometry.boundingBox;
-			if (!localBox) {
-				debugText = 'mesh: no bounding box';
-				console.warn('[ThreeModelViewer] mesh has no bounding box');
-				return;
-			}
-
-			const size = localBox.getSize(new THREE.Vector3());
-			const centerLocal = localBox.getCenter(new THREE.Vector3());
-			const anchor = new THREE.Object3D();
-			const geometry = targetMesh.geometry as THREE.BufferGeometry;
-			if (!geometry.getAttribute('normal')) {
-				geometry.computeVertexNormals();
-			}
-
-			const posAttr = geometry.getAttribute('position') as THREE.BufferAttribute | undefined;
-			const normalAttr = geometry.getAttribute('normal') as THREE.BufferAttribute | undefined;
-
-			const normalLocal = new THREE.Vector3(0, 0, 1);
-			if (normalAttr && normalAttr.count > 0) {
-				normalLocal.set(0, 0, 0);
-				for (let i = 0; i < normalAttr.count; i++) {
-					normalLocal.x += normalAttr.getX(i);
-					normalLocal.y += normalAttr.getY(i);
-					normalLocal.z += normalAttr.getZ(i);
-				}
-				normalLocal.normalize();
-			}
-			if (normalLocal.lengthSq() < 1e-6) {
-				normalLocal.set(0, 0, 1);
-			}
-
-			const tangentA = new THREE.Vector3().crossVectors(normalLocal, new THREE.Vector3(0, 1, 0));
-			if (tangentA.lengthSq() < 1e-6) {
-				tangentA.set(1, 0, 0);
-			}
-			tangentA.normalize();
-			const tangentB = new THREE.Vector3().crossVectors(normalLocal, tangentA).normalize();
-
-			let minA = Infinity;
-			let maxA = -Infinity;
-			let minB = Infinity;
-			let maxB = -Infinity;
-			let maxN = -Infinity;
-			if (posAttr) {
-				const p = new THREE.Vector3();
-				const d = new THREE.Vector3();
-				for (let i = 0; i < posAttr.count; i++) {
-					p.set(posAttr.getX(i), posAttr.getY(i), posAttr.getZ(i));
-					d.copy(p).sub(centerLocal);
-					const a = d.dot(tangentA);
-					const b = d.dot(tangentB);
-					const n = d.dot(normalLocal);
-					if (a < minA) minA = a;
-					if (a > maxA) maxA = a;
-					if (b < minB) minB = b;
-					if (b > maxB) maxB = b;
-					if (n > maxN) maxN = n;
-				}
-			}
-
-			let planeWidth = Number.isFinite(maxA - minA) ? maxA - minA : size.x;
-			let planeHeight = Number.isFinite(maxB - minB) ? maxB - minB : size.y;
-			if (planeWidth <= 0) planeWidth = size.x;
-			if (planeHeight <= 0) planeHeight = size.y;
-
-			targetMesh.updateMatrixWorld(true);
-			const centerWorld = targetMesh.localToWorld(centerLocal.clone());
-			const normalWorld = normalLocal.clone().transformDirection(targetMesh.matrixWorld).normalize();
-			const toCamera = camera.position.clone().sub(centerWorld).normalize();
-			if (normalWorld.dot(toCamera) < 0) normalLocal.multiplyScalar(-1);
-
-			const surfacePush = Number.isFinite(maxN) ? maxN : 0;
-			anchor.position.copy(centerLocal);
-			anchor.quaternion.setFromUnitVectors(new THREE.Vector3(0, 0, 1), normalLocal.clone().normalize());
-			targetMesh.add(anchor);
-			targetMesh.updateMatrixWorld(true);
-			anchor.updateMatrixWorld(true);
-
-			const panelCanvas = document.createElement('canvas');
-			panelCanvas.width = SITE_EMBED.panelWidth;
-			panelCanvas.height = SITE_EMBED.panelHeight;
-			const ctx = panelCanvas.getContext('2d');
-			if (!ctx) {
-				debugText = 'panel: canvas context error';
-				return;
-			}
-
-			const buttons = [
-				{ label: 'Home', href: '/', x: 40, y: 170, w: 220, h: 76 },
-				{ label: 'Works', href: '/works', x: 280, y: 170, w: 220, h: 76 },
-				{ label: 'Blogs', href: '/blogs', x: 520, y: 170, w: 220, h: 76 }
-			];
-
-			const panelInfo: PanelDrawerContext = {
-				width: panelCanvas.width,
-				height: panelCanvas.height,
-				siteUrl
-			};
-
-			const hasSlot = !!children && !!slotHostEl;
-			let isSlotCapturePending = false;
-			let isSlotCapturing = false;
-
-			const drawPanelFromSlot = async () => {
-				if (!slotHostEl || !panelTexture || isSlotCapturing) return;
-				isSlotCapturing = true;
-				try {
-					const snapshot = await html2canvas(slotHostEl, {
-						backgroundColor: null,
-						logging: false,
-						useCORS: true,
-						scale: 1
-					});
-
-					ctx.clearRect(0, 0, panelCanvas.width, panelCanvas.height);
-					ctx.fillStyle = '#101726';
-					ctx.fillRect(0, 0, panelCanvas.width, panelCanvas.height);
-					ctx.drawImage(snapshot, 0, 0, panelCanvas.width, panelCanvas.height);
-					panelTexture.needsUpdate = true;
-					debugText = `panel: slot captured ${snapshot.width}x${snapshot.height}`;
-				} catch (error) {
-					debugText = 'panel: slot capture failed';
-					console.error('[ThreeModelViewer] slot capture failed:', error);
-				} finally {
-					isSlotCapturing = false;
-				}
-			};
-
-			const scheduleSlotCapture = () => {
-				if (!hasSlot || isSlotCapturePending) return;
-				isSlotCapturePending = true;
-				window.setTimeout(() => {
-					isSlotCapturePending = false;
-					void drawPanelFromSlot();
-				}, 32);
-			};
-			triggerSlotCapture = scheduleSlotCapture;
-
-			const drawPanel = () => {
-				if (hasSlot) {
-					scheduleSlotCapture();
-					return;
-				}
-
-				if (panelDrawer) {
-					panelDrawer(ctx, panelInfo);
-					return;
-				}
-
-				ctx.fillStyle = '#121826';
-				ctx.fillRect(0, 0, panelCanvas.width, panelCanvas.height);
-
-				ctx.strokeStyle = '#89a6ff';
-				ctx.lineWidth = 6;
-				ctx.strokeRect(3, 3, panelCanvas.width - 6, panelCanvas.height - 6);
-
-				ctx.fillStyle = '#f2f6ff';
-				ctx.font = '700 58px sans-serif';
-				ctx.fillText('3D Panel Active', 42, 96);
-
-				ctx.font = '500 28px sans-serif';
-				ctx.globalAlpha = 0.95;
-				ctx.fillText(`source: ${siteUrl}`, 44, 136);
-				ctx.globalAlpha = 1;
-
-				for (const btn of buttons) {
-					ctx.fillStyle = '#1f2a44';
-					ctx.strokeStyle = '#89a6ff';
-					ctx.lineWidth = 3;
-					ctx.fillRect(btn.x, btn.y, btn.w, btn.h);
-					ctx.strokeRect(btn.x, btn.y, btn.w, btn.h);
-					ctx.fillStyle = '#ffffff';
-					ctx.font = '600 34px sans-serif';
-					ctx.fillText(btn.label, btn.x + 52, btn.y + 49);
-				}
-
-				ctx.fillStyle = 'rgba(255, 0, 0, 0.92)';
-				ctx.fillRect(0, 0, 120, 72);
-				ctx.fillStyle = '#ffffff';
-				ctx.font = 'bold 26px sans-serif';
-				ctx.fillText('OK', 34, 48);
-			};
-
-			drawPanel();
-			panelTexture = new THREE.CanvasTexture(panelCanvas);
-			panelTexture.colorSpace = THREE.SRGBColorSpace;
-			panelTexture.needsUpdate = true;
-			if (hasSlot) {
-				scheduleSlotCapture();
-				const currentSlotHost = slotHostEl;
-				if (!currentSlotHost) {
-					debugText = 'panel: slot host missing';
-					return;
-				}
-				const observer = new MutationObserver(() => scheduleSlotCapture());
-				observer.observe(currentSlotHost, {
-					attributes: true,
-					childList: true,
-					subtree: true,
-					characterData: true
+				const allMeshes: THREE.Mesh[] = [];
+				loadedModel.traverse((obj) => {
+					const mesh = obj as THREE.Mesh;
+					if (mesh.isMesh) allMeshes.push(mesh);
 				});
-				cleanupSlotCapture = () => observer.disconnect();
-			}
 
-			const panelGeometry = new THREE.PlaneGeometry(
-				planeWidth,
-				planeHeight,
-				SITE_EMBED.surfaceSegmentsX,
-				SITE_EMBED.surfaceSegmentsY
-			);
-
-			const panelPos = panelGeometry.getAttribute('position') as THREE.BufferAttribute;
-			const projRaycaster = new THREE.Raycaster();
-			const normalWorldForProject = normalLocal
-				.clone()
-				.transformDirection(targetMesh.matrixWorld)
-				.normalize();
-
-			for (let i = 0; i < panelPos.count; i++) {
-				const vx = panelPos.getX(i);
-				const vy = panelPos.getY(i);
-				const probeCenterLocal = centerLocal
-					.clone()
-					.addScaledVector(tangentA, vx)
-					.addScaledVector(tangentB, vy);
-
-				const probeDistance = SITE_EMBED.surfaceProbeDistance;
-				const originFrontWorld = targetMesh.localToWorld(
-					probeCenterLocal.clone().addScaledVector(normalLocal, probeDistance)
-				);
-				const originBackWorld = targetMesh.localToWorld(
-					probeCenterLocal.clone().addScaledVector(normalLocal, -probeDistance)
-				);
-
-				projRaycaster.set(originFrontWorld, normalWorldForProject.clone().multiplyScalar(-1));
-				let hit = projRaycaster.intersectObject(targetMesh, false)[0] ?? null;
-
-				if (!hit) {
-					projRaycaster.set(originBackWorld, normalWorldForProject.clone());
-					hit = projRaycaster.intersectObject(targetMesh, false)[0] ?? null;
-				}
-
-				if (!hit) {
-					panelPos.setZ(i, surfacePush + SITE_EMBED.surfaceOffset);
-					continue;
-				}
-
-				const hitInAnchor = anchor.worldToLocal(hit.point.clone());
-				panelPos.setZ(i, hitInAnchor.z + SITE_EMBED.surfaceOffset);
-			}
-
-			panelPos.needsUpdate = true;
-			panelGeometry.computeVertexNormals();
-			const panelMaterial = new THREE.MeshBasicMaterial({
-				map: panelTexture,
-				transparent: false,
-				depthTest: false,
-				depthWrite: false,
-				side: THREE.DoubleSide,
-				toneMapped: false
-			});
-
-			panelMesh = new THREE.Mesh(panelGeometry, panelMaterial);
-			panelMesh.renderOrder = 999;
-
-			const pickPanelPoint = (clientX: number, clientY: number) => {
-				if (!panelMesh) return null;
-				const rect = renderCanvas.getBoundingClientRect();
-				ndc.x = ((clientX - rect.left) / rect.width) * 2 - 1;
-				ndc.y = -((clientY - rect.top) / rect.height) * 2 + 1;
-				raycaster.setFromCamera(ndc, camera);
-				const hits = raycaster.intersectObject(panelMesh, false);
-				if (!hits.length) return null;
-				const uv = hits[0].uv;
-				if (!uv) return null;
-				const px = uv.x * panelCanvas.width;
-				const py = (1 - uv.y) * panelCanvas.height;
-				return { px, py };
-			};
-
-			const onPointerDown = (event: PointerEvent) => {
-				if (!interactive || !panelMesh) return;
-				const point = pickPanelPoint(event.clientX, event.clientY);
-				if (!point) return;
-				const { px, py } = point;
-
-				if (hasSlot && slotHostEl) {
-					const hostRect = slotHostEl.getBoundingClientRect();
-					const clientX = hostRect.left + px;
-					const clientY = hostRect.top + py;
-					const interactiveEls = Array.from(
-						slotHostEl.querySelectorAll<HTMLElement>(
-							'a, button, input, textarea, select, [role="button"], [onclick], [data-clickable]'
-						)
+				const byMaterial = allMeshes.find((mesh) => {
+					const material = mesh.material;
+					if (Array.isArray(material)) {
+						return material.some(
+							(m) =>
+								normalizeName(m?.name ?? '') === normalizeName(SITE_EMBED.preferredMaterialName)
+						);
+					}
+					return (
+						normalizeName(material?.name ?? '') === normalizeName(SITE_EMBED.preferredMaterialName)
 					);
-					for (let i = interactiveEls.length - 1; i >= 0; i--) {
-						const el = interactiveEls[i];
-						if (el.hidden) continue;
-						const style = window.getComputedStyle(el);
-						if (style.display === 'none' || style.visibility === 'hidden') continue;
-						const rect = el.getBoundingClientRect();
-						const hit =
-							clientX >= rect.left &&
-							clientX <= rect.right &&
-							clientY >= rect.top &&
-							clientY <= rect.bottom;
-						if (!hit) continue;
+				});
 
-						const clickEvent = new MouseEvent('click', {
-							bubbles: true,
-							cancelable: true,
-							view: window,
-							clientX,
-							clientY
+				const byRootName = allMeshes.find(
+					(mesh) => normalizeName(mesh.name) === normalizeName(SITE_EMBED.targetRootName)
+				);
+
+				const byMeshName = allMeshes.find(
+					(mesh) => normalizeName(mesh.name) === normalizeName(SITE_EMBED.targetMeshName)
+				);
+
+				const byLooseRoot = allMeshes.find((mesh) =>
+					normalizeName(mesh.name).includes(normalizeName(SITE_EMBED.targetRootName))
+				);
+
+				const targetMesh =
+					byMeshName ?? byMaterial ?? byRootName ?? byLooseRoot ?? allMeshes[0] ?? null;
+				if (!targetMesh) {
+					debugText = 'mesh: target not found';
+					console.warn('[ThreeModelViewer] target mesh not found');
+					return;
+				}
+				debugText = `mesh: ${targetMesh.name}`;
+
+				targetMesh.geometry.computeBoundingBox();
+				const localBox = targetMesh.geometry.boundingBox;
+				if (!localBox) {
+					debugText = 'mesh: no bounding box';
+					console.warn('[ThreeModelViewer] mesh has no bounding box');
+					return;
+				}
+
+				const size = localBox.getSize(new THREE.Vector3());
+				const centerLocal = localBox.getCenter(new THREE.Vector3());
+				const anchor = new THREE.Object3D();
+				const geometry = targetMesh.geometry as THREE.BufferGeometry;
+				if (!geometry.getAttribute('normal')) {
+					geometry.computeVertexNormals();
+				}
+
+				const posAttr = geometry.getAttribute('position') as THREE.BufferAttribute | undefined;
+				const normalAttr = geometry.getAttribute('normal') as THREE.BufferAttribute | undefined;
+
+				const normalLocal = new THREE.Vector3(0, 0, 1);
+				if (normalAttr && normalAttr.count > 0) {
+					normalLocal.set(0, 0, 0);
+					for (let i = 0; i < normalAttr.count; i++) {
+						normalLocal.x += normalAttr.getX(i);
+						normalLocal.y += normalAttr.getY(i);
+						normalLocal.z += normalAttr.getZ(i);
+					}
+					normalLocal.normalize();
+				}
+				if (normalLocal.lengthSq() < 1e-6) {
+					normalLocal.set(0, 0, 1);
+				}
+
+				const tangentA = new THREE.Vector3().crossVectors(normalLocal, new THREE.Vector3(0, 1, 0));
+				if (tangentA.lengthSq() < 1e-6) {
+					tangentA.set(1, 0, 0);
+				}
+				tangentA.normalize();
+				const tangentB = new THREE.Vector3().crossVectors(normalLocal, tangentA).normalize();
+
+				let minA = Infinity;
+				let maxA = -Infinity;
+				let minB = Infinity;
+				let maxB = -Infinity;
+				let maxN = -Infinity;
+				if (posAttr) {
+					const p = new THREE.Vector3();
+					const d = new THREE.Vector3();
+					for (let i = 0; i < posAttr.count; i++) {
+						p.set(posAttr.getX(i), posAttr.getY(i), posAttr.getZ(i));
+						d.copy(p).sub(centerLocal);
+						const a = d.dot(tangentA);
+						const b = d.dot(tangentB);
+						const n = d.dot(normalLocal);
+						if (a < minA) minA = a;
+						if (a > maxA) maxA = a;
+						if (b < minB) minB = b;
+						if (b > maxB) maxB = b;
+						if (n > maxN) maxN = n;
+					}
+				}
+
+				let planeWidth = Number.isFinite(maxA - minA) ? maxA - minA : size.x;
+				let planeHeight = Number.isFinite(maxB - minB) ? maxB - minB : size.y;
+				if (planeWidth <= 0) planeWidth = size.x;
+				if (planeHeight <= 0) planeHeight = size.y;
+
+				targetMesh.updateMatrixWorld(true);
+				const centerWorld = targetMesh.localToWorld(centerLocal.clone());
+				const normalWorld = normalLocal
+					.clone()
+					.transformDirection(targetMesh.matrixWorld)
+					.normalize();
+				const toCamera = camera.position.clone().sub(centerWorld).normalize();
+				if (normalWorld.dot(toCamera) < 0) normalLocal.multiplyScalar(-1);
+
+				const surfacePush = Number.isFinite(maxN) ? maxN : 0;
+				anchor.position.copy(centerLocal);
+				anchor.quaternion.setFromUnitVectors(
+					new THREE.Vector3(0, 0, 1),
+					normalLocal.clone().normalize()
+				);
+				targetMesh.add(anchor);
+				targetMesh.updateMatrixWorld(true);
+				anchor.updateMatrixWorld(true);
+
+				const panelCanvas = document.createElement('canvas');
+				panelCanvas.width = SITE_EMBED.panelWidth;
+				panelCanvas.height = SITE_EMBED.panelHeight;
+				const ctx = panelCanvas.getContext('2d');
+				if (!ctx) {
+					debugText = 'panel: canvas context error';
+					return;
+				}
+
+				const buttons = [
+					{ label: 'Home', href: '/', x: 40, y: 170, w: 220, h: 76 },
+					{ label: 'Works', href: '/works', x: 280, y: 170, w: 220, h: 76 },
+					{ label: 'Blogs', href: '/blogs', x: 520, y: 170, w: 220, h: 76 }
+				];
+
+				const panelInfo: PanelDrawerContext = {
+					width: panelCanvas.width,
+					height: panelCanvas.height,
+					siteUrl
+				};
+
+				const hasSlot = !!children && !!slotHostEl;
+				let isSlotCapturePending = false;
+				let isSlotCapturing = false;
+
+				const drawPanelFromSlot = async () => {
+					if (!slotHostEl || !panelTexture || isSlotCapturing) return;
+					isSlotCapturing = true;
+					try {
+						const snapshot = await html2canvas(slotHostEl, {
+							backgroundColor: null,
+							logging: false,
+							useCORS: true,
+							scale: 1
 						});
-						el.dispatchEvent(clickEvent);
-						triggerSlotCapture?.();
+
+						ctx.clearRect(0, 0, panelCanvas.width, panelCanvas.height);
+						ctx.fillStyle = '#101726';
+						ctx.fillRect(0, 0, panelCanvas.width, panelCanvas.height);
+						ctx.drawImage(snapshot, 0, 0, panelCanvas.width, panelCanvas.height);
+						panelTexture.needsUpdate = true;
+						debugText = `panel: slot captured ${snapshot.width}x${snapshot.height}`;
+					} catch (error) {
+						debugText = 'panel: slot capture failed';
+						console.error('[ThreeModelViewer] slot capture failed:', error);
+					} finally {
+						isSlotCapturing = false;
+					}
+				};
+
+				const scheduleSlotCapture = () => {
+					if (!hasSlot || isSlotCapturePending) return;
+					isSlotCapturePending = true;
+					window.setTimeout(() => {
+						isSlotCapturePending = false;
+						void drawPanelFromSlot();
+					}, 32);
+				};
+				triggerSlotCapture = scheduleSlotCapture;
+
+				const drawPanel = () => {
+					if (hasSlot) {
+						scheduleSlotCapture();
 						return;
 					}
-				}
 
-				if (panelPointerDown) {
-					const handled = panelPointerDown({ x: px, y: py }, panelInfo);
-					if (handled) return;
-				}
-				for (const btn of buttons) {
-					const hit = px >= btn.x && px <= btn.x + btn.w && py >= btn.y && py <= btn.y + btn.h;
-					if (hit) {
-						window.location.assign(btn.href);
-						break;
+					if (panelDrawer) {
+						panelDrawer(ctx, panelInfo);
+						return;
 					}
+
+					ctx.fillStyle = '#121826';
+					ctx.fillRect(0, 0, panelCanvas.width, panelCanvas.height);
+
+					ctx.strokeStyle = '#89a6ff';
+					ctx.lineWidth = 6;
+					ctx.strokeRect(3, 3, panelCanvas.width - 6, panelCanvas.height - 6);
+
+					ctx.fillStyle = '#f2f6ff';
+					ctx.font = '700 58px sans-serif';
+					ctx.fillText('3D Panel Active', 42, 96);
+
+					ctx.font = '500 28px sans-serif';
+					ctx.globalAlpha = 0.95;
+					ctx.fillText(`source: ${siteUrl}`, 44, 136);
+					ctx.globalAlpha = 1;
+
+					for (const btn of buttons) {
+						ctx.fillStyle = '#1f2a44';
+						ctx.strokeStyle = '#89a6ff';
+						ctx.lineWidth = 3;
+						ctx.fillRect(btn.x, btn.y, btn.w, btn.h);
+						ctx.strokeRect(btn.x, btn.y, btn.w, btn.h);
+						ctx.fillStyle = '#ffffff';
+						ctx.font = '600 34px sans-serif';
+						ctx.fillText(btn.label, btn.x + 52, btn.y + 49);
+					}
+
+					ctx.fillStyle = 'rgba(255, 0, 0, 0.92)';
+					ctx.fillRect(0, 0, 120, 72);
+					ctx.fillStyle = '#ffffff';
+					ctx.font = 'bold 26px sans-serif';
+					ctx.fillText('OK', 34, 48);
+				};
+
+				drawPanel();
+				panelTexture = new THREE.CanvasTexture(panelCanvas);
+				panelTexture.colorSpace = THREE.SRGBColorSpace;
+				panelTexture.needsUpdate = true;
+				if (hasSlot) {
+					scheduleSlotCapture();
+					const currentSlotHost = slotHostEl;
+					if (!currentSlotHost) {
+						debugText = 'panel: slot host missing';
+						return;
+					}
+					const observer = new MutationObserver(() => scheduleSlotCapture());
+					observer.observe(currentSlotHost, {
+						attributes: true,
+						childList: true,
+						subtree: true,
+						characterData: true
+					});
+					cleanupSlotCapture = () => observer.disconnect();
 				}
-			};
 
-			const onWheel = (event: WheelEvent) => {
-				if (!interactive || !slotHostEl || !hasSlot) return;
-				const point = pickPanelPoint(event.clientX, event.clientY);
-				if (!point) return;
+				const panelGeometry = new THREE.PlaneGeometry(
+					planeWidth,
+					planeHeight,
+					SITE_EMBED.surfaceSegmentsX,
+					SITE_EMBED.surfaceSegmentsY
+				);
 
-				event.preventDefault();
-				slotHostEl.scrollTop += event.deltaY;
-				slotHostEl.scrollLeft += event.deltaX;
-				triggerSlotCapture?.();
-			};
+				const panelPos = panelGeometry.getAttribute('position') as THREE.BufferAttribute;
+				const projRaycaster = new THREE.Raycaster();
+				const normalWorldForProject = normalLocal
+					.clone()
+					.transformDirection(targetMesh.matrixWorld)
+					.normalize();
 
-			const onPointerMove = (event: PointerEvent) => {
-				const rect = renderCanvas.getBoundingClientRect();
-				if (!rect.width || !rect.height) return;
-				const nx = ((event.clientX - rect.left) / rect.width) * 2 - 1;
-				const ny = -((event.clientY - rect.top) / rect.height) * 2 + 1;
-				pointerTargetX = THREE.MathUtils.clamp(nx, -1, 1);
-				pointerTargetY = THREE.MathUtils.clamp(ny, -1, 1);
-			};
+				for (let i = 0; i < panelPos.count; i++) {
+					const vx = panelPos.getX(i);
+					const vy = panelPos.getY(i);
+					const probeCenterLocal = centerLocal
+						.clone()
+						.addScaledVector(tangentA, vx)
+						.addScaledVector(tangentB, vy);
 
-			const onPointerLeave = () => {
-				pointerTargetX = 0;
-				pointerTargetY = 0;
-			};
+					const probeDistance = SITE_EMBED.surfaceProbeDistance;
+					const originFrontWorld = targetMesh.localToWorld(
+						probeCenterLocal.clone().addScaledVector(normalLocal, probeDistance)
+					);
+					const originBackWorld = targetMesh.localToWorld(
+						probeCenterLocal.clone().addScaledVector(normalLocal, -probeDistance)
+					);
 
-			renderCanvas.addEventListener('pointerdown', onPointerDown);
-			renderCanvas.addEventListener('wheel', onWheel, { passive: false });
-			renderCanvas.addEventListener('pointermove', onPointerMove);
-			renderCanvas.addEventListener('pointerleave', onPointerLeave);
+					projRaycaster.set(originFrontWorld, normalWorldForProject.clone().multiplyScalar(-1));
+					let hit = projRaycaster.intersectObject(targetMesh, false)[0] ?? null;
 
-			debugText = `panel: canvas mounted ${panelCanvas.width}x${panelCanvas.height}`;
-			console.log('[ThreeModelViewer] target mesh:', targetMesh.name);
+					if (!hit) {
+						projRaycaster.set(originBackWorld, normalWorldForProject.clone());
+						hit = projRaycaster.intersectObject(targetMesh, false)[0] ?? null;
+					}
 
-			anchor.add(panelMesh);
+					if (!hit) {
+						panelPos.setZ(i, surfacePush + SITE_EMBED.surfaceOffset);
+						continue;
+					}
 
-			cleanupPanelInteraction = () => {
-				renderCanvas.removeEventListener('pointerdown', onPointerDown);
-				renderCanvas.removeEventListener('wheel', onWheel);
-				renderCanvas.removeEventListener('pointermove', onPointerMove);
-				renderCanvas.removeEventListener('pointerleave', onPointerLeave);
-			};
+					const hitInAnchor = anchor.worldToLocal(hit.point.clone());
+					panelPos.setZ(i, hitInAnchor.z + SITE_EMBED.surfaceOffset);
+				}
+
+				panelPos.needsUpdate = true;
+				panelGeometry.computeVertexNormals();
+				const panelMaterial = new THREE.MeshBasicMaterial({
+					map: panelTexture,
+					transparent: false,
+					depthTest: false,
+					depthWrite: false,
+					side: THREE.DoubleSide,
+					toneMapped: false
+				});
+
+				panelMesh = new THREE.Mesh(panelGeometry, panelMaterial);
+				panelMesh.renderOrder = 999;
+
+				const pickPanelPoint = (clientX: number, clientY: number) => {
+					if (!panelMesh) return null;
+					const rect = renderCanvas.getBoundingClientRect();
+					ndc.x = ((clientX - rect.left) / rect.width) * 2 - 1;
+					ndc.y = -((clientY - rect.top) / rect.height) * 2 + 1;
+					raycaster.setFromCamera(ndc, camera);
+					const hits = raycaster.intersectObject(panelMesh, false);
+					if (!hits.length) return null;
+					const uv = hits[0].uv;
+					if (!uv) return null;
+					const px = uv.x * panelCanvas.width;
+					const py = (1 - uv.y) * panelCanvas.height;
+					return { px, py };
+				};
+
+				const onPointerDown = (event: PointerEvent) => {
+					if (!interactive || !panelMesh) return;
+					const point = pickPanelPoint(event.clientX, event.clientY);
+					if (!point) return;
+					const { px, py } = point;
+
+					if (hasSlot && slotHostEl) {
+						const hostRect = slotHostEl.getBoundingClientRect();
+						const clientX = hostRect.left + px;
+						const clientY = hostRect.top + py;
+						const interactiveEls = Array.from(
+							slotHostEl.querySelectorAll<HTMLElement>(
+								'a, button, input, textarea, select, [role="button"], [onclick], [data-clickable]'
+							)
+						);
+						for (let i = interactiveEls.length - 1; i >= 0; i--) {
+							const el = interactiveEls[i];
+							if (el.hidden) continue;
+							const style = window.getComputedStyle(el);
+							if (style.display === 'none' || style.visibility === 'hidden') continue;
+							const rect = el.getBoundingClientRect();
+							const hit =
+								clientX >= rect.left &&
+								clientX <= rect.right &&
+								clientY >= rect.top &&
+								clientY <= rect.bottom;
+							if (!hit) continue;
+
+							const clickEvent = new MouseEvent('click', {
+								bubbles: true,
+								cancelable: true,
+								view: window,
+								clientX,
+								clientY
+							});
+							el.dispatchEvent(clickEvent);
+							triggerSlotCapture?.();
+							return;
+						}
+					}
+
+					if (panelPointerDown) {
+						const handled = panelPointerDown({ x: px, y: py }, panelInfo);
+						if (handled) return;
+					}
+					for (const btn of buttons) {
+						const hit = px >= btn.x && px <= btn.x + btn.w && py >= btn.y && py <= btn.y + btn.h;
+						if (hit) {
+							window.location.assign(btn.href);
+							break;
+						}
+					}
+				};
+
+				const onWheel = (event: WheelEvent) => {
+					if (!interactive || !slotHostEl || !hasSlot) return;
+					const point = pickPanelPoint(event.clientX, event.clientY);
+					if (!point) return;
+
+					event.preventDefault();
+					slotHostEl.scrollTop += event.deltaY;
+					slotHostEl.scrollLeft += event.deltaX;
+					triggerSlotCapture?.();
+				};
+
+				const onPointerMove = (event: PointerEvent) => {
+					const rect = renderCanvas.getBoundingClientRect();
+					if (!rect.width || !rect.height) return;
+					const nx = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+					const ny = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+					pointerTargetX = THREE.MathUtils.clamp(nx, -1, 1);
+					pointerTargetY = THREE.MathUtils.clamp(ny, -1, 1);
+				};
+
+				const onPointerLeave = () => {
+					pointerTargetX = 0;
+					pointerTargetY = 0;
+				};
+
+				renderCanvas.addEventListener('pointerdown', onPointerDown);
+				renderCanvas.addEventListener('wheel', onWheel, { passive: false });
+				renderCanvas.addEventListener('pointermove', onPointerMove);
+				renderCanvas.addEventListener('pointerleave', onPointerLeave);
+
+				debugText = `panel: canvas mounted ${panelCanvas.width}x${panelCanvas.height}`;
+				console.log('[ThreeModelViewer] target mesh:', targetMesh.name);
+
+				anchor.add(panelMesh);
+
+				cleanupPanelInteraction = () => {
+					renderCanvas.removeEventListener('pointerdown', onPointerDown);
+					renderCanvas.removeEventListener('wheel', onWheel);
+					renderCanvas.removeEventListener('pointermove', onPointerMove);
+					renderCanvas.removeEventListener('pointerleave', onPointerLeave);
+				};
 			},
 			undefined,
 			(err) => {

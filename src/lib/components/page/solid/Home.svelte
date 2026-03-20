@@ -186,11 +186,15 @@
 		{@render children()}
 		<footer class="bg:#153F63 fg:#ffffff bt:1px|solid|#fff justify-content:center ai:center flex">
 			<Page height={80}>
-				<div class="w:100% h:100% p:40px flex:column justify-content:space-between ai:center flex footer-inner">
+				<div
+					class="w:100% h:100% p:40px flex:column justify-content:space-between ai:center flex footer-inner"
+				>
 					<div
 						class="w:100% flex:column justify-content:space-between align-items:start gap:40px px:16px flex flex-wrap footer-content"
 					>
-						<div class="w:100% h:60px flex:row justify-content:start ai:center gap:16px footer-logo-wrap">
+						<div
+							class="w:100% h:60px flex:row justify-content:start ai:center gap:16px footer-logo-wrap"
+						>
 							<img src={logo} alt="Logo" class="w:auto h:100% object:cover" />
 						</div>
 						<div class="w:100% px:40px grid-template-columns:1fr|1fr|1fr gap:40px grid footer-grid">
