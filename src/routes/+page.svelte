@@ -4,6 +4,7 @@
 	import icon from '$lib/assets/img/myicon.png';
 	import WorksBox from '$lib/components/page/solid/components/WorksBox.svelte';
 	import works from '$lib/assets/mocks/works-list.json';
+	import WorksWindow from '$lib/components/page/solid/components/WorksWindow.svelte';
 
 	const icons = [
 		{
@@ -60,7 +61,7 @@
 					</div>
 				</div>
 				<p class="text:20px">
-					どこにでもいる普通の高校生<br /><br />
+					どこにでもいる普通の大学生<br /><br />
 					Web 系を中心としたフルスタックエンジニアを目指している<br />
 					デザインの分野にも興味があるためやりたいことの収集がつかなくなっている<br /><br />
 					API が完全な型をもって実装できることが最近の幸せ
@@ -71,19 +72,21 @@
 	<Page>
 		<div class="w:100% h:100% flex ai:center jc:center flex:column pt:100px gap:60px">
 			<h1 class="text:4em text-align:center font:thin line-h:1em uppercase w:100%">works</h1>
-			<div class="flex flex:wrap w:100% h:100% px:100px gap:40px ai:center jc:center">
-				{#each works.contents.slice(0, 3) as work}
-					<WorksBox
-						id={work.id}
-						title={work.title}
-						_description={work.description}
-						src={work.image.url}
-						tags={work.tags}
-					/>
-				{/each}
-			</div>
-			<div>
-				<a class="f:2em font-weight:100 uppercase" href="/works">more</a>
+			<div class="flex w:100% px:100px">
+				<WorksWindow title={'/GET/ENTRIES/WORKS'}>
+					{#each works.contents.slice(0, 3) as work}
+						<WorksBox
+							id={work.id}
+							title={work.title}
+							_description={work.description}
+							src={work.image.url}
+							tags={work.tags}
+						/>
+					{/each}
+					<div class="flex flex:column w:100% ai:center py:20px">
+							<a class="f:2em font-weight:100 uppercase" href="/works">more</a>
+					</div>
+				</WorksWindow>
 			</div>
 		</div>
 	</Page>
@@ -94,7 +97,7 @@
 	</Page>
 	<Page>
 		<div class="w:100% h:100% flex ai:start jc:center pt:100px">
-			<h1 class="text:4em font:thin line-h:1em uppercase">blog</h1>
+			<h1 class="text:4em font:thin line-h:1em uppercase">blogs</h1>
 		</div>
 	</Page>
 </div>
