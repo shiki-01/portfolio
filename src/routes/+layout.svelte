@@ -1,5 +1,8 @@
 <script lang="ts">
 	import '../app.css';
+	import '@master/normal.css';
+	import { initCSSRuntime } from '@master/css-runtime';
+	import masterCssConfig from 'virtual:master-css-config';
 	import SolidHome from '$lib/components/page/solid/Home.svelte';
 	import { page } from '$app/state';
 	import { setupViewTransition } from 'sveltekit-view-transition';
@@ -14,6 +17,10 @@
 		toAbsoluteUrl,
 		type SeoData
 	} from '$lib/utils/seo';
+
+	if (typeof document !== 'undefined') {
+		initCSSRuntime(masterCssConfig);
+	}
 
 	setupViewTransition();
 

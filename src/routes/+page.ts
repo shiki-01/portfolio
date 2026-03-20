@@ -21,7 +21,7 @@ export const load: PageLoad = ({ data }) => {
 			jsonLd: {
 				'@context': 'https://schema.org',
 				'@type': 'WebSite',
-				name: 'Shiki Portfolio',
+				name: 'shiki Portfolio',
 				inLanguage: 'ja-JP',
 				url: `${SITE_URL}/`,
 				author: {
