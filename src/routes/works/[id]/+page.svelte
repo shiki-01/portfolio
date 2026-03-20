@@ -26,7 +26,7 @@
 </script>
 
 <section
-	class="rel w:min(1220px,calc(100%-20px)) my:160px mx:auto px:100px px:60px@<md px:20px@<md"
+	class="rel w:min(1220px,calc(100%-20px)) my:160px mx:auto px:100px px:60px@<md px:20px@<sm"
 >
 	<Title class="abs top:-6em left:0">works</Title>
 	<div
@@ -35,7 +35,7 @@
 	></div>
 	<div class="rel z:1 overflow:hidden bg:#153f63 b:1px|solid|#fff r:10px">
 		<p
-			class="h:40px px:12px flex ai:center f:clamp(12px,3.8vw,16px) font:JetBrainsMono ls:0.04em uppercase bb:1px|solid|#fff"
+			class="h:40px px:12px flex ai:center f:clamp(6px,3.8vw,16px) white-space:nowrap font:JetBrainsMono ls:0.04em uppercase bb:1px|solid|#fff"
 		>
 			/GET/ENTRIES<a href="/works">/WORKS</a>/{currentWork?.id}
 		</p>
