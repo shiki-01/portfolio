@@ -77,7 +77,7 @@
 			</h1>
 			<div class="flex w:100% px:100px works-inner">
 				<WorksWindow title={'/GET/ENTRIES/WORKS'}>
-					{#each works.contents.slice(0, 3) as work}
+					{#each (works.contents ?? []).slice(0, 3) as work}
 						<WorksBox
 							id={work.id}
 							title={work.title}

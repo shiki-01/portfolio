@@ -1,16 +1,24 @@
 import { existsSync, writeFileSync } from 'fs';
 
-const mockFilePaths = [
-	'src/lib/assets/mocks/works-list.json',
-	'src/lib/assets/mocks/works-detail.json'
+const mockFiles = [
+	{
+		path: 'src/lib/assets/mocks/works-list.json',
+		content: {
+			contents: []
+		}
+	},
+	{
+		path: 'src/lib/assets/mocks/works-detail.json',
+		content: {}
+	}
 ];
 
-mockFilePaths.forEach((filePath) => {
-	if (existsSync(filePath)) {
-		console.error(`Error: File ${filePath} already exists.`);
-		process.exit(1);
-	} else {
-		writeFileSync(filePath, '{}', 'utf8');
-		console.log(`File ${filePath} has been created.`);
+mockFiles.forEach(({ path, content }) => {
+	if (existsSync(path)) {
+		console.log(`Skip: File ${path} already exists.`);
+		return;
 	}
+
+	writeFileSync(path, JSON.stringify(content, null, '\t'), 'utf8');
+	console.log(`File ${path} has been created.`);
 });
