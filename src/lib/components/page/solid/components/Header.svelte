@@ -24,7 +24,7 @@
 </script>
 
 <header
-	class="top:0 left:0 z:999 w:100% fixed {scrollY >= 100
+	class="top:0 z:999 w:100% sticky {scrollY >= 100
 		? 'h:80px'
 		: 'h:100px'} transition:height|0.3s|ease bg:#153F63 fg:#ffffff bb:1px|#fff|solid px:30px justify-content:space-between ai:center flex"
 >

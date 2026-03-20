@@ -161,12 +161,12 @@
 <div
 	id="scroll-container"
 	bind:this={scrollContainer}
-	class="scroll-wrapper w:100vw h:100vh overflow-y:auto overflow-x:hidden"
+	class="scroll-wrapper w:100% h:100% overflow-y:auto overflow-x:hidden"
 	style="position: fixed; inset: 0;"
 >
 	<main
 		bind:this={mainContainer}
-		class="w:100dvw h:auto flex:column justify-content:center ai:center flex"
+		class="w:100% h:auto flex:column justify-content:center ai:center flex"
 	>
 		{#if pageNumber.subscribe((v) => v === 1)}
 			<div
@@ -201,5 +201,9 @@
 	}
 	:global(*) {
 		user-select: none;
+	}
+
+	.scroll-wrapper {
+		scrollbar-gutter: stable;
 	}
 </style>

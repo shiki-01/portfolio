@@ -174,7 +174,7 @@
 	<!-- <LogoAnimate /> -->
 	<div
 		bind:this={backEl}
-		class="fixed back top:0 left:0 w:100dvw h:100dvh overflow:hidden flex:column justify-content:center ai:center flex"
+		class="fixed w:100dvw back top:0 left:0 right:0 bottom:0 z:0 pointer-events:none overflow:hidden flex:column justify-content:center ai:center flex"
 	>
 		<span class="circle circle1"></span>
 		<span class="circle circle2"></span>
@@ -183,7 +183,7 @@
 	</div>
 	<div
 		bind:this={scrollEl}
-		class="w:100% h:100% z:2 mt:80px flex:column justify-content:center align-items:start overflow-y:auto flex"
+		class="w:100% h:100% z:2 flex:column justify-content:center align-items:start flex"
 	>
 		{@render children()}
 		<footer class="bg:#153F63 fg:#ffffff bt:1px|solid|#fff justify-content:center ai:center flex">

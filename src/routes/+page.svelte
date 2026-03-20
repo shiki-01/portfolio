@@ -25,7 +25,7 @@
 </script>
 
 <div class="w:100%">
-	<Page>
+	<Page height={100}>
 		<p class="text:3em line-h:1.4em font:thin">好きに、<br />自由に。</p>
 	</Page>
 	<Page>

@@ -35,6 +35,10 @@ export type Blogs<T = 'get'> = Structure<
 		 * 説明
 		 */
 		description?: string;
+		/**
+		 * 本文
+		 */
+		content?: string;
         /**
 		 * 期間
 		 */
