@@ -7,16 +7,15 @@
 		tags: string[];
 	};
 	let { title, src, id, _description, tags: _tags }: Props = $props();
-	let height = 168.75;
 </script>
 
-<section class="w:calc(300px+36px*2) flex flex:column ai:center">
-	<table>
+<section class="works-box flex flex:column ai:center">
+	<table class="works-table">
 		<tbody>
-			<tr class="h:36px">
-				<td class="w:36px"></td>
-				<td class="w:300px">
-					<div class="width w:300px">
+			<tr class="top-row">
+				<td class="side-cell"></td>
+				<td class="image-cell">
+					<div class="width width-indicator">
 						<p>Width</p>
 						<div class="arrow">
 							<span></span>
@@ -24,11 +23,11 @@
 						</div>
 					</div>
 				</td>
-				<td class="w:36px"></td>
+				<td class="side-cell"></td>
 			</tr>
 			<tr>
-				<td>
-					<div class="height w:{height}">
+				<td class="side-cell vertical-cell">
+					<div class="height height-indicator">
 						<p>Height</p>
 						<div class="arrow">
 							<span></span>
@@ -36,21 +35,21 @@
 						</div>
 					</div>
 				</td>
-				<td>
-					<a href={'/works/' + id} class="h:{height} flex overflow:hidden">
+				<td class="image-cell">
+					<a href={'/works/' + id} class="preview-link flex overflow:hidden">
 						<img {src} alt="works src" class="w:100% h:100% obj:cover" />
 					</a>
 				</td>
+				<td class="side-cell"></td>
+			</tr>
+			<tr class="spacer-row">
+				<td></td>
+				<td></td>
 				<td></td>
 			</tr>
-			<tr class="h:20px">
+			<tr class="meta-row">
 				<td></td>
-				<td></td>
-				<td></td>
-			</tr>
-			<tr class="h:2.4em">
-				<td></td>
-				<td class="h:2.4em">
+				<td>
 					<div class="h:100% px:10px|8px flex ai:center jc:space-between gap:10px">
 						<a
 							href={'/works/' + id}
@@ -69,7 +68,7 @@
 				</td>
 				<td></td>
 			</tr>
-			<tr class="h:36px">
+			<tr class="bottom-row">
 				<td></td>
 				<td></td>
 				<td></td>
@@ -79,10 +78,47 @@
 </section>
 
 <style>
-	table {
+	.works-box {
+		--box-width: clamp(220px, 62vw, 300px);
+		--side: 36px;
+		--box-height: calc(var(--box-width) * 0.5625);
+		width: calc(var(--box-width) + var(--side) * 2);
+	}
+
+	.works-table {
 		border-collapse: collapse;
 		border: none;
+		width: 100%;
 	}
+
+	.side-cell {
+		width: var(--side);
+	}
+
+	.image-cell {
+		width: var(--box-width);
+	}
+
+	.top-row {
+		height: 36px;
+	}
+
+	.spacer-row {
+		height: 20px;
+	}
+
+	.meta-row {
+		height: 2.4em;
+	}
+
+	.bottom-row {
+		height: 36px;
+	}
+
+	.preview-link {
+		height: var(--box-height);
+	}
+
 	td {
 		position: relative;
 		border: none;
@@ -126,6 +162,14 @@
 		font-size: 12px;
 		color: #ffffff50;
 		border-bottom: 1px solid #ffffff50;
+	}
+
+	.width-indicator {
+		width: var(--box-width);
+	}
+
+	.height-indicator {
+		width: var(--box-height);
 	}
 
 	.width {
@@ -177,5 +221,17 @@
 		border-right: 1px solid #ffffff50;
 		-webkit-transform: rotate(45deg);
 		transform: rotate(45deg);
+	}
+
+	@media (max-width: 480px) {
+		.works-box {
+			--box-width: min(260px, calc(100vw - 88px));
+			--side: 24px;
+		}
+
+		.top-row,
+		.bottom-row {
+			height: 28px;
+		}
 	}
 </style>

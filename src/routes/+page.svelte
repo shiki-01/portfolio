@@ -27,21 +27,21 @@
 
 <div class="w:100%">
 	<Page height={100}>
-		<p class="text:3em line-h:1.4em font:thin">好きに、<br />自由に。</p>
+		<p class="text:3em line-h:1.4em font:thin hero-copy">好きに、<br />自由に。</p>
 	</Page>
 	<Page>
-		<div class="w:100% h:100% grid-template-columns:1fr|1fr grid px:100px">
-			<div class="w:100% h:100% justify-content:center ai:center flex icon-wrap">
+		<div class="w:100% h:100% grid-template-columns:1fr|1fr grid px:100px intro-grid">
+			<div class="w:100% h:100% justify-content:center ai:center flex icon-wrap profile-media">
 				<span class="circle"></span>
 				<span class="circle circle2"></span>
 				<img src={icon} alt="My Icon" class="w:240px h:240px object:cover r:full overflow:hidden" />
 			</div>
 			<div
-				class="w:100% h:100% px:20px flex:column gap:80px justify-content:center align-items:start flex"
+				class="w:100% h:100% px:20px flex:column gap:80px justify-content:center align-items:start flex intro-content"
 			>
 				<div class="flex flex:column gap:20px">
 					<h1 class="text:4em font:thin line-h:1em uppercase">shiki</h1>
-					<div class="text:20px flex:row flex:wrap gap:20px flex">
+					<div class="text:20px flex:row flex:wrap gap:20px flex social-list">
 						{#each icons as { title, icon, link }}
 							<a
 								href={link}
@@ -60,7 +60,7 @@
 						{/each}
 					</div>
 				</div>
-				<p class="text:20px">
+				<p class="text:20px bio-text">
 					どこにでもいる普通の大学生<br /><br />
 					Web 系を中心としたフルスタックエンジニアを目指している<br />
 					デザインの分野にも興味があるためやりたいことの収集がつかなくなっている<br /><br />
@@ -70,9 +70,9 @@
 		</div>
 	</Page>
 	<Page>
-		<div class="w:100% h:100% flex ai:center jc:center flex:column pt:100px gap:60px">
-			<h1 class="text:4em text-align:center font:thin line-h:1em uppercase w:100%">works</h1>
-			<div class="flex w:100% px:100px">
+		<div class="w:100% h:100% flex ai:center jc:center flex:column pt:100px gap:60px works-section">
+			<h1 class="text:4em text-align:center font:thin line-h:1em uppercase w:100% section-title">works</h1>
+			<div class="flex w:100% px:100px works-inner">
 				<WorksWindow title={'/GET/ENTRIES/WORKS'}>
 					{#each works.contents.slice(0, 3) as work}
 						<WorksBox
@@ -91,13 +91,13 @@
 		</div>
 	</Page>
 	<Page>
-		<div class="w:100% h:100% flex ai:start jc:center pt:100px">
-			<h1 class="text:4em font:thin line-h:1em uppercase">skills</h1>
+		<div class="w:100% h:100% flex ai:start jc:center pt:100px simple-heading-wrap">
+			<h1 class="text:4em font:thin line-h:1em uppercase section-title">skills</h1>
 		</div>
 	</Page>
 	<Page>
-		<div class="w:100% h:100% flex ai:start jc:center pt:100px">
-			<h1 class="text:4em font:thin line-h:1em uppercase">blogs</h1>
+		<div class="w:100% h:100% flex ai:start jc:center pt:100px simple-heading-wrap">
+			<h1 class="text:4em font:thin line-h:1em uppercase section-title">blogs</h1>
 		</div>
 	</Page>
 </div>
@@ -122,5 +122,75 @@
 	.circle2 {
 		width: 280px;
 		height: 280px;
+	}
+
+	.hero-copy {
+		font-size: clamp(2rem, 6vw, 3em);
+	}
+
+	.section-title {
+		font-size: clamp(2rem, 6.4vw, 4em);
+	}
+
+	@media (max-width: 1024px) {
+		.intro-grid {
+			display: flex;
+			flex-direction: column;
+			padding: 0 40px;
+			gap: 36px;
+		}
+
+		.intro-content {
+			gap: 40px;
+			padding: 0;
+		}
+
+		.works-section {
+			padding-top: 56px;
+			gap: 32px;
+		}
+
+		.works-inner {
+			padding: 0 32px;
+		}
+	}
+
+	@media (max-width: 768px) {
+		.profile-media img {
+			width: 188px;
+			height: 188px;
+		}
+
+		.circle {
+			width: 204px;
+			height: 204px;
+		}
+
+		.circle2 {
+			width: 228px;
+			height: 228px;
+		}
+
+		.intro-grid {
+			padding: 0 20px;
+		}
+
+		.social-list {
+			gap: 10px;
+			font-size: 16px;
+		}
+
+		.bio-text {
+			font-size: 16px;
+			line-height: 1.9;
+		}
+
+		.works-inner {
+			padding: 0 12px;
+		}
+
+		.simple-heading-wrap {
+			padding-top: 64px;
+		}
 	}
 </style>

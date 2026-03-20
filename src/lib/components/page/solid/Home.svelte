@@ -3,9 +3,7 @@
 	import Page from '$lib/components/Page.svelte';
 	import Icon from '@iconify/svelte';
 	import logo from '$lib/components/page/solid/img/logoTitle.svg';
-	import outline from '$lib/components/page/solid/img/logoSymbol_outline.svg';
 	import ToTop from './components/ToTop.svelte';
-	import LogoAnimate from './components/LogoAnimate.svelte';
 	import { onMount } from 'svelte';
 	let { children } = $props();
 
@@ -188,14 +186,14 @@
 		{@render children()}
 		<footer class="bg:#153F63 fg:#ffffff bt:1px|solid|#fff justify-content:center ai:center flex">
 			<Page height={80}>
-				<div class="w:100% h:100% p:40px flex:column justify-content:space-between ai:center flex">
+				<div class="w:100% h:100% p:40px flex:column justify-content:space-between ai:center flex footer-inner">
 					<div
-						class="w:100% flex:column justify-content:space-between align-items:start gap:40px px:16px flex flex-wrap"
+						class="w:100% flex:column justify-content:space-between align-items:start gap:40px px:16px flex flex-wrap footer-content"
 					>
-						<div class="w:100% h:60px flex:row justify-content:start ai:center gap:16px">
+						<div class="w:100% h:60px flex:row justify-content:start ai:center gap:16px footer-logo-wrap">
 							<img src={logo} alt="Logo" class="w:auto h:100% object:cover" />
 						</div>
-						<div class="w:100% px:40px grid-template-columns:1fr|1fr|1fr gap:40px grid">
+						<div class="w:100% px:40px grid-template-columns:1fr|1fr|1fr gap:40px grid footer-grid">
 							<div class="flex:column gap:8px flex">
 								<h2 class="text:2em font:thin mb:8px uppercase">site map</h2>
 								<div class="flex:column pl:12px gap:16px flex">
@@ -349,5 +347,36 @@
 	.line,
 	.back {
 		will-change: transform, background-position;
+	}
+
+	@media (max-width: 960px) {
+		.footer-inner {
+			padding: 24px 16px;
+		}
+
+		.footer-content {
+			gap: 28px;
+			padding: 0;
+		}
+
+		.footer-grid {
+			padding: 0;
+			gap: 28px;
+			grid-template-columns: 1fr;
+		}
+
+		.footer-grid h2 {
+			font-size: clamp(1.4rem, 6vw, 2rem);
+		}
+	}
+
+	@media (max-width: 640px) {
+		.footer-logo-wrap {
+			height: 42px;
+		}
+
+		.footer-grid a {
+			font-size: 15px;
+		}
 	}
 </style>

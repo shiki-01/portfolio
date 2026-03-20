@@ -15,8 +15,17 @@
 		>
 			{title}
 		</p>
-		<div class="flex flex:wrap jc:center gap:20px px:24px py:30px @min-900:px:20px">
+		<div class="flex flex:wrap jc:center gap:20px px:24px py:30px @min-900:px:20px works-window-body">
 			{@render children?.()}
 		</div>
 	</div>
 </div>
+
+<style>
+	@media (max-width: 768px) {
+		.works-window-body {
+			padding: 18px 12px 24px;
+			gap: 14px;
+		}
+	}
+</style>

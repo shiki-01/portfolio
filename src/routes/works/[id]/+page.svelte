@@ -25,9 +25,9 @@
 </script>
 
 <section
-	class="rel w:min(1220px,calc(100%-20px)) my:160px mx:auto @min-900:w:min(1220px,calc(100%-32px)) @min-900:mt:100px @min-900:mb:180px"
+	class="rel w:min(1220px,calc(100%-20px)) my:160px mx:auto @min-900:w:min(1220px,calc(100%-32px)) @min-900:mt:100px @min-900:mb:180px work-detail-section"
 >
-	<h1 class="abs top:-1.4em left:0 text:4em text-align:center font:thin line-h:1em uppercase w:100%">works</h1>
+	<h1 class="abs top:-1.4em left:0 text:4em text-align:center font:thin line-h:1em uppercase w:100% work-detail-title">works</h1>
 	<div
 		class="abs w:100% h:100% top:10px right:-10px bottom:-10px left:10px z:0 bg:#153f63 b:1px|solid|#fff r:15px @min-900:top:14px @min-900:right:-14px @min-900:bottom:-14px @min-900:left:14px"
 		aria-hidden="true"
@@ -38,12 +38,12 @@
 		>
 			/GET/ENTRIES<a href="/works">/WORKS</a>/{currentWork?.id}
 		</p>
-		<div class="grid cols:1 gap:20px p:24px @min-900:px:24px">
+		<div class="grid cols:1 gap:20px p:24px @min-900:px:24px detail-body">
 			<h1 class="f:clamp(24px,4.6vw,36px) font:thin line-h:1.2">{title}</h1>
 
-			<div class="grid grid-template-cols:1fr|500px @min-900:cols:2 gap:20px @min-900:ai:start">
+			<div class="grid grid-template-cols:1fr|500px @min-900:cols:2 gap:20px @min-900:ai:start detail-grid">
 				<div
-					class="b:1px|solid|#ffffff50 r:8px w:100% h:100% @min-900:h:338px overflow:hidden"
+					class="b:1px|solid|#ffffff50 r:8px w:100% h:100% @min-900:h:338px overflow:hidden detail-image"
 				>
 					{#if imageUrl}
 						<img
@@ -127,3 +127,35 @@
 		</div>
 	</div>
 </section>
+
+<style>
+	.work-detail-section {
+		margin-top: clamp(96px, 12vw, 160px);
+		margin-bottom: clamp(120px, 13vw, 180px);
+	}
+
+	.work-detail-title {
+		font-size: clamp(2rem, 7vw, 4rem);
+		top: -1.3em;
+	}
+
+	@media (max-width: 960px) {
+		.detail-grid {
+			grid-template-columns: 1fr;
+		}
+
+		.detail-image {
+			max-height: 300px;
+		}
+	}
+
+	@media (max-width: 768px) {
+		.work-detail-title {
+			top: -1.55em;
+		}
+
+		.detail-body {
+			padding: 14px;
+		}
+	}
+</style>
