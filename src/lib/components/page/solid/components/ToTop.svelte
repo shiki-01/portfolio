@@ -45,6 +45,11 @@
 		}
 	};
 
+	const canHover = () => {
+		if (typeof window === 'undefined') return false;
+		return window.matchMedia?.('(hover: hover) and (pointer: fine)')?.matches ?? false;
+	};
+
 	const showButton = () => {
 		if (!buttonEl) return;
 		buttonEl.style.pointerEvents = 'auto';
@@ -83,6 +88,10 @@
 
 	const handleMouseEnter = () => {
 		if (!buttonEl) return;
+		if (!canHover()) {
+			isHovered = false;
+			return;
+		}
 		isHovered = true;
 		if (isAutoScrolling) lockExpandedUntilScrollEnd = true;
 		const prefersReducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
@@ -140,6 +149,7 @@
 
 		cancelScrollTween();
 		animateContentUp();
+		isHovered = false;
 
 		isAutoScrolling = true;
 		if (buttonEl?.matches?.(':hover')) lockExpandedUntilScrollEnd = true;
@@ -156,20 +166,20 @@
 			const cancelTarget: EventTarget = target;
 			cancelTarget.addEventListener('wheel', cancelByUser, {
 				passive: true
-			} as AddEventListenerOptions);
+			});
 			cancelTarget.addEventListener('touchstart', cancelByUser, {
 				passive: true
-			} as AddEventListenerOptions);
+			});
 			cancelTarget.addEventListener('pointerdown', cancelByUser, {
 				passive: true
-			} as AddEventListenerOptions);
+			});
 			window.addEventListener('keydown', cancelByUser);
 
 			const cleanup = () => {
-				cancelTarget.removeEventListener('wheel', cancelByUser as EventListener);
-				cancelTarget.removeEventListener('touchstart', cancelByUser as EventListener);
-				cancelTarget.removeEventListener('pointerdown', cancelByUser as EventListener);
-				window.removeEventListener('keydown', cancelByUser as EventListener);
+				cancelTarget.removeEventListener('wheel', cancelByUser);
+				cancelTarget.removeEventListener('touchstart', cancelByUser);
+				cancelTarget.removeEventListener('pointerdown', cancelByUser);
+				window.removeEventListener('keydown', cancelByUser);
 
 				isAutoScrolling = false;
 				lockExpandedUntilScrollEnd = false;
@@ -204,20 +214,20 @@
 		const cancelTarget: EventTarget = target === window ? window : target;
 		cancelTarget.addEventListener('wheel', cancelByUser, {
 			passive: true
-		} as AddEventListenerOptions);
+		});
 		cancelTarget.addEventListener('touchstart', cancelByUser, {
 			passive: true
-		} as AddEventListenerOptions);
+		});
 		cancelTarget.addEventListener('pointerdown', cancelByUser, {
 			passive: true
-		} as AddEventListenerOptions);
+		});
 		window.addEventListener('keydown', cancelByUser);
 
 		const cleanup = () => {
-			cancelTarget.removeEventListener('wheel', cancelByUser as EventListener);
-			cancelTarget.removeEventListener('touchstart', cancelByUser as EventListener);
-			cancelTarget.removeEventListener('pointerdown', cancelByUser as EventListener);
-			window.removeEventListener('keydown', cancelByUser as EventListener);
+			cancelTarget.removeEventListener('wheel', cancelByUser);
+			cancelTarget.removeEventListener('touchstart', cancelByUser);
+			cancelTarget.removeEventListener('pointerdown', cancelByUser);
+			window.removeEventListener('keydown', cancelByUser);
 
 			isAutoScrolling = false;
 			lockExpandedUntilScrollEnd = false;
@@ -263,11 +273,11 @@
 		const scrollEventTarget: EventTarget = scrollTarget === window ? window : scrollTarget;
 		scrollEventTarget.addEventListener('scroll', handleScroll, {
 			passive: true
-		} as AddEventListenerOptions);
+		});
 		handleScroll();
 
 		return () => {
-			scrollEventTarget.removeEventListener('scroll', handleScroll as EventListener);
+			scrollEventTarget.removeEventListener('scroll', handleScroll);
 			cancelScrollTween();
 		};
 	});
@@ -275,7 +285,7 @@
 
 <button
 	type="button"
-	class="fixed z:999 bottom:80px right:80px z:999 w:80px h:80px r:40px overflow:hidden bg:#153F63 b:2px|solid|#fff cursor:pointer pointer-events:auto flex"
+	class="fixed z:999 bottom:80px right:80px bottom:24px@<md right:24px@<md z:999 w:80px w:60px@<md square r:40px overflow:hidden bg:#153F63 b:2px|solid|#fff cursor:pointer pointer-events:auto flex"
 	bind:this={buttonEl}
 	data-variant={variant}
 	data-expanded={isExpanded}
@@ -303,7 +313,7 @@
 			</svg>
 		</span>
 
-		<span class="abs w:60px bottom:8px left:50% translateX(-50%)" aria-hidden="true">
+		<span class="abs w:60px w:48px@<md bottom:8px bottom:4px@<md left:50% translateX(-50%)" aria-hidden="true">
 			<img bind:this={logoEl} src={logoSymbolSmall} class="w:100%" alt="logo symbol" />
 		</span>
 

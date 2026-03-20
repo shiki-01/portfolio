@@ -26,7 +26,7 @@
 </script>
 
 <section
-	class="rel w:min(1220px,calc(100%-20px)) my:160px mx:auto @min-900:w:min(1220px,calc(100%-32px)) @min-900:mt:100px @min-900:mb:180px work-detail-section"
+	class="rel w:min(1220px,calc(100%-20px)) my:160px mx:auto @min-900:w:min(1220px,calc(100%-32px))"
 >
 	<Title class="abs top:-6em left:0">works</Title>
 	<div
@@ -41,12 +41,11 @@
 		</p>
 		<div class="grid cols:1 gap:20px p:24px @min-900:px:24px detail-body">
 			<h1 class="f:clamp(24px,4.6vw,36px) font:thin line-h:1.2">{title}</h1>
-
 			<div
 				class="grid grid-template-cols:1fr|500px @min-900:cols:2 gap:20px @min-900:ai:start detail-grid"
 			>
 				<div
-					class="b:1px|solid|#ffffff50 r:8px w:100% h:100% @min-900:h:338px overflow:hidden detail-image"
+					class="b:1px|solid|#ffffff50 r:8px w:100% h:100% max-h:340px overflow:hidden detail-image"
 				>
 					{#if imageUrl}
 						<img
@@ -128,11 +127,6 @@
 </section>
 
 <style>
-	.work-detail-section {
-		margin-top: clamp(96px, 12vw, 160px);
-		margin-bottom: clamp(120px, 13vw, 180px);
-	}
-
 	@media (max-width: 960px) {
 		.detail-grid {
 			grid-template-columns: 1fr;

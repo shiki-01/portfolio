@@ -117,13 +117,26 @@ const SKILL_PUSH = 12;
 const SKILL_HOVER_SCALE = 1.38;
 const SKILL_OTHER_SCALE = 0.94;
 
-const getSkillTransform = (hoveredSkill: { row: number; col: number } | null, row: number, col: number, rowLength: number): string => {
+const getSkillTransform = (
+	hoveredSkill: { row: number; col: number } | null,
+	row: number,
+	col: number,
+	rowLength: number,
+	compactMode = false
+): string => {
 	if (!hoveredSkill) {
 		return 'translate(0, 0) scale(1)';
 	}
 
 	const totalRows = skillsIconRows.length;
 	const isHovered = hoveredSkill.row === row && hoveredSkill.col === col;
+
+	if (compactMode) {
+		if (isHovered) {
+			return `translate(0, 0) scale(${SKILL_HOVER_SCALE})`;
+		}
+		return 'translate(0, 0) scale(1)';
+	}
 
 	if (isHovered) {
 		let offsetX = 0;

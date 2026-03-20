@@ -8,7 +8,7 @@
 </script>
 
 <section
-	class="rel w:min(1220px,calc(100%-100px)) my:160px mx:auto @min-900:w:min(1220px,calc(100%-32px)) @min-900:mt:100px @min-900:mb:180px works-page-section"
+	class="rel w:min(1220px,calc(100%-100px)) px:100px px:60px@<md px:25px@<sm my:160px mx:auto @min-900:w:min(1220px,calc(100%-32px))"
 >
 	<Title class="abs top:-6em left:0">works</Title>
 	<WorksWindow title={'/GET/ENTRIES/WORKS'}>
@@ -25,17 +25,3 @@
 		{/if}
 	</WorksWindow>
 </section>
-
-<style>
-	.works-page-section {
-		margin-top: clamp(96px, 12vw, 160px);
-		margin-bottom: clamp(120px, 13vw, 180px);
-		width: min(1220px, calc(100% - 32px));
-	}
-
-	@media (max-width: 768px) {
-		.works-page-section {
-			width: min(1220px, calc(100% - 16px));
-		}
-	}
-</style>

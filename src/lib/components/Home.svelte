@@ -82,7 +82,7 @@
 							title={work.title}
 							_description={work.description}
 							src={work.image.url}
-							tags={work.tags}
+							tags={work.tags as ('system' | 'design' | 'plan')[]}
 						/>
 					{/each}
 					<div class="flex flex:column w:100% ai:center py:20px">

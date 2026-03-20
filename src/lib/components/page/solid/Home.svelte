@@ -184,7 +184,9 @@
 		class="w:100% h:100% z:2 flex:column justify-content:center align-items:start flex"
 	>
 		{@render children()}
-		<footer class="w:100% pt:20px bg:#153F63 fg:#ffffff bt:1px|solid|#fff justify-content:center ai:center flex">
+		<footer
+			class="w:100% pt:20px bg:#153F63 fg:#ffffff bt:1px|solid|#fff justify-content:center ai:center flex"
+		>
 			<div
 				class="w:100% h:100% p:40px flex:column justify-content:space-between ai:center flex footer-inner"
 			>
@@ -233,11 +235,11 @@
 										href={link}
 										target="_blank"
 										rel="noopener noreferrer"
-										class="w:fit mb:10px flex:row ai:center gap:4px b:1px|solid|#fff px:16px py:8px bg:#fff:hover fg:#153F63:hover transition:background-color|0.3s flex rounded"
+										class="mb:10px w:fit flex:row ai:center gap:4px gap:2px@<md b:1px|solid|#fff px:16px py:8px pl:10px@<md pr:8px@<md py:4px@<md bg:#fff:hover fg:#153F63:hover transition:background-color|0.3s flex rounded"
 									>
-										<Icon class="text:24px mr:10px" {icon} />
+										<Icon class="text:24px text:20px@<md mr:10px" {icon} />
 										<div class="flex:row gap:2px ai:center flex">
-											<span class="text:18px">
+											<span class="text:18px text:12px@<md">
 												{title}
 											</span>
 											<Icon
