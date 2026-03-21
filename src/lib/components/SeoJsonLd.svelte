@@ -12,9 +12,12 @@
 		})
 	);
 
+	const scriptOpenTag = '<script type="application/ld+json">';
+	const scriptCloseTag = '</scr' + 'ipt>';
+
 	const jsonLdScripts = $derived(
 		serializedBlocks
-			.map((serialized: string) => `<script type="application/ld+json">${serialized}<\\/script>`)
+			.map((serialized: string) => `${scriptOpenTag}${serialized}${scriptCloseTag}`)
 			.join('')
 	);
 </script>
