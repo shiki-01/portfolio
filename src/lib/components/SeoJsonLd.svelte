@@ -11,10 +11,15 @@
 				.replace(scriptClosePattern, '<\\/script');
 		})
 	);
+
+	const jsonLdScripts = $derived(
+		serializedBlocks
+			.map((serialized: string) => `<script type="application/ld+json">${serialized}<\\/script>`)
+			.join('')
+	);
 </script>
 
 <svelte:head>
-	{#each serializedBlocks as serialized}
-		<script type="application/ld+json">{serialized}</script>
-	{/each}
+	<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+	{@html jsonLdScripts}
 </svelte:head>
