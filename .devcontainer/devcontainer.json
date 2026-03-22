@@ -1,0 +1,9 @@
+{
+  "name": "portfolio-dev",
+  "dockerComposeFile": "../docker-compose.yml",
+  "service": "frontend",
+  "workspaceFolder": "/app",
+  "forwardPorts": [5173],
+  "remoteUser": "node",
+  "updateRemoteUserUID": true
+}
