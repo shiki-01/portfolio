@@ -175,22 +175,9 @@
 </section>
 
 {#if selectedSnapshot}
-	<!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
-	<div
-		role="dialog"
-		aria-modal="true"
-		aria-label="スナップショット拡大表示"
-		class="lightbox"
-		onclick={() => (selectedSnapshot = null)}
-		onkeydown={(e) => e.key === 'Escape' && (selectedSnapshot = null)}
-		tabindex="-1"
-	>
-		<img
-			src={selectedSnapshot.url}
-			alt="スナップショット拡大"
-			class="lightbox-img"
-			onclick={(e) => e.stopPropagation()}
-		/>
+	<div role="dialog" aria-modal="true" aria-label="スナップショット拡大表示" class="lightbox" tabindex="-1">
+		<button class="lightbox-backdrop" onclick={() => (selectedSnapshot = null)} aria-label="閉じる"></button>
+		<img src={selectedSnapshot.url} alt="スナップショット拡大" class="lightbox-img" />
 	</div>
 {/if}
 
@@ -288,10 +275,22 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
+	}
+
+	.lightbox-backdrop {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		background: none;
+		border: none;
 		cursor: zoom-out;
+		padding: 0;
 	}
 
 	.lightbox-img {
+		position: relative;
+		z-index: 1;
 		display: block;
 		max-width: 90vw;
 		max-height: 90vh;
@@ -299,6 +298,6 @@
 		height: auto;
 		border-radius: 8px;
 		border: 1px solid rgba(255, 255, 255, 0.15);
-		cursor: default;
+		pointer-events: none;
 	}
 </style>
