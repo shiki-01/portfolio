@@ -23,7 +23,21 @@
 	);
 	const imageAlt = $derived(`${title} preview`);
 	const description = $derived(currentWork?.description);
+	const snapshots = $derived(currentWork?.snapshots ?? []);
+
+	let scrollEl = $state<HTMLElement | undefined>(undefined);
+	let selectedSnapshot = $state<{ url: string; width: number; height: number } | null>(null);
+
+	function slideLeft() {
+		scrollEl?.scrollBy({ left: -280, behavior: 'smooth' });
+	}
+
+	function slideRight() {
+		scrollEl?.scrollBy({ left: 280, behavior: 'smooth' });
+	}
 </script>
+
+<svelte:window onkeydown={(e) => e.key === 'Escape' && (selectedSnapshot = null)} />
 
 <section
 	class="rel my:160px mx:auto px:100px px:60px@<md px:20px@<sm"
@@ -122,9 +136,63 @@
 				<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 				{@html content}
 			</div>
+
+			{#if snapshots.length > 0}
+				<div class="mt:32px">
+					<p class="f:12px uppercase ls:0.06em opacity:.8 mb:10px">snapshots</p>
+					<div class="snapshot-wrapper rel">
+						{#if snapshots.length > 1}
+							<button class="snap-arrow snap-arrow--left" onclick={slideLeft} aria-label="前へ">
+								&#8249;
+							</button>
+						{/if}
+						<div bind:this={scrollEl} class="snapshot-scroll flex gap:12px">
+							{#each snapshots as snap, i}
+								<button
+									class="snapshot-thumb"
+									onclick={() => (selectedSnapshot = snap)}
+									aria-label={`スナップショット ${i + 1} を拡大表示`}
+								>
+									<img
+										src={snap.url}
+										alt={`${title} snapshot ${i + 1}`}
+										class="w:100% h:100% obj:cover d:block"
+										loading="lazy"
+									/>
+								</button>
+							{/each}
+						</div>
+						{#if snapshots.length > 1}
+							<button class="snap-arrow snap-arrow--right" onclick={slideRight} aria-label="次へ">
+								&#8250;
+							</button>
+						{/if}
+					</div>
+				</div>
+			{/if}
 		</div>
 	</div>
 </section>
+
+{#if selectedSnapshot}
+	<!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
+	<div
+		role="dialog"
+		aria-modal="true"
+		aria-label="スナップショット拡大表示"
+		class="lightbox"
+		onclick={() => (selectedSnapshot = null)}
+		onkeydown={(e) => e.key === 'Escape' && (selectedSnapshot = null)}
+		tabindex="-1"
+	>
+		<img
+			src={selectedSnapshot.url}
+			alt="スナップショット拡大"
+			class="lightbox-img"
+			onclick={(e) => e.stopPropagation()}
+		/>
+	</div>
+{/if}
 
 <style>
 	@media (max-width: 960px) {
@@ -141,5 +209,96 @@
 		.detail-body {
 			padding: 14px;
 		}
+	}
+
+	/* Snapshot slider */
+	.snapshot-wrapper {
+		position: relative;
+	}
+
+	.snapshot-scroll {
+		overflow-x: auto;
+		scroll-snap-type: x mandatory;
+		padding-bottom: 6px;
+		scrollbar-width: none;
+	}
+
+	.snapshot-scroll::-webkit-scrollbar {
+		display: none;
+	}
+
+	.snapshot-thumb {
+		flex-shrink: 0;
+		width: 240px;
+		height: 160px;
+		overflow: hidden;
+		border-radius: 8px;
+		border: 1px solid rgba(255, 255, 255, 0.2);
+		cursor: pointer;
+		padding: 0;
+		background: none;
+		scroll-snap-align: start;
+		transition: border-color 0.15s;
+	}
+
+	.snapshot-thumb:hover {
+		border-color: rgba(255, 255, 255, 0.6);
+	}
+
+	.snap-arrow {
+		position: absolute;
+		top: 50%;
+		translate: 0 -50%;
+		z-index: 10;
+		width: 32px;
+		height: 32px;
+		border-radius: 50%;
+		background: #153f63;
+		border: 1px solid rgba(255, 255, 255, 0.4);
+		color: #fff;
+		font-size: 20px;
+		line-height: 1;
+		cursor: pointer;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0;
+		transition: background 0.15s;
+	}
+
+	.snap-arrow:hover {
+		background: #1d5280;
+	}
+
+	.snap-arrow--left {
+		left: -16px;
+	}
+
+	.snap-arrow--right {
+		right: -16px;
+	}
+
+	/* Lightbox */
+	.lightbox {
+		position: fixed;
+		inset: 0;
+		z-index: 9999;
+		background: rgba(0, 0, 0, 0.82);
+		backdrop-filter: blur(4px);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		cursor: zoom-out;
+	}
+
+	.lightbox-img {
+		display: block;
+		max-width: 90vw;
+		max-height: 90vh;
+		width: auto;
+		height: auto;
+		border-radius: 8px;
+		border: 1px solid rgba(255, 255, 255, 0.15);
+		cursor: default;
 	}
 </style>
