@@ -81,6 +81,10 @@ export type Blogs<T = 'get'> = Structure<
 		 * 表示画像
 		 */
 		image?: Image;
+		/**
+		 * スナップショット
+		 */
+		snapshots?: Image[];
 	}
 >;
 
