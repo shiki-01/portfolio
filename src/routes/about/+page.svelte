@@ -7,9 +7,56 @@
 	import Icon from '@iconify/svelte';
 	import icon from '$lib/assets/img/myicon.png';
 
+	type ProfileEntry = {
+		year: string;
+		title: string;
+		description: string;
+		link?: string;
+	};
+
+	const profileEntries: ProfileEntry[] = [
+		{
+			year: '2023.04',
+			title: '名電高校 入学',
+			description: '情報科学科。'
+		},
+		{
+			year: '2023.04',
+			title: '情報システム部入部',
+			description: 'コンテスト参加や自主制作を行い、三年次には部長として活動。',
+			link: 'https://misc-mdn.dev/'
+		},
+		{
+			year: '2025.11',
+			title: '3D プリンター活用推進会 システム部 所属',
+			description:
+				'ホームページ兼予約サイトの制作を機に所属。各イベントにて、ゲーム制作や印刷データのモデリングの支援を行う。',
+			link: 'https://mdn-3dprinter.f5.si/'
+		},
+		{
+			year: '2025.08',
+			title: 'PALETTE 所属',
+			description: 'エンジニアとして、公式サイトの制作や外部依頼を中心に活動している。',
+			link: 'https://palette-sync.com/'
+		},
+		{
+			year: '2026.04',
+			title: '愛知工業大学 入学',
+			description: '情報科学部 メディア情報専攻。'
+		},
+		{
+			year: 'Now',
+			title: '大学生として色々なことに挑戦中...',
+			description: 'システムに留まらず、デザインや企画など幅広い分野に挑戦。'
+		}
+	];
+
 	let hoveredSkill: { row: number; col: number } | null = $state(null);
 	let tooltipPos: { left: number; top: number; placeBelow: boolean } | null = $state(null);
 	let skillsListEl: HTMLDivElement | null = null;
+	let profileSectionEl: HTMLElement | null = null;
+	let profileObserver: IntersectionObserver | null = null;
+	let isProfileVisible = $state(false);
 	let isSkillsCompact = $state(false);
 
 	const getHoveredSkillItem = () => {
@@ -61,18 +108,50 @@
 		tooltipPos = null;
 	};
 
-	onMount(() => {
-		if (!skillsListEl) return;
-		updateSkillsCompactMode();
+	const revealProfile = () => {
+		isProfileVisible = true;
+		profileObserver?.disconnect();
+		profileObserver = null;
+	};
 
-		const observer = new ResizeObserver(() => {
+	onMount(() => {
+		if (typeof window !== 'undefined') {
+			const prefersReducedMotion =
+				window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches ?? false;
+			if (prefersReducedMotion) {
+				isProfileVisible = true;
+			} else if (profileSectionEl && 'IntersectionObserver' in window) {
+				profileObserver = new IntersectionObserver(
+					(entries) => {
+						if (entries.some((entry) => entry.isIntersecting)) {
+							revealProfile();
+						}
+					},
+					{
+						threshold: 0.3,
+						rootMargin: '0px 0px -12% 0px'
+					}
+				);
+				profileObserver.observe(profileSectionEl);
+			} else {
+				isProfileVisible = true;
+			}
+		}
+
+		let observer: ResizeObserver | null = null;
+		if (skillsListEl) {
 			updateSkillsCompactMode();
-			if (isSkillsCompact) clearHoveredSkill();
-		});
-		observer.observe(skillsListEl);
+
+			observer = new ResizeObserver(() => {
+				updateSkillsCompactMode();
+				if (isSkillsCompact) clearHoveredSkill();
+			});
+			observer.observe(skillsListEl);
+		}
 
 		return () => {
-			observer.disconnect();
+			profileObserver?.disconnect();
+			observer?.disconnect();
 		};
 	});
 </script>
@@ -125,6 +204,36 @@
 					</p>
 				</div>
 			</div>
+		</Page>
+		<Page>
+			<section
+				bind:this={profileSectionEl}
+				class={`w:100% h:100% flex flex:column ai:center pt:100px gap:56px profile-section ${
+					isProfileVisible ? 'is-visible' : ''
+				}`}
+			>
+				<Title class="f:.8em">profile</Title>
+				<div class="profile-timeline w:100%">
+					{#each profileEntries as entry, index}
+						<article class="timeline-item" style={`--delay:${index * 120}ms`}>
+							<div class="timeline-rail" aria-hidden="true">
+								<span class="timeline-dot"></span>
+								{#if index < profileEntries.length - 1}
+									<span class="timeline-line"></span>
+								{/if}
+							</div>
+							<div class="timeline-card">
+								<p class="timeline-year">{entry.year}</p>
+								<h3 class="timeline-title">{entry.title}</h3>
+								<p class="timeline-description">{entry.description}</p>
+								{#if entry.link}
+									<a target="_blank" class="w:full flex jc:start text-decoration:underline mt:14px f:.8em" href={entry.link}>{entry.link}</a>
+								{/if}
+							</div>
+						</article>
+					{/each}
+				</div>
+			</section>
 		</Page>
 		<Page>
 			<div class="w:100% h:100% flex:column ai:center pt:100px gap:80px flex">
@@ -186,5 +295,119 @@
 
 	.skill-row {
 		width: min(100%, 736px);
+	}
+
+	.profile-section {
+		padding-inline: clamp(20px, 6vw, 100px);
+	}
+
+	.profile-timeline {
+		display: flex;
+		flex-direction: column;
+		gap: 24px;
+		max-width: 880px;
+	}
+
+	.timeline-item {
+		display: grid;
+		grid-template-columns: 36px minmax(0, 1fr);
+		column-gap: 18px;
+		align-items: start;
+		opacity: 0;
+		transform: translate3d(0, 24px, 0);
+		filter: blur(8px);
+		transition:
+			opacity 0.6s ease,
+			transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+			filter 0.6s ease;
+		transition-delay: var(--delay);
+		will-change: opacity, transform, filter;
+	}
+
+	.profile-section.is-visible .timeline-item {
+		opacity: 1;
+		transform: translate3d(0, 0, 0);
+		filter: blur(0);
+	}
+
+	.timeline-rail {
+		position: relative;
+		display: flex;
+		justify-content: center;
+		min-height: 100%;
+	}
+
+	.timeline-dot {
+		width: 14px;
+		height: 14px;
+		margin-top: 18px;
+		border-radius: 999px;
+		border: 2px solid rgba(255, 255, 255, 0.95);
+		background: #153f63;
+		z-index: 1;
+	}
+
+	.timeline-line {
+		position: absolute;
+		top: 32px;
+		bottom: -12px;
+		left: 50%;
+		width: 2px;
+		background: #fff;
+		transform: translateX(-50%);
+	}
+
+	.timeline-card {
+		padding: 24px 26px;
+		border: 1px solid rgba(255, 255, 255, 1);
+		background-color: #153f63;
+		border-radius: 12px;
+	}
+
+	.timeline-year {
+		margin-bottom: 8px;
+		font-size: 0.8rem;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+		opacity: 0.72;
+	}
+
+	.timeline-title {
+		margin: 0;
+		font-size: clamp(1.15rem, 1.8vw, 1.45rem);
+		font-weight: 600;
+		line-height: 1.4;
+	}
+
+	.timeline-description {
+		margin-top: 4px;
+		font-size: 1rem;
+		line-height: 1.85;
+		opacity: 0.92;
+	}
+
+	@media (max-width: 767px) {
+		.timeline-item {
+			grid-template-columns: 24px minmax(0, 1fr);
+			column-gap: 12px;
+		}
+
+		.timeline-card {
+			padding: 20px 18px;
+			border-radius: 20px;
+		}
+
+		.timeline-dot {
+			margin-top: 16px;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.timeline-item {
+			opacity: 1;
+			transform: none;
+			filter: none;
+			transition: none;
+		}
 	}
 </style>
