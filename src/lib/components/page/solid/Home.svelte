@@ -204,72 +204,51 @@
 			<div
 				class="w:100% h:100% p:40px flex:column justify-content:space-between ai:center flex footer-inner"
 			>
-				<div
-					class="w:100% flex:column justify-content:space-between align-items:start gap:40px px:16px flex flex-wrap footer-content"
-				>
-					<div
-						class="w:100% h:60px flex:row justify-content:start ai:center gap:16px footer-logo-wrap"
-					>
+				<div class="w:100% flex:column align-items:start gap:50px px:16px flex footer-content">
+					<div class="w:100% h:60px flex:row justify-content:start ai:center gap:16px footer-logo-wrap">
 						<img src={logo} alt="Logo" class="w:auto h:100% object:cover" />
 					</div>
-					<div class="w:100% px:40px grid-template-columns:1fr|1fr|1fr gap:40px grid footer-grid">
-						<div class="flex:column gap:8px flex">
-							<h2 class="text:2em font:thin mb:8px uppercase">site map</h2>
-							<div class="flex:column pl:12px gap:16px flex">
-								<a href="/" class="text:18px fg:#fff:hover underline:hover transition:color|0.2s"
-									>Home</a
-								>
+					<div class="footer-main ml:20px">
+						<div class="footer-left">
+							<div class="flex:column gap:16px flex">
+								<h2 class="footer-h2">site map</h2>
 								<a
-									href="/about"
-									class="text:18px fg:#fff:hover underline:hover transition:color|0.2s">About</a
+									href="/sitemap"
+									class="text:18px pl:12px line-h:1em fg:#fff:hover underline:hover transition:color|0.2s flex:row ai:center gap:6px flex"
 								>
-								<a
-									href="/works"
-									class="text:18px fg:#fff:hover underline:hover transition:color|0.2s">Works</a
+									サイトマップを見る
+									<Icon icon="mdi-light:arrow-right" width="20" height="20" class="opacity:.7" />
+								</a>
+							</div>
+							<div class="flex:column gap:16px flex">
+								<h2 class="footer-h2">Contact</h2>
+								<button
+									onclick={copyEmail}
+									class="email-copy text:18px pl:12px line-h:1em fg:#fff:hover transition:color|0.2s flex:row ai:center gap:6px flex"
 								>
-								<a
-									href="/blogs"
-									class="text:18px fg:#fff:hover underline:hover transition:color|0.2s">Blogs</a
-								>
+									<span class="user-select:none">{EMAIL}</span>
+									<Icon
+										icon={copied ? 'lucide:copy-check' : 'lucide:copy'}
+										width="18"
+										height="18"
+										class="copy-icon flex-shrink:0 {copied ? 'fg:#6ee7b7' : ''}"
+									/>
+								</button>
 							</div>
 						</div>
-						<div class="flex:column gap:8px flex">
-							<h2 class="text:2em font:thin mb:8px uppercase">Contact</h2>
-							<button
-								onclick={copyEmail}
-								class="email-copy text:18px pl:12px fg:#fff:hover transition:color|0.2s flex:row ai:center gap:6px flex"
-							>
-								<span class="user-select:none">{EMAIL}</span>
-								<Icon
-									icon={copied ? 'lucide:copy-check' : 'lucide:copy'}
-									width="18"
-									height="18"
-									class="copy-icon flex-shrink:0 {copied ? 'fg:#6ee7b7' : ''}"
-								/>
-							</button>
-						</div>
-						<div class="flex:column gap:8px flex">
-							<h2 class="text:2em font:thin mb:8px uppercase">Links</h2>
-							<div class="flex:column gap:8px pl:12px flex">
+						<div class="footer-links">
+							<h2 class="footer-h2">Links</h2>
+							<div class="footer-links-buttons">
 								{#each icons as { title, icon, link }}
 									<a
 										href={link}
 										target="_blank"
 										rel="noopener noreferrer"
-										class="mb:10px w:fit flex:row ai:center gap:4px gap:2px@<md b:1px|solid|#fff px:16px py:8px pl:10px@<md pr:8px@<md py:4px@<md bg:#fff:hover fg:#153F63:hover transition:background-color|0.3s flex rounded"
+										class="text:18px line-h:1em fg:#fff:hover underline:hover transition:color|0.2s flex:row ai:center gap:6px flex footer-link-item"
 									>
-										<Icon class="text:24px text:20px@<md mr:10px" {icon} />
-										<div class="flex:row gap:2px ai:center flex">
-											<span class="text:18px text:12px@<md">
-												{title}
-											</span>
-											<Icon
-												icon="mdi-light:arrow-up"
-												width="30"
-												height="30"
-												class="rotate(45deg)"
-											/>
-										</div>
+										<Icon class="text:20px opacity:.8 flex-shrink:0" {icon} />
+										<span>{title}</span>
+										<Icon icon="mdi-light:arrow-up" width="20" height="20" class="rotate(45deg) opacity:.7 flex-shrink:0" />
 									</a>
 								{/each}
 							</div>
@@ -377,7 +356,6 @@
 	.email-copy {
 		background: none;
 		border: none;
-		padding: 0;
 		cursor: pointer;
 		color: inherit;
 		font-family: inherit;
@@ -390,6 +368,44 @@
 		user-select: none;
 	}
 
+	.footer-h2 {
+		font-size: 2em;
+		font-weight: 100;
+		margin-bottom: 6px;
+		text-transform: uppercase;
+	}
+
+	/* wide: [sitemap | contact] [links horizontal] — all in one row */
+	.footer-main {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 40px 60px;
+		align-items: start;
+	}
+
+	.footer-left {
+		display: flex;
+		flex-direction: row;
+		gap: 60px;
+		align-items: start;
+	}
+
+	.footer-links {
+		display: flex;
+		flex-direction: column;
+		gap: 16px;
+	}
+
+	.footer-links-buttons {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		align-items: start;
+		gap: 4px 24px;
+		padding-left: 12px;
+	}
+
+	/* medium: links wrap below, sitemap+contact stay side by side */
 	@media (max-width: 960px) {
 		.footer-inner {
 			padding: 24px 16px;
@@ -400,23 +416,27 @@
 			padding: 0;
 		}
 
-		.footer-grid {
-			padding: 0;
-			gap: 28px;
-			grid-template-columns: 1fr;
-		}
-
-		.footer-grid h2 {
+		.footer-h2 {
 			font-size: clamp(1.4rem, 6vw, 2rem);
 		}
 	}
 
-	@media (max-width: 640px) {
+	/* narrow: everything single column, links go vertical */
+	@media (max-width: 600px) {
 		.footer-logo-wrap {
 			height: 42px;
 		}
 
-		.footer-grid a {
+		.footer-left {
+			flex-direction: column;
+			gap: 28px;
+		}
+
+		.footer-links-buttons {
+			flex-direction: column;
+		}
+
+		.footer-links-buttons a {
 			font-size: 15px;
 		}
 	}
