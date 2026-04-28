@@ -48,7 +48,7 @@
 		aria-hidden="true"
 	></div>
 	<div
-		class="rel w:100% z:1 overflow:hidden bg:#153f63 b:1px|solid|#fff r:10px"
+		class="rel w:100% overflow:hidden bg:#153f63 b:1px|solid|#fff r:10px"
 	>
 		<p
 			class="h:40px px:12px flex ai:center f:clamp(6px,3.8vw,16px) white-space:nowrap font:JetBrainsMono ls:0.04em uppercase bb:1px|solid|#fff"

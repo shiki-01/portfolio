@@ -181,8 +181,6 @@
 			/>
 		</svg>
 	</span>
-	<Header />
-	<ToTop />
 	<!-- <LogoAnimate /> -->
 	<div
 		bind:this={backEl}
@@ -195,8 +193,10 @@
 	</div>
 	<div
 		bind:this={scrollEl}
-		class="w:100% h:100% z:2 flex:column justify-content:center align-items:start flex"
+		class="w:100% h:100% z:1 flex:column justify-content:center align-items:start flex"
 	>
+		<Header />
+		<ToTop />
 		{@render children()}
 		<footer
 			class="w:100% pt:20px bg:#153F63 fg:#ffffff bt:1px|solid|#fff justify-content:center ai:center flex"

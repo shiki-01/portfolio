@@ -41,7 +41,7 @@
 </script>
 
 <header
-	class="site-header flex:row flex:column@<md top:0 z:999 w:100% sticky bg:#153F63 fg:#ffffff bb:1px|#fff|solid"
+	class="site-header flex:row flex:column@<md top:0 z:2 w:100% sticky bg:#153F63 fg:#ffffff bb:1px|#fff|solid"
 	data-compact={isCompact}
 	data-menu-open={isMenuOpen}
 >

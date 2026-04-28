@@ -258,7 +258,13 @@
 		{:else if $pageNumber === 3}
 			{@render children()}
 		{:else if $pageNumber === 4}
-			{@render children()}
+			<div
+				class="w:100% h:100% bg:#153F63 fg:#ffffff flex:column justify-content:center ai:center flex"
+			>
+				<SolidHome>
+					{@render children()}
+				</SolidHome>
+			</div>
 		{/if}
 	</main>
 </div>
