@@ -3,10 +3,13 @@
 	import symbol from '$lib/components/page/solid/img/logoSymbol_small.svg';
 	import { onMount } from 'svelte';
 
-	let scrollY = $state(0);
+	let isCompact = $state(false);
 	let scrollContainer: HTMLDivElement | null = null;
 	let handleScroll: (() => void) | null = null;
 	let isMenuOpen = $state(false);
+
+	const COMPACT_THRESHOLD = 100;
+	const EXPAND_THRESHOLD = 60;
 
 	const links = [
 		{ title: 'Home', href: '/' },
@@ -19,7 +22,12 @@
 		scrollContainer = document.querySelector('.scroll-wrapper');
 		if (scrollContainer) {
 			handleScroll = () => {
-				scrollY = scrollContainer!.scrollTop;
+				const y = scrollContainer!.scrollTop;
+				if (!isCompact && y >= COMPACT_THRESHOLD) {
+					isCompact = true;
+				} else if (isCompact && y <= EXPAND_THRESHOLD) {
+					isCompact = false;
+				}
 			};
 			scrollContainer.addEventListener('scroll', handleScroll, { passive: true });
 		}
@@ -34,7 +42,7 @@
 
 <header
 	class="site-header flex:row flex:column@<md top:0 z:999 w:100% sticky bg:#153F63 fg:#ffffff bb:1px|#fff|solid"
-	data-compact={scrollY >= 100}
+	data-compact={isCompact}
 	data-menu-open={isMenuOpen}
 >
 	<div class="header-top min-w:100%@<md">

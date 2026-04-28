@@ -40,23 +40,25 @@
 <svelte:window onkeydown={(e) => e.key === 'Escape' && (selectedSnapshot = null)} />
 
 <section
-	class="rel my:160px mx:auto px:100px px:60px@<md px:20px@<sm"
+	class="rel w:calc(100%-200px) w:calc(100%-120px)@<md w:calc(100%-40px)@<sm flex ai:center jc:center my:160px mx:auto"
 >
 	<Title class="abs top:-6em left:0">works</Title>
 	<div
-		class="abs w:calc(100%-200px) w:calc(100%-120px)@<md w:calc(100%-40px)@<sm h:100% top:10px left:calc(50%+10px) translateX(-50%) z:0 bg:#153f63 b:1px|solid|#fff r:15px @min-900:top:14px @min-900:right:-14px @min-900:bottom:-14px @min-900:left:14px"
+		class="abs w:100% h:100% top:10px left:calc(50%+10px) translateX(-50%) z:0 bg:#153f63 b:1px|solid|#fff r:15px @min-900:top:14px @min-900:right:-14px @min-900:bottom:-14px @min-900:left:14px"
 		aria-hidden="true"
 	></div>
-	<div class="rel z:1 overflow:hidden bg:#153f63 b:1px|solid|#fff r:10px">
+	<div
+		class="rel w:100% z:1 overflow:hidden bg:#153f63 b:1px|solid|#fff r:10px"
+	>
 		<p
 			class="h:40px px:12px flex ai:center f:clamp(6px,3.8vw,16px) white-space:nowrap font:JetBrainsMono ls:0.04em uppercase bb:1px|solid|#fff"
 		>
 			/GET/ENTRIES<a href="/works">/WORKS</a>/{currentWork?.id}
 		</p>
-		<div class="grid cols:1 gap:20px p:24px @min-900:px:24px detail-body">
+		<div class="flex flex:column w:100% cols:1 gap:20px p:24px @min-900:px:24px detail-body">
 			<h1 class="f:clamp(24px,4.6vw,36px) font:thin line-h:1.2">{title}</h1>
 			<div
-				class="grid grid-template-cols:1fr|500px @min-900:cols:2 gap:20px @min-900:ai:start detail-grid"
+				class="grid w:100% grid-template-cols:1fr|500px grid-template-rows:1fr @min-900:cols:2 gap:20px @min-900:ai:start detail-grid"
 			>
 				<div
 					class="b:1px|solid|#ffffff50 r:8px w:100% h:100% max-h:340px overflow:hidden detail-image"
@@ -175,8 +177,15 @@
 </section>
 
 {#if selectedSnapshot}
-	<div role="dialog" aria-modal="true" aria-label="スナップショット拡大表示" class="lightbox" tabindex="-1">
-		<button class="lightbox-backdrop" onclick={() => (selectedSnapshot = null)} aria-label="閉じる"></button>
+	<div
+		role="dialog"
+		aria-modal="true"
+		aria-label="スナップショット拡大表示"
+		class="lightbox"
+		tabindex="-1"
+	>
+		<button class="lightbox-backdrop" onclick={() => (selectedSnapshot = null)} aria-label="閉じる"
+		></button>
 		<img src={selectedSnapshot.url} alt="スナップショット拡大" class="lightbox-img" />
 	</div>
 {/if}

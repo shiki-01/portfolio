@@ -31,6 +31,20 @@
 		}
 	];
 
+	const EMAIL = 'contact@shiki-01.com';
+	let copied = $state(false);
+	let copyTimeout: ReturnType<typeof setTimeout> | null = null;
+
+	const copyEmail = () => {
+		navigator.clipboard.writeText(EMAIL).then(() => {
+			copied = true;
+			if (copyTimeout) clearTimeout(copyTimeout);
+			copyTimeout = setTimeout(() => {
+				copied = false;
+			}, 2000);
+		});
+	};
+
 	let backEl: HTMLDivElement | null = null;
 	let scrollEl: HTMLDivElement | null = null;
 	const parallax = {
@@ -221,11 +235,18 @@
 						</div>
 						<div class="flex:column gap:8px flex">
 							<h2 class="text:2em font:thin mb:8px uppercase">Contact</h2>
-							<a
-								href="mailto:contact@shiki-01.com"
-								class="text:18px pl:12px fg:#fff:hover underline:hover transition:color|0.2s"
-								>contact@shiki-01.com</a
+							<button
+								onclick={copyEmail}
+								class="email-copy text:18px pl:12px fg:#fff:hover transition:color|0.2s flex:row ai:center gap:6px flex"
 							>
+								<span class="user-select:none">{EMAIL}</span>
+								<Icon
+									icon={copied ? 'lucide:copy-check' : 'lucide:copy'}
+									width="18"
+									height="18"
+									class="copy-icon flex-shrink:0 {copied ? 'fg:#6ee7b7' : ''}"
+								/>
+							</button>
 						</div>
 						<div class="flex:column gap:8px flex">
 							<h2 class="text:2em font:thin mb:8px uppercase">Links</h2>
@@ -351,6 +372,22 @@
 	.line,
 	.back {
 		will-change: transform, background-position;
+	}
+
+	.email-copy {
+		background: none;
+		border: none;
+		padding: 0;
+		cursor: pointer;
+		color: inherit;
+		font-family: inherit;
+		font-size: inherit;
+		line-height: inherit;
+		user-select: none;
+	}
+
+	.email-copy span {
+		user-select: none;
 	}
 
 	@media (max-width: 960px) {
