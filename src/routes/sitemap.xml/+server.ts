@@ -12,8 +12,16 @@ const escapeXml = (value: string): string =>
 		.replace(/"/g, '&quot;')
 		.replace(/'/g, '&apos;');
 
+// 不正な日付を toISOString() に渡すと RangeError で sitemap 生成ごと失敗するため、
+// パースできない値は lastmod を省略する。
+const toLastmod = (value?: string): string | undefined => {
+	if (!value) return undefined;
+	const date = new Date(value);
+	return Number.isNaN(date.getTime()) ? undefined : date.toISOString();
+};
+
 export const GET: RequestHandler = async () => {
-	const staticUrls = ['/', '/about', '/works', '/blogs'];
+	const staticUrls = ['/', '/about', '/works', '/blogs', '/sitemap'];
 	const works = await getServerContentList('works');
 
 	const urlEntries: Array<{ loc: string; lastmod?: string }> = [
@@ -22,17 +30,19 @@ export const GET: RequestHandler = async () => {
 		})),
 		...works.contents.map((work) => ({
 			loc: toAbsoluteUrl(`/works/${work.id}`),
-			lastmod: work.updatedAt || work.publishedAt
+			lastmod: toLastmod(work.updatedAt || work.publishedAt)
 		}))
 	];
 
 	const urls = urlEntries
-		.map(
-			(entry) => `<url>
-	<loc>${escapeXml(entry.loc)}</loc>
-	${entry.lastmod ? `<lastmod>${escapeXml(new Date(entry.lastmod).toISOString())}</lastmod>` : ''}
-</url>`
-		)
+		.map((entry) => {
+			const lines = [`\t<url>`, `\t\t<loc>${escapeXml(entry.loc)}</loc>`];
+			if (entry.lastmod) {
+				lines.push(`\t\t<lastmod>${escapeXml(entry.lastmod)}</lastmod>`);
+			}
+			lines.push(`\t</url>`);
+			return lines.join('\n');
+		})
 		.join('\n');
 
 	const body = `<?xml version="1.0" encoding="UTF-8"?>

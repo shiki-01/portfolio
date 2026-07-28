@@ -29,9 +29,23 @@ const hasMicroCMSCredentials = () => {
 
 let hasWarnedMockFallback = false;
 
+const isProductionBuild = () =>
+	process.env.NODE_ENV === 'production' || String(viteEnv?.PROD) === 'true';
+
 const shouldUseMocks = () => {
 	if (USE_MOCKS) return true;
 	if (hasMicroCMSCredentials()) return false;
+
+	// 認証情報が無いまま本番ビルドを空モックで通すと、works 詳細が 1 件も
+	// prerender されず sitemap.xml も静的ページだけの状態で公開されてしまう。
+	// SEO 事故になるため、原因が分かる形で明示的に失敗させる。
+	if (isProductionBuild()) {
+		throw new Error(
+			'[microCMS] MICROCMS_SERVICE_DOMAIN / MICROCMS_API_KEY are not set. ' +
+				'A production build without credentials would publish an empty works list and sitemap. ' +
+				'Set the credentials, or pass USE_MOCKS=true to build intentionally with mock data.'
+		);
+	}
 
 	if (!hasWarnedMockFallback) {
 		hasWarnedMockFallback = true;
