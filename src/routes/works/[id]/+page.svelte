@@ -61,7 +61,7 @@
 				class="grid w:100% grid-template-cols:1fr|500px grid-template-rows:1fr @min-900:cols:2 gap:20px @min-900:ai:start detail-grid"
 			>
 				<div
-					class="b:1px|solid|#ffffff50 r:8px w:100% h:100% max-h:340px overflow:hidden detail-image"
+					class="b:1px|solid|#ffffff50 w:100% h:100% max-h:340px overflow:hidden detail-image"
 				>
 					{#if imageUrl}
 						<img
@@ -228,7 +228,6 @@
 		width: 240px;
 		height: 160px;
 		overflow: hidden;
-		border-radius: 8px;
 		border: 1px solid rgba(255, 255, 255, 0.2);
 		cursor: pointer;
 		padding: 0;
@@ -305,7 +304,6 @@
 		max-height: 90vh;
 		width: auto;
 		height: auto;
-		border-radius: 8px;
 		border: 1px solid rgba(255, 255, 255, 0.15);
 		pointer-events: none;
 	}
